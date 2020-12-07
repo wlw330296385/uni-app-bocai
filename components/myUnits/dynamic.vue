@@ -145,6 +145,7 @@
 	.Box2 {
 		width: 100%;
 		position: absolute;
+		background-color: #fff;
 	}
 
 	.Box1-list {

@@ -16,7 +16,9 @@
 </template>
 
 <script>
+	import navigationbar from "@/components/wuxingzhixuanfushi/navigationbar.vue";
 	export default {
+		components:{navigationbar},
 		data() {
 			return {
 				

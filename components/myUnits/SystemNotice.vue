@@ -5,7 +5,10 @@
 				<ul>
 					<li v-for="(item,index) in 2" :key="index" @click="cilckpopup">
 						<span class="content">
-							<img class="image" src="@/static/logo.png" alt="">
+							<span class="content-span">
+							<img class="image" src="@/static/news.png" alt="">
+							<span class="content-span-quan" v-if="quanonoff"></span>
+							</span>
 							<i>1231</i>
 							彩票报表
 						</span>
@@ -13,25 +16,35 @@
 					</li>
 				</ul>
 			</view>
-			<uni-popup ref="popup" type="bottom">底部弹出 Popup</uni-popup>
+			<uni-popup ref="popup" type="bottom">
+				<noticeDetails @close="closeclick"></noticeDetails>
+			</uni-popup>
 		</view>
 	</view>
 </template>
 
 <script>
 	import uniPopup from '@/components/uni-popup/uni-popup.vue'
+	import noticeDetails from '@/components/myUnits/noticeDetails.vue'
 	export default {
 		components:{
-			uniPopup
+			uniPopup,
+			noticeDetails
 		},
 		data() {
 			return {
-				
+				quanonoff:true,
 			}
 		},
 		methods: {
 			cilckpopup(){
-				 this.$refs.popup.open()
+				 this.$refs.popup.open(),
+				 this.quanonoff = false
+			},
+			closeclick(data){
+				if(data){
+					this.$refs.popup.close()
+				}
 			}
 		}
 	}
@@ -77,9 +90,28 @@
 	.content{
 		display: flex;
 		align-items: center;
+		position: relative;
 	}
 	.image{
 		width: 25px;
 		height: 25px;
+		padding: 2.5px;
+	}
+	.content-span{
+		display: block;
+		width: 30px;
+		height: 30px;
+		border-radius: 50%;
+		background-color: #aa00ff;
+	}
+	.content-span-quan{
+			display: block;
+			position: absolute;
+			top:15upx;
+			left:50upx;
+			width: 5px;
+			height: 5px;
+			border-radius: 50%;
+			background-color: red;
 	}
 </style>

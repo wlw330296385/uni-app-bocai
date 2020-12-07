@@ -1,4 +1,4 @@
-<!-- 全清按钮的组件 -->
+<!-- 大小单双组件 -->
 <template>
 	<view class="r-top">
 		<view class="r-background">

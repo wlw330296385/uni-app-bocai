@@ -1,5 +1,5 @@
 <template name='sunui-stepper'>
-	<view>
+	<view class="content">
 		<view class="title">
 			<view class="title-p">余额:{{balance}}</view>
 			<view class="title-p">已选{{label}}注,共{{Totalprice}}元</view>
@@ -29,15 +29,8 @@
 		<view class="yixuan-list">
 			<view class="yixuan-top">
 				<view class="yixuan-top-left">已选1单,共三注</view>
-				<view class="yixuan-checkbox">
-					<checkbox-group @change="checkboxChange">
-						<checkbox :value="value" :checked="checked" />
-
-					</checkbox-group>
-					<view>11111</view>
-				</view>
-			</view>
 			<view class="yixuan-buttom">总金额:0.060元</view>
+			</view>
 		</view>
 		<!-- 立即投注 -->
 		<view class="lijitouzhu">
@@ -190,11 +183,11 @@
 					}
 				}
 			},
-			checkboxChange: function(e) {
-				var items = this.items,
-					values = e.detail.value;
-			},
 			lijitouzhu() {
+				if (this.Totalprice <= this.balance) {
+					this.$refs.popup.open()
+					return
+				}
 				if (this.Totalprice >= this.balance) {
 					this.$refs.popup.open()
 					return
@@ -250,6 +243,13 @@
 </script>
 
 <style lang="scss">
+	.content{
+		position: fixed;
+		background-color: #fff;
+		bottom:0;
+		box-shadow: 0 0 10upx 0 #cccccc;
+		width: 100%;
+	}
 	.sunui-stepper {
 		display: flex;
 		align-items: center;
@@ -321,7 +321,7 @@
 	}
 
 	.caizhong-list {
-		margin: 10px 0;
+		margin: 10px 0 0 0;
 	}
 
 	.caizhong-item {
@@ -375,7 +375,7 @@
 	}
 
 	.yixuan-top-left {
-		padding: 5px 10px;
+		padding: 0px 10px;
 		color: #999999;
 	}
 

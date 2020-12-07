@@ -1,6 +1,11 @@
 <!-- 公告详情 -->
 <template>
 	<view class="page">
+		<view class="navbutton">
+			<view class="navbutton-left" @click="gotoback"><</view>
+			<view class="navbutton-title">公告详情</view>
+			<view class="navbutton-right"></view>
+		</view>
 		<view class="header">
 			<h2>BBIN 维护公告</h2>
 			<p>2020-12-01  20:36:39</p>
@@ -26,13 +31,31 @@
 			return {
 				
 			};
+		},
+		methods:{
+			gotoback(){
+				this.$emit('close',true)
+			}
 		}
 	}
 </script>
 
 <style lang="scss">
+	.navbutton{
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		}
+		.navbutton-left{
+		}
+		.navbutton-title{
+			font-weight: bold;
+			font-size: 18px;
+		}
 	.page{
-		padding: 20px 20px;
+		padding: 5px 20px;
+		background-color: #fff;
+		height: 1200upx;
 		}
 		.header p {
 			color: #999999;

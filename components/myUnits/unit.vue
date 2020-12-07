@@ -11,7 +11,7 @@
 							<text style="warm">{{item.label}}</text>
 							<text style="warm">活动时间：2020年11月25日</text>
 						</view>
-						<button class="btn-bottom" style="flex: 1;" type="warn" @click="goTo">参与</button>
+						<button class="btn-bottom" style="flex: 1;" type="warn" @click="goTo" loading="true">参与</button>
 					</view>
 	            </view>
 	        </view>

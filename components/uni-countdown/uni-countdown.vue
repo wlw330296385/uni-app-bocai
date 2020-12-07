@@ -171,7 +171,7 @@
 		justify-content: center;
 		line-height: $countdown-height;
 		padding: 5rpx;
-		font-size: $uni-font-size-sm;
+		font-size: $uni-font-size-base;
 	}
 
 	.uni-countdown__number {
@@ -185,6 +185,6 @@
 		line-height: $countdown-height;
 		margin: 5rpx;
 		text-align: center;
-		font-size: $uni-font-size-sm;
+		font-size: $uni-font-size-base;
 	}
 </style>

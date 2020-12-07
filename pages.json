@@ -20,7 +20,16 @@
 					"navigationBarTextStyle":"black",
 					"navigationBarTitleText": "热门活动",
 					"navigationBarBackgroundColor": "white",
-					"enablePullDownRefresh":false
+					"enablePullDownRefresh":false,
+					"app-plus": {
+					            "titleNView": {  
+					                "buttons": [{  
+					                    "text": "消息",  
+					                    "fontSize": "18px",
+										  "width":"60px"
+					                }]  
+					            }  
+					        }  
 			}
 		},
 		{
@@ -61,7 +70,10 @@
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "分分彩",
-                "enablePullDownRefresh": false
+                "enablePullDownRefresh": false,
+				"app-plus": {
+					"titleNView":false
+				        }  
             }
             
         }
@@ -82,7 +94,10 @@
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "时时彩",
-                "enablePullDownRefresh": false
+                "enablePullDownRefresh": false,
+				"app-plus": {
+					"titleNView":false
+				        }  
             }
             
         }
@@ -95,7 +110,7 @@
 				"app-plus": {
 						"titleNView": {
 							"buttons": [{  
-								"text": "查看走势",  
+								"text": "",  
 								"fontSize": "14px",
 								  "width":"80px"
 							}]  
@@ -126,7 +141,10 @@
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
+                "enablePullDownRefresh": false,
+				"app-plus": {
+					"titleNView":false
+				        }  
             }
             
         }
@@ -172,6 +190,18 @@
             {
                 "navigationBarTitleText": "系统公告",
                 "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/xuanma/sizeSinglepair",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false,
+				"app-plus": {
+					"titleNView":false
+				        }  
             }
             
         }

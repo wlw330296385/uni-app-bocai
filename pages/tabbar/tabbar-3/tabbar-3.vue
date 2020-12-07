@@ -17,15 +17,15 @@
 			</view>
 			<view class="btn-area">
 				<navigator class="botton-flex" url="/#">
-					<view class="btn-area-img"><img src="../../../static/img/金色渐变app图标-02.png" alt=""></view>
+					<view class="btn-area-img"><img src="../../../static/img/app-02.png" alt=""></view>
 					<view>立即提现</view>
 				</navigator>
 				<navigator class="botton-flex" url="/#">
-					<view class="btn-area-img"><img src="../../../static/img/金色渐变app图标-03.png" alt=""></view>
+					<view class="btn-area-img"><img src="../../../static/img/app-03.png" alt=""></view>
 					<view>立即充值</view>
 				</navigator>
 				<navigator class="botton-flex" url="/#">
-					<view class="btn-area-img"><img src="../../../static/img/金色渐变app图标-04.png" alt=""></view>
+					<view class="btn-area-img"><img src="../../../static/img/app-04.png" alt=""></view>
 					<view>账变记录</view>
 				</navigator>
 			</view>
@@ -58,7 +58,15 @@
 		methods: {
 			onoffclick() {
 				this.onoff = !this.onoff
-			}
+			},
+			onNavigationBarButtonTap(val) {
+			 
+			  if (val.index == 0) {
+			    uni.redirectTo({
+			        url: '/components/myUnits/SystemNotice'
+			    })
+			  }
+			 }
 		}
 	}
 </script>
@@ -101,7 +109,7 @@
 		width: 3.79rem;
 		height: 3.79rem;
 		padding: 0 .85rem 0 1rem;
-		background: url(../../../static/img/QQ图片20201126162211.jpg) no-repeat 50%;
+		background: url(../../../static/img/QQ20201126162211.jpg) no-repeat 50%;
 		background-size: contain;
 	}
 
@@ -129,7 +137,7 @@
 
 	.refresh {
 		padding-left: 1rem;
-		background: url(../../../static/img/刷新.png) no-repeat;
+		background: url(../../../static/img/shuaxin.png) no-repeat;
 		background-position:3px 3px;
 		background-size: 70% 70%;
 		color: rgba(255, 255, 255, 0)
@@ -173,13 +181,13 @@
 	}
 
 	.eys2 {
-		background: url(../../../static/img/眼睛.png) repeat;
+		background: url(../../../static/img/eyes.png) repeat;
 		background-size: 100% 100%;
 		color: rgba(255, 255, 255, 0)
 	}
 
 	.eys1 {
-		background: url(../../../static/img/隐藏.png) repeat;
+		background: url(../../../static/img/yincang.png) repeat;
 		background-size: 100% 100%;
 		color: rgba(255, 255, 255, 0)
 	}
