@@ -33,7 +33,9 @@
 			<view class="wfxz_title">玩法选择</view>
 			<hr class="wfxz_br">
 			<view class="page_wfxz_list">
-				<view class="page_wfxz_list_item" v-for="(item3,index) in wfxz_list" :key="index" :class="item3.onoff?'page_five_list_item_onoff':''" @click="onoffclick3(item3.title,index)">
+				<view class="page_wfxz_list_item" v-for="(item3,index) in wfxz_list" :key="index" 
+				:class="item3.onoff?'page_five_list_item_onoff':''" 
+				@click="onoffclick3(item3.title,index)">
 					{{item3.title}}
 				</view>
 			</view>
@@ -159,28 +161,30 @@
 		methods: {
 			// 平特 特码 平码
 			onoffclick1(index1){
+				this.temaonoff = false;
 				let url ='/lhc-wanfa/v1/pingmasx';
 				let name = ''
-				for (let i = 0; i < this.five_list_item.length; i++) {
-					if (index1 == i) {
-							this.five_list_item[index1].onoff = true
-						if(index1 == 1){
-							this.temaonoff = true;
-						}else{
-							this.temaonoff = false
-						}
-					}else{
-						this.five_list_item[i].onoff = false
-					}
-					if(index1 == 1){
-						url = '/lhc-wanfa/v1/temahexiao';
-						name = this.wfxzitem
-					}else if(index1 == 2){
-						url ='/lhc-wanfa/v1/pingmasx';
-					}else if(index1 == 3){
-						url = '/lhc-wanfa/v1/temasx';
-					}
+				if(index1 == 1){
+					url = '/lhc-wanfa/v1/temahexiao';
+					this.temaonoff = true;
+					name = this.wfxzitem
+				}else if(index1 == 2){
+					url ='/lhc-wanfa/v1/pingmasx';
+				}else if(index1 == 3){
+					url = '/lhc-wanfa/v1/temasx';
 				}
+				for(let i in this.five_list_item) {
+					this.five_list_item[i].onoff = false;
+				}
+				for(let i in this.codeList) {
+					this.codeList[i].onoff = false;
+				}
+				for (let i = 0; i < this.wfxz_list.length; i++) {
+					this.wfxz_list[i].onoff = false
+				}
+				this.five_list_item[index1].onoff = true;
+				this.data_list1 = [];
+				this.data_list2 = [];
 				this.$myRequest.get(
 					url, 
 					{name:name},
@@ -200,19 +204,28 @@
 			},
 			// 玩法选择
 			onoffclick3(item,index3){
-				for (let i = 0; i < this.wfxz_list.length; i++) {
-						this.wfxz_list[i].onoff = false
-					if (index3 == i) {
-						this.wfxz_list[index3].onoff = true
-					}
-				}
-				this.wfxzitem = item;
 				this.onoffclick1(1)
+				this.wfxz_list[index3].onoff = true
+				this.wfxzitem = item;
+				this.data_list2 = [item];
 			},
 			// 号码选择
 			clickbuttom2(it,idx){
-						this.codeList[idx].onoff = !this.codeList[idx].onoff
-this.$forceUpdate();
+				this.codeList[idx].onoff = !this.codeList[idx].onoff;
+				// 把选择的号码装到dataList1里去
+				let index = -1;
+				for(let i in this.data_list1) {
+					if(this.data_list1[i] == it.code) {
+						index = i;
+					}
+				}
+				if(index >=0) {
+					this.data_list1.splice(index,1);
+				} else {
+					this.data_list1.push(it.code)
+				}
+				this.$emit('data_list1', this.data_list1);
+				this.$forceUpdate();
 			},
 			onoffclick(index) {
 					if (index == 4) {

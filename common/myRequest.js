@@ -23,8 +23,9 @@ export default {
 		options.data = options.data || {}
 		options.method = options.method || this.config.method;
 		options.header = {
-					appId	: 'M0001' ,//自定义请求头信息
-					sign	: "iaL1LJM1mF9aRKPZJkmG8xXhiaHqkKSVMMWeN3hLut7X7hicFNjakmxibMLGWpXrEXB33367o7zHN0CwngnQY7zb7g",
+					appId		: 'M0001' ,//自定义请求头信息
+					sign		: "iaL1LJM1mF9aRKPZJkmG8xXhiaHqkKSVMMWeN3hLut7X7hicFNjakmxibMLGWpXrEXB33367o7zHN0CwngnQY7zb7g",
+					appSecret	: "C683C7AC18566066228667EA802C06EF",
 					timestamp: (new Date()).valueOf()
 				};
 		if	(!options.success) {

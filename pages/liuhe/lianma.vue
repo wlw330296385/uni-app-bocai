@@ -13,7 +13,7 @@
 				<view class="page_five_list1">
 					<view class="page_five_list_item-1" v-for="(item1,index1) in five_list_item" :key="index1">
 						<view class="page_five_list_item-1_item"  :class="item1.onoff?'page_five_list_item_onoff':''"
-						 @click="onoffclick1(index1)">
+						 @click="onoffclick1(item1,index1)">
 						 <span style="font-weight: bolder;font-size: 30upx; line-height: 1.8;">
 							{{item1.code}}
 						</span>
@@ -201,21 +201,34 @@
 					});
 				}
 			},
-			onoffclick1(index1){
-				for (let i = 0; i < this.five_list_item.length; i++) {
-					if (index1 == i) {
-						this.five_list_item[index1].onoff = true
-					}else{
-						this.five_list_item[i].onoff = false
+			onoffclick1(item1,index1){
+				this.wanfas = index1;
+				this.getCodeList();
+				for(let i in this.five_list_item) {
+					this.five_list_item[i].onoff = false;
+				}
+				for(let i in this.codeList) {
+					this.codeList[i].onoff = false;
+				}
+				this.five_list_item[index1].onoff = true;
+				this.data_list1 = [];
+				this.data_list2 = [item1.code];
+			},
+			clickbuttom2(it, idx){
+				this.codeList[idx].onoff = !this.codeList[idx].onoff;
+				// 把选择的号码装到dataList1里去
+				let index = -1;
+				for(let i in this.data_list1) {
+					if(this.data_list1[i] == it.code) {
+						index = i;
 					}
 				}
-			},
-			clickbuttom2(it,idx){
-				for (let i = 0; i < 49; i++) {
-					if (idx == i) {
-						this.codeList[idx].onoff = !this.codeList[idx].onoff
-					} 
+				if(index >=0) {
+					this.data_list1.splice(index,1);
+				} else {
+					this.data_list1.push(it.code)
 				}
+				this.$emit('data_list1', this.data_list1);
 			},
 			stepper3(e){
 				console.log(e)

@@ -180,20 +180,32 @@
 				})
 			},
 			onoffclick1(index1){
-				for (let i = 0; i < this.five_list_item.length; i++) {
-					if (index1 == i) {
-						this.five_list_item[index1].onoff = true
-					}else{
-						this.five_list_item[i].onoff = false
-					}
+				this.wanfas = index1;
+				this.getCodeList();
+				for(let i in this.five_list_item) {
+					this.five_list_item[i].onoff = false;
 				}
+				for(let i in this.codeList) {
+					this.codeList[i].onoff = false;
+				}
+				this.five_list_item[index1].onoff = true;
+				this.data_list1 = [];
 			},
-			clickbuttom2(it,idx){
-				for (let i = 0; i < 49; i++) {
-					if (idx == i) {
-						this.codeList[idx].onoff = !this.codeList[idx].onoff
+			clickbuttom2(it, idx){
+				this.codeList[idx].onoff = !this.codeList[idx].onoff;
+				// 把选择的号码装到dataList1里去
+				let index = -1;
+				for(let i in this.data_list1) {
+					if(this.data_list1[i] == it.code) {
+						index = i;
 					}
 				}
+				if(index >=0) {
+					this.data_list1.splice(index,1);
+				} else {
+					this.data_list1.push(it.code)
+				}
+				this.$emit('data_list1', this.data_list1);
 			},
 			stepper3(){
 				

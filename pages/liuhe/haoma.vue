@@ -19,7 +19,7 @@
 		<!-- 号码选择列表 -->
 		<view class="caizhonghaoma_list">
 			<view class="buttom">
-				<view class="buttom-hezi" v-for="(it, idx) in codeList" :key="idx" @click="clickbuttom2(idx)">
+				<view class="buttom-hezi" v-for="(it, idx) in codeList" :key="idx" @click="clickbuttom2(it, idx)">
 					<view class="button-list" :class="addClass(it)" >
 					{{it.code}}
 					</view>
@@ -50,9 +50,9 @@
 				wanfa:0,
 				codeList:[],
 				color_onoff:[],
-				data_list1:[],
-				data_list2:[],
-				playmode:"连号",
+				data_list1:[],//所选号码
+				data_list2:[],//所选生肖什么的
+				playmode:"号码",
 				caizhong:"六合",
 				yjfl:[
 					  {
@@ -143,16 +143,30 @@
 			onoffclick1(index1){
 				this.wanfas = index1;
 				this.getCodeList();
-				for (let i = 0; i < this.five_list_item.length; i++) {
-					if (index1 == i) {
-						this.five_list_item[index1].onoff = true;
-					}else{
-						this.five_list_item[i].onoff = false;
+				for(let i in this.five_list_item) {
+					this.five_list_item[i].onoff = false;
+				}
+				for(let i in this.codeList) {
+					this.codeList[i].onoff = false;
+				}
+				this.five_list_item[index1].onoff = true;
+				this.data_list1 = [];
+			},
+			clickbuttom2(it, idx){
+				this.codeList[idx].onoff = !this.codeList[idx].onoff;
+				// 把选择的号码装到dataList1里去
+				let index = -1;
+				for(let i in this.data_list1) {
+					if(this.data_list1[i] == it.code) {
+						index = i;
 					}
 				}
-			},
-			clickbuttom2(idx){
-				this.codeList[idx].onoff = !this.codeList[idx].onoff
+				if(index >=0) {
+					this.data_list1.splice(index,1);
+				} else {
+					this.data_list1.push(it.code)
+				}
+				this.$emit('data_list1', this.data_list1);
 			},
 			onoffclick(index) {
 					if (index == 4) {

@@ -25,7 +25,7 @@
 			<view class="caizhong-item">
 				<view class="item-left">
 					<view class="item-left-top">已选</view>
-					<view class="item-left-buttom">1,2,3,4,5,75</view>
+					<view class="item-left-buttom">{{pingjie}}</view>
 				</view>
 			</view>
 		</view>
@@ -70,11 +70,11 @@
 		props: {
 			caizhong:{
 				type: String,
-				default:"分分彩"
+				default:"六合彩"
 			},
 			playmode:{
 				type: String,
-				default:"复式"
+				default:"号码"
 			},
 			val: {
 				type: [String, Number],
@@ -174,14 +174,11 @@
 				var arr2 = [];
 				var str1 = '';
 				var str2 = '';
-				this.data_list1.forEach(res => {
-					str1 += "'"+arr.concat(res)+"'";
-				});
-				
+				str1 = this.data_list1.join(',');
 				this.data_list2.forEach(res => {
-					str2 += arr2.concat(res) + ',';
+					str2 = res + ":";
 				})
-				return str1+"-"+str2
+				return str2 + str1;
 			}
 			
 		},
