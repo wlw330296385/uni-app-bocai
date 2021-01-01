@@ -59,7 +59,7 @@
 			 * 内容区背景颜色
 			 */
 			setBackgroundColor() {
-				let backgroundColor = "background: #ffffff;";
+				let backgroundColor = "background: none;";
 				if (this.backgroundColor) {
 					backgroundColor = `background: ${this.backgroundColor};`;
 				}
@@ -97,13 +97,13 @@
 		top: 0;
 		left: 0;
 		right: 0;
-		background: #ffffff;
+		/* background: #ffffff; */
 	}
 
 	.cmd-page-body-top-bottom {
-		padding-bottom: 118upx;
-		padding-top: 88upx;
-		top: var(--status-bar-height);
+		/* padding-bottom: 118upx; */
+		/* padding-top: 88upx; */
+		/* top: var(--status-bar-height); */
 	}
 
 	.cmd-page-body-bottom {

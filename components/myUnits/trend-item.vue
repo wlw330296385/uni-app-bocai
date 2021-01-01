@@ -23,11 +23,14 @@
 
 <script>
 	export default {
-		props:['url'],
+		props:['url','list'],
 		data() {
 			return {
 				
 			};
+		},
+		methods:{
+			
 		}
 	}
 </script>
@@ -47,9 +50,8 @@
 		}
 		
 		.buttom-list-left-top {
-			font-weight: bold;
 			font-size: 18px;
-			color: #aaaaff;
+			color: $uni-bg-color-darkgray;
 		}
 		.span-list{
 			display: flex;
@@ -58,10 +60,11 @@
 			width: 50upx;
 			height: 50upx;
 			border-radius: 50%;
+			margin-right: 10upx;
 			text-align: center;
 			line-height: 50upx;
 			color: #fff;
-			background-color: #aaaaff;
+			background-color: $uni-color-ping;
 		}
 	}
 

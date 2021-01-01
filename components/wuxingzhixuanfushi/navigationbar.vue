@@ -1,31 +1,38 @@
 <template>
-	<view>
+	<view class="tabbar_content">
+		<view class="nonetop"></view>
 		<view class="header">
 			<view class="header-left" @click="goto">
-				<</view> <view class="header-center" @click="itemlink">{{Title}}
+				<image style="width: 30upx; height: 30upx;" :src="src">
+				</image>
+			</view>
+			<view class="header-center" @click="itemlink">
+				<span class="header-center-span">{{caizhong}}</span>
+				{{playmode}}:{{playmode1}} 
+				<image style="width: 30upx; height: 20upx; padding: 10upx 10upx 0 10upx ;" src="/static/down.png">
+				</image>
 			</view>
 			<view class="header-right"></view>
 		</view>
-
-		<s-popup ref="popup" type="top" height="50%">
+		<s-popup ref="popup" type="top" height="950upx">
 			<view class="page">
 				<!-- 占位 -->
 				<view class="category-list">
 					<!-- 左侧分类导航 -->
 					<scroll-view scroll-y="true" class="left">
 						<view class="row" v-for="(category,index) in categoryList" :key="category.id" :class="[index==showCategoryIndex?'on':'']"
-						 @tap="showCategory(index)">
+						 @tap="showCategory(index,category.name)">
 							<view class="text">
-								{{category.title}}
+								{{category.name}}
 							</view>
 						</view>
 
 					</scroll-view>
 					<!-- 右侧子导航 -->
 					<scroll-view scroll-y="true" class="right">
-						<view class="category" v-for="(category,index) in categoryList" :key="category.id" v-show="index==showCategoryIndex">
+						<view class="category" v-for="(item,index) in categoryList" :key="item.id" v-show="index==showCategoryIndex">
 							<view class="list">
-								<Wuxing :list="category.list" @send="getSonValue"></Wuxing>
+								<Wuxing :list="item.childs" @send="getSonValue"></Wuxing>
 							</view>
 						</view>
 					</scroll-view>
@@ -38,223 +45,224 @@
 <script>
 	import sPopup from "@/components/lee-popup/lee-popup.vue";
 	import Wuxing from "@/components/wuxingzhixuanfushi/wuxingzhixuanfushi.vue";
-	import cmdNavBar from "@/components/cmd-nav-bar/cmd-nav-bar.vue";
 	export default {
 		components: {
 			Wuxing,
-			cmdNavBar,
 			sPopup
 		},
+		props: ["caizhong"],
 		data() {
 			return {
+				src: "/static/fanhui.png",
 				showCategoryIndex: 0,
 				headerPosition: "fixed",
-				Title: '彩种',
 				visible: false,
+				gameId : 105,
+				playmode:'',
+				playmode1:'',
 				//分类列表
 				categoryList: [{
-						id: 1,
-						title: '五星',
-						banner: '/static/img/category/banner.jpg',
-						list: [{
-								title: '直选1',
-								textlist: [
-									'直选复式1',
-									'直选复式1',
-									'直选复式1',
-									'直选复式1',
+						"name": "前三",
+						"childs": [{
+								"name": "直选",
+								"wfs": [{
+										"id": 1000038,
+										"name": "直选复式"
+									},
+									{
+										"id": 1000039,
+										"name": "直选单式"
+									},
+									{
+										"id": 1000101,
+										"name": "直选组合"
+									}
 								]
-							},
-							{
-								title: '直选2',
-								textlist: [
-									'直选复式1',
-									'直选复式1',
-									'直选复式1',
-									'直选复式1',
-								]
-							},
+							}
 						]
-					},
-					{
-						id: 2,
-						title: '前四',
-						banner: '/static/img/category/banner.jpg',
-						list: [{
-							title: '直选2',
-							textlist: [
-								'直选复式2',
-								'直选复式2',
-								'直选复式2',
-								'直选复式2',
-							]
-						}, ]
-					},
-					{
-						id: 3,
-						title: '后四',
-						banner: '/static/img/category/banner.jpg',
-						list: [{
-							title: '直选3',
-							textlist: [
-								'直选复式3',
-								'直选复式3',
-								'直选复式3',
-								'直选复式3',
-							]
-						}, ]
-					},
-					{
-						id: 4,
-						title: '前三',
-						banner: '/static/img/category/banner.jpg',
-						list: [{
-							title: '直选4',
-							textlist: [
-								'直选复式4',
-								'直选复式4',
-								'直选复式4',
-								'直选复式4',
-							]
-						}, ]
 					},
 				]
 			}
 		},
-		onPageScroll(e) {
-			//兼容iOS端下拉时顶部漂移
-			if (e.scrollTop >= 0) {
-				this.headerPosition = "fixed";
-			} else {
-				this.headerPosition = "absolute";
-			}
+		mounted() {
+			this.getList(this.gameId);	
 		},
 		methods: {
-			//消息列表
-			toMsg() {
-				uni.navigateTo({
-					url: '../../msg/msg'
-				})
+			getList(gameId) {
+				this.$myRequest.get("/wanfa/v1/wfcls", {gameId:gameId}, {
+					success: (res) => {
+						if (res.data.data.gameId == 0) {
+							//跳转'
+							alert('玩法暂时关闭');
+							uni.switchTab({
+							    url: '/pages/tabbar/tabbar-1/tabbar-1'
+							});
+						} else {							
+							this.categoryList = res.data.data.cls;
+							this.playmode = this.categoryList[0].name;
+							this.playmode1 = this.categoryList[0].childs[0].wfs[0].name;
+						}
+					},
+					fail: (res) => {
+						//跳转'
+						alert('玩法暂时关闭');
+						uni.switchTab({
+							url: '/pages/tabbar/tabbar-1/tabbar-1'
+						});
+					}
+				});
 			},
 			//分类切换显示
-			showCategory(index) {
+			showCategory(index, name) {
 				this.showCategoryIndex = index;
+				this.playmode = name;
 			},
 			toCategory(e) {
-				uni.setStorageSync('catName', e.name);
-				uni.navigateTo({
-					url: '../../goods/goods-list/goods-list?cid=' + e.id + '&name=' + e.name
-				});
+				// uni.setStorageSync('catName', e.name);
+				// uni.navigateTo({
+				// 	url: '../../goods/goods-list/goods-list?cid=' + e.id + '&name=' + e.name
+				// });
 			},
-			//搜索跳转
-			toSearch() {
-				uni.showToast({
-					title: "建议跳转到新页面做搜索功能"
-				});
-			},
-			/**
-			 * 跳转注册页面
-			 */
-			fnRegisterWin() {
-				uni.navigateTo({
-					url: "/pages/login/register"
-				})
-				/**
-				 * 改变状态重置，跳转不会摧毁实例
-				 */
-				this.fnChangeStatus(true);
-			},
+
 			getSonValue(res) {
-				this.Title = res;
-				 this.$refs.popup.close()
+				this.playmode1 = res.name;
+				this.$refs.popup.close()
 			},
-			itemlink(){
-				 this.$refs.popup.open()
+			itemlink() {
+				this.$refs.popup.open()
 			},
 			goto() {
 				uni.navigateBack();
-			},
-			 stepper3(e) {
-			                console.log(e);
-			            }
+			}
 		}
 	}
 </script>
 <style lang="scss">
+	.tabbar_content {
+		margin-bottom: 5upx;
+	}
+
+	.nonetop {
+		height: var(--status-bar-height);
+		width: 100%;
+	}
+
+	
+	/* #ifdef  APP-PLUS-NVUE || MP-WEIXIN || APP-PLUS */  
 	.header {
 		position: fixed;
-		top:0;
+		top: 50upx;
 		background-color: #fff;
 		width: 100%;
-		height: 45px;
+		height: 45upx;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}  	
+	/deep/.lee-popup-mask{
+		margin-top: 50upx;
+	}
+
+	/* #endif */  
+	
+	/* #ifdef  H5 */  
+	.header {
+		position: fixed;
+		top: 10upx;
+		background-color: #fff;
+		width: 100%;
+		height: 45upx;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 	}
+	/* #endif */  
+	
 
 	.header-left,
 	.header-right {
-		padding: 5px 10px;
-		font-size: 20px;
+		margin: 5upx 10upx;
+		font-size: 20upx;
 	}
 
-	.header-left {}
+	.header-left-img {
+		width: 30upx;
+		height: 30upx;
+	}
 
 	.header-center {
 		font-weight: bold;
-		font-size: 18px;
+		font-size: 30upx;
+		text-align: center;
+		padding-top: 20upx;
+		line-height: 1.4;
 	}
-
+	
+	.header-center-span{
+		font-size: 26upx;
+		width: 100%;
+		display: inline-block;
+	}
+	
+	/* #ifdef  APP-PLUS-NVUE || MP-WEIXIN || APP-PLUS */  
 	.page {
 		position: absolute;
 		top: 0;
 		right: 0;
 		bottom: 0;
 		left: 0;
-		background-image: linear-gradient(to right, #202044, #0c0828);
+		background-image: linear-gradient(to right, #efefef, #ababab);
 	}
+	/* #endif */  
 
-	/deep/.demo-popup {
-		.s-popup-wrap {
-			top: 45px;
-		}
+	/* #ifdef  H5 */  
+	.page {
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		background-image: linear-gradient(to right, #efefef, #ababab);
 	}
+	/* #endif */  
+
+	
 
 	.category-list {
 		width: 100%;
 		background-color: #fff;
 		display: flex;
-
 		.left,
 		.right {
 			position: absolute;
 			top: 0upx;
-			/*  #ifdef  APP-PLUS  */
-			top: calc(100upx + var(--status-bar-height));
+			/*  #ifdef  APP-PLUS || APP-PLUS-NVUE */
+			// top: calc(100upx + var(--status-bar-height));
 			/*  #endif  */
 			bottom: 0upx;
 		}
 
 		.left {
-			width: 24%;
-			left: 0upx;
+			width: 20%;
+			left: 1%;
 
 			.row {
 				width: 100%;
 				height: 90upx;
 				border-radius: 10px;
+				box-shadow: 10upx 10upx 5upx #d3d3d3 ;
 				display: flex;
 				margin-bottom: 2.5px;
 				align-items: center;
-				background-color: #6B6D7F;
-
+				background-color: #ffffff;
+				
 				.text {
 					width: 100%;
 					position: relative;
 					font-size: 28upx;
 					display: flex;
 					justify-content: center;
-					color: #fff;
+					color: #000000;
 
 					.block {
 						position: absolute;
@@ -265,9 +273,9 @@
 
 				&.on {
 					height: 100upx;
-					background-image: linear-gradient(to right, #510686, #0331af);
+					background: #F76260;
 					border-radius: 10px;
-
+					
 					.text {
 						font-size: 30upx;
 						font-weight: 600;
@@ -278,12 +286,12 @@
 		}
 
 		.right {
-			width: 76%;
-			left: 24%;
+			width: 80%;
+			left: 21%;
 
 			.category {
 				width: 94%;
-				padding: 0upx 3%;
+				margin: 0upx 1%;
 
 				.list {
 					margin-top: 0upx;
@@ -300,7 +308,7 @@
 						flex-wrap: wrap;
 
 						image {
-							width: 60%;
+							width: 80%;
 							height: calc(71.44vw / 3 * 0.6);
 						}
 
@@ -317,4 +325,3 @@
 		}
 	}
 </style>
-

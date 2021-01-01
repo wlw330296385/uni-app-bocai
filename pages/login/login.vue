@@ -1,39 +1,74 @@
 <template>
-  <view>
-    <cmd-nav-bar  title="用户登录" rightText="注册" @rightText="fnRegisterWin"></cmd-nav-bar>
+  <view class="page">
+    <cmd-nav-bar  title="用户登录" right-text=""></cmd-nav-bar>
     <cmd-page-body type="top">
       <view class="login">
         <!-- 上部分 start -->
-        <view class="login-title">{{ status ? '手机快捷登录': '使用账号密码登录'}}</view>
-        <view class="login-explain">{{ status ? '已注册用户可通过手机验证码直接登录': '未注册用户可通过点击右上角进行注册'}}</view>
+        <view class="login-title">{{ status ? '手机快捷登录': '账号密码登录'}}</view>
+        <!-- <view class="login-explain">{{ status ? '已注册用户可通过手机验证码直接登录': '未注册用户可通过点击下方[注册]进行注册'}}</view> -->
         <!-- 上部分 end -->
         <!-- 手机表单登录 start -->
         <!-- #ifdef H5 -->
         <cmd-transition name="fade-up">
           <view v-if="status">
+			  
             <view class="login-phone">
+				<view>
+					<image class="loginimage" src="@/static/dianhua.png" mode=""></image>
+				</view>
               <cmd-input v-model="mobile.phone" type="number" focus maxlength="11" placeholder="请输入手机号"></cmd-input>
               <view class="login-phone-getcode" @tap="!safety.state ? fnGetPhoneCode() : ''">{{!safety.state&&'获取验证码'||(safety.time+' s')}}</view>
             </view>
+			
             <view class="login-code">
+				<view>
+					<image class="loginimage" src="@/static/yanzheng.png" mode=""></image>
+				</view>
               <cmd-input v-model="mobile.code" type="number" maxlength="6" placeholder="请输入短信验证码"></cmd-input>
             </view>
-            <button class="btn-login" :class="loginMobile ? 'btn-login-active':''" :disabled="!loginMobile" hover-class="btn-login-hover"
-              @tap="fnLogin">登录1</button>
+			
+			<view class="login-phone" style="opacity: 0;">
+				<view>
+					<image class="loginimage" src="" mode=""></image>
+				</view>
+			  
+			</view>
+			
+			
+			  <navigator url="/pages/tabbar/tabbar-1/tabbar-1" open-type="switchTab" hover-class="other-navigator-hover">
+				<button class="btn-login" :class="loginMobile ? 'btn-login-active':''" :disabled="!loginMobile" hover-class="btn-login-hover"
+			 @click="fnLogin()" @tap="fnLogin()">登录</button>
+			  </navigator>
           </view>
         </cmd-transition>
         <!-- #endif -->
         <!-- #ifndef H5 -->
         <cmd-transition name="fade-up" v-if="status">
           <view class="login-phone">
+			  <view>
+			  	<image class="loginimage" src="@/static/dianhua.png" mode=""></image>
+			  </view>
             <cmd-input v-model="mobile.phone" type="number" focus maxlength="11" placeholder="请输入手机号"></cmd-input>
             <view class="login-phone-getcode" @tap="!safety.state ? fnGetPhoneCode() : ''">{{!safety.state&&'获取验证码'||(safety.time+' s')}}</view>
           </view>
           <view class="login-code">
+			  <view>
+			  	<image class="loginimage" src="@/static/yanzheng.png" mode=""></image>
+			  </view>
             <cmd-input v-model="mobile.code" type="number" maxlength="6" placeholder="请输入短信验证码"></cmd-input>
           </view>
+		  
+		  
+		  <view class="login-phone" style="opacity: 0;">
+		  	<view>
+		  		<image class="loginimage" src="" mode=""></image>
+		  	</view>
+		    
+		  </view>
+		  <navigator url="/pages/tabbar/tabbar-1/tabbar-1" open-type="switchTab" hover-class="other-navigator-hover">
           <button class="btn-login" :class="loginMobile ? 'btn-login-active':''" :disabled="!loginMobile" hover-class="btn-login-hover"
-            @tap="fnLogin">登录2</button>
+           @click="fnLogin">登录</button>
+			</navigator>
         </cmd-transition>
         <!-- #endif -->
         <!-- 手机表单登录 end -->
@@ -42,40 +77,71 @@
         <cmd-transition name="fade-up">
           <view v-if="!status">
             <view class="login-username">
+				<view>
+					<image class="loginimage1" src="@/static/team1.png" mode=""></image>
+				</view>
               <cmd-input v-model="account.username" type="text" focus maxlength="26" placeholder="请输入账号"></cmd-input>
             </view>
             <view class="login-password">
+				<view>
+					<image class="loginimage1" src="@/static/mima.png" mode=""></image>
+				</view>
               <cmd-input v-model="account.password" type="password" displayable maxlength="26" placeholder="请输入密码"></cmd-input>
             </view>
-            <button class="btn-login" :class="loginAccount ? 'btn-login-active':''" :disabled="!loginAccount"
-              hover-class="btn-login-hover" @tap="fnLogin">登录3</button>
+			
+			<view class="login-phone" style="opacity: 0;">
+				<view>
+					<image class="loginimage" src="" mode=""></image>
+				</view>
+			  
+			</view>
+			
+			<!-- <navigator url="/pages/tabbar/tabbar-1/tabbar-1" open-type="switchTab" hover-class="other-navigator-hover"> -->
+            <button class="btn-login" :class="loginAccount ? 'btn-login-active':''" 
+              hover-class="btn-login-hover" @tap="fnLogin" @click="fnLogin">登录</button>
+			  <!-- </navigator> -->
           </view>
         </cmd-transition>
         <!-- #endif -->
         <!-- #ifndef H5 -->
        <cmd-transition name="fade-up" v-if="!status">
           <view class="login-username">
+				<view>
+					<image class="loginimage1" src="@/static/team1.png" mode=""></image>
+				</view>
             <cmd-input v-model="account.username" type="text" focus maxlength="26" placeholder="请输入账号"></cmd-input>
           </view>
           <view class="login-password">
+				<view>
+					<image class="loginimage1" src="@/static/mima.png" mode=""></image>
+				</view>
             <cmd-input v-model="account.password" type="password" displayable maxlength="26" placeholder="请输入密码"></cmd-input>
           </view>
+			
+			<view class="login-phone" style="opacity: 0;">
+				<view>
+					<image class="loginimage" src="" mode=""></image>
+				</view>
+			  
+			</view>
+		  <!-- <navigator url="/pages/tabbar/tabbar-1/tabbar-1" open-type="switchTab" hover-class="other-navigator-hover"> -->
           <button class="btn-login" :class="loginAccount ? 'btn-login-active':''" :disabled="!loginAccount" hover-class="btn-login-hover"
-            @tap="fnLogin">登录4</button>
+          @click="fnLogin">登录</button>
+			<!-- </navigator> -->
         </cmd-transition>
         <!-- #endif -->
         <!-- 账号表单登录 end -->
         <!-- 切换登录方式 -->
         <view class="login-mode" @tap="fnChangeStatus(false)">{{status ?	'账号密码登录' : '手机快捷登录'}}</view>
+		
+		<navigator url="/pages/login/register"  hover-class="other-navigator-hover">
+		<view class="login-mode">注册</view>
+		</navigator>
       </view>
     </cmd-page-body>
 	<view class="uni-padding-wrap uni-common-mt">
-		<view class="uni-textarea uni-common-mt">
+		<view class="uni-common-mt">
 			<textarea :value="res"></textarea>
-		</view>
-		<view class="uni-btn-v uni-common-mt">
-			<button type="primary" @click="sendRequest" :loading="loading">发起请求</button>
-			<button type="default" @click="sendRequest1" :loading="loading">发起请求(async/await)</button>
 		</view>
 	</view>
 	
@@ -121,7 +187,7 @@
           state: false,
           interval: ''
         },
-        status: true // true手机登录,false账号登录
+        status: false // true手机登录,false账号登录
       };
     },
 
@@ -157,44 +223,38 @@
 
     methods: {
 		
-		// 方式一
-		sendRequest: function() {
-			this.loading = true
-			this.$shoopyHttp.test({noncestr: Date.now()}).then((res)=>{
-				this.loading = false;
-				console.log('request success', res)
-				uni.showToast({
-					title: '请求成功',
-					icon: 'success',
-					mask: true
-				});
-				this.res = '请求结果 : ' + JSON.stringify(res);
-			}).catch((err)=>{
-				this.loading = false;
-				console.log('request fail', err);
-			})
-		},
-		
-		//方式二  https://segmentfault.com/a/1190000013292562?utm_source=channel-newest
-		async sendRequest1() {
-			this.loading = true
-			let res = await this.$shoopyHttp.test({noncestr: Date.now()});
-			this.loading = false;
-			this.res = '请求结果 : ' + JSON.stringify(res);
-		},
-		
-		
 		
       /**
        * 登录按钮点击执行
        */
       fnLogin() {
-        if (this.status) {
-          console.log(JSON.stringify(this.mobile));
-        } else {
-          console.log(JSON.stringify(this.account));
-        }
-      },
+      			this.$myRequest.post(
+      			'/user-info/v1/login', 
+      			{pwd:this.account.password,userName : this.account.username},
+      			{
+      			success: (res) => {
+      					if(res.data.code == 200){
+      						uni.setStorage({
+      							key: 'userInfo',
+      							data: res.data.data,
+      							success: function () {
+      								uni.showToast({
+      									title: res.message,
+      									icon: "success"
+      								})
+      								uni.switchTab({
+      								    url: '/pages/tabbar/tabbar-1/tabbar-1'
+      								});
+      							}
+      						})
+      					}else{
+      						alert(res.data.message)
+      					}
+      				}
+      			}
+      		)
+            },
+
       /**
        * 获取验证码
        */
@@ -242,6 +302,7 @@
           username: '',
           password: ''
         }
+		console.log(this.account)
         this.loginAccount = false
         // 验证码时间状态还原
         clearInterval(this.safety.interval);
@@ -284,66 +345,127 @@
 </script>
 
 <style>
+	.page{
+		 position:absolute;
+	     top: 0;
+	     left: 0;
+		 bottom: 0;
+	     width:100%;
+	     height:100%;
+	     z-index:90000;
+	     background-color: #fff;
+	     background: url(@/static/img/denglu.png) no-repeat;
+	     background-size: 100%;
+	     -webkit-background-size: 100%;
+	     -o-background-size: 100%;
+	     background-position:center;
+	}
   .login {
-    margin-top: 56upx;
+    margin-top: 450upx;
     margin-right: 72upx;
     margin-left: 72upx;
+	background-color:rgba(255,255,255,0.61);
+	border-radius: 30upx;
   }
+  
+  .loginimage{
+	  width: 70upx;
+	  height: 70upx;
+	  margin:5upx 20upx 0 10upx;
+  }
+   .loginimage1{
+	   width: 60upx;
+	   height: 60upx;
+	  margin:10upx 20upx 0 10upx;
+   }
 
   .login-title {
-    font-size: 56upx;
+    font-size: 38upx;
+	padding: 10upx 0 0 0;
     font-weight: 500;
+	color: #000000;
+	text-align: center;
   }
 
   .login-explain {
     font-size: 28upx;
-    color: #9E9E9E;
+    color: #fff;
   }
 
   .login-phone {
+	  margin: 0 auto;
+	  width: 90%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 2upx #dedede solid;
-    margin-top: 56upx;
-    margin-bottom: 40upx;
+	border-radius: 50upx;
+    margin-top: 20upx;
+    margin-bottom: 20upx;
+	background-color:rgba(0,0,0,0.41);
   }
 
   .login-phone-getcode {
-    color: #3F51B5;
+	 margin-right: 20upx;
+    color: #fff;
     text-align: center;
     min-width: 140upx;
+	padding:0 10upx;
+	border-radius: 20upx;
+	background-color: rgba(217,93,0,0.9);
   }
 
   .login-code {
-    border-bottom: 2upx #dedede solid;
+	  margin: 0 auto;
+	  width: 90%;
+	border-radius: 50upx;
+	display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+	background-color:rgba(0,0,0,0.41);
   }
 
   .login-username {
-    margin-top: 56upx;
+	  margin: 0 auto;
+	  width: 90%;
+    margin-top: 36upx;
     margin-bottom: 40upx;
-    border-bottom: 2upx #dedede solid;
+	background-color:rgba(0,0,0,0.41);
+	border-radius: 50upx;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
   }
 
   .login-password {
-    border-bottom: 2upx #dedede solid;
+	  margin: 0 auto;
+	  width: 90%;
+	background-color:rgba(0,0,0,0.41);
+	border-radius: 50upx;
+	display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
   }
 
   .btn-login {
-    margin-top: 100upx;
+    margin-top: 10upx;
+    margin-bottom: 30upx;
     border-radius: 50upx;
     font-size: 16px;
+	width: 70%;
     color: #fff;
-    background: linear-gradient(to right, #88a1f9, #9ac6ff);
+    background: linear-gradient(to right, #D95D00, #ff9e02);
   }
 
   .btn-login-active {
-    background: linear-gradient(to right, #365fff, #36bbff);
+    background: linear-gradient(to right, #D95D00, #fca901);
   }
 
   .btn-login-hover {
-    background: linear-gradient(to right, #365fdd, #36bbfa);
+    background: linear-gradient(to right, #D95D00, #fca901);
   }
 
   button[disabled] {
@@ -352,6 +474,6 @@
 
   .login-mode {
     text-align: center;
-    margin-top: 32upx;
+    margin-top: 20upx;
   }
 </style>

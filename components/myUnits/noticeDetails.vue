@@ -2,31 +2,26 @@
 <template>
 	<view class="page">
 		<view class="navbutton">
-			<view class="navbutton-left" @click="gotoback"><</view>
-			<view class="navbutton-title">公告详情</view>
+			<view class="navbutton-left" @click="gotoback">
+					<img class="header-left-img" src="@/static/fanhui.png" alt="">
+			</view>
+			<view class="navbutton-title">消息详情</view>
 			<view class="navbutton-right"></view>
 		</view>
 		<view class="header">
-			<h2>BBIN 维护公告</h2>
-			<p>2020-12-01  20:36:39</p>
+			<h2>{{currentContent.title}}</h2>
+			<p>{{currentContent.sendTime}}</p>
 		</view>
 		<hr class="hr">
-		<view class="content">
-			<p>尊敬的用户:</p>
-			<p>[BBIN]将会在2020年12月02日06:00~8:00 进行例行维护作业.在此期间.将无法访问游戏,给您带来不便,请您谅解,谢谢!</p>
-		</view>
-		<view class="buttom-title">
-			<p>杏彩娱乐</p>
-		</view>
-		<view class="buttom">
-			<p>2020年12月01日</p>
-			<p>感谢您的选择杏彩娱乐,祝您盈利多多</p>
+		<view class="content" v-html="currentContent.body">
+			
 		</view>
 	</view>
 </template>
 
 <script>
 	export default {
+		props:["currentContent"],
 		data() {
 			return {
 				
@@ -69,5 +64,9 @@
 		}
 		.buttom-title{
 			margin: 30px auto;
+		}
+		.header-left-img{
+			width: 35upx;
+			height: 35upx;
 		}
 </style>

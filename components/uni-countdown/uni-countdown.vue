@@ -183,7 +183,7 @@
 		width: $countdown-width;
 		height: $countdown-height;
 		line-height: $countdown-height;
-		margin: 5rpx;
+		margin: 2upx 5upx;
 		text-align: center;
 		font-size: $uni-font-size-base;
 	}

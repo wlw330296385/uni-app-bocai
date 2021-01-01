@@ -4,8 +4,8 @@
       :password="type==='password' && !showPassword" :value="inputValue" :maxlength="maxlength" :placeholder="placeholder"
       :placeholder-style="setPlaceholderStyle" @input="$_onInput" @focus="$_onFocus" @blur="$_onBlur" @confirm="$_onConfirm" />
     <view v-if="inputValue.length" class="cmd-input-icon">
-      <cmd-icon v-if="displayable&&!clearable" type="eye" size="24" :color="showPassword ? '#111a34':'#c5cad5'" @click="$_display"></cmd-icon>
-      <cmd-icon v-if="clearable" type="close-circle" size="24" color="#c5cad5" @click="$_clear"></cmd-icon>
+      <cmd-icon v-if="displayable&&!clearable" type="eye" size="24" :color="showPassword ? '#111a34':'#fff'" @click="$_display"></cmd-icon>
+      <cmd-icon v-if="clearable" type="close-circle" size="24" color="#fff" @click="$_clear"></cmd-icon>
     </view>
   </view>
 </template>
@@ -193,15 +193,15 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+	width: 85%;
   }
 
   .cmd-input-input {
     flex: 1;
     text-align: left;
     width: 100%;
-    height: 90upx;
-    color: #111a34;
-    font-size: 36upx;
+    color: #fff;
+    font-size: 28upx;
     font-weight: 500;
     line-height: 1.2;
     font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, 微软雅黑, Arial, sans-serif;

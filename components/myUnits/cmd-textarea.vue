@@ -12,12 +12,12 @@
 			</view>
 		</view>
 		<view v-if="weishu" class="uni-flex uni-row">
-			<view class="flex-item r-top-buttom" v-for="(item, index) in weishu_list" :key="index" @click="buttonclick(index)"
-			 :class="is_click == index ? 'uni-bg-red' : 'uni-bg-blue'">
-				{{item}}
+			<view class="flex-item r-top-buttom" v-for="(item, index) in weishu_list" :key="index" @click="buttonclick(index,item)"
+			 :class="item.clickonoff ? 'uni-bg-red' : 'uni-bg-blue'">
+				{{item.title}}
 			</view>
 		</view>
-		<textarea class="textarea-class" placeholder-style="color:rgba(153,153,153,1);" v-model="content" />
+		<textarea class="textarea-class" @keyup="keyupclick()" placeholder-style="color:rgba(153,153,153,1);" v-model="content" />
 		<view class="r-top-t">
 		 	<view class="r-top-buttom r-top-buttom-color" @click="Delete">删除重复号</view>
 			<view class="r-top-buttom r-top-buttom-color" @click="empty">清空</view>
@@ -25,10 +25,6 @@
 		 <view class="r-botom">
 			 <span>每注号码之间请用一个空格[   ],逗号[ , ]或者分号[ : ]隔开</span>
 		 </view>
-		 <!-- <uni-popup ref="popup1" type="dialog">
-		 	<uni-popup-dialog type="input" mode="base" message="成功消息" title="帮助" content="你好啊" :duration="2000" :before-close="true" @close="close1"
-		 	 @confirm="confirm1"></uni-popup-dialog>
-		 </uni-popup> -->
 		 <uni-popup ref="popup1" type="message">
 		     <uni-popup-message type="success" message="成功消息" :duration="2000"></uni-popup-message>
 		 </uni-popup>
@@ -38,9 +34,9 @@
 		 </uni-popup>
 	</view>
 </template>
-<script>	
+<script>
 	import uniPopupDialog from '@/components/uni-popup/uni-popup-dialog.vue';
-import uniPopupMessage from '@/components/uni-popup/uni-popup-message.vue';
+	import uniPopupMessage from '@/components/uni-popup/uni-popup-message.vue';
 	export default {
 		components: {
 			uniPopupDialog,
@@ -65,16 +61,26 @@ import uniPopupMessage from '@/components/uni-popup/uni-popup-message.vue';
 				content:'',
 				visible1: false,
 				visible2: false,
-				is_click:false
+				wanfas:[],
+				item_list1:[],
+				item_list2:[],
 			}
 		},
 		methods:{
 			Delete(){
 				let array = this.content.split(/[,]+/);
 				this.content =Array.from(new Set(array)).join(",");
+				array = this.content.split(/[,]+/);
+				this.$emit('click_list2',array)
+			},
+			keyupclick(){
+				let array1 = this.content.split(/[,]+/)
+				this.$emit('click_list2',array1)
 			},
 			empty(){
 				this.content = '';
+				let array1 = this.content.split(/[,]+/)
+				this.$emit('click_list2',array1)
 			},
 			clickhelp(){
 					this.$refs.popup1.open()
@@ -82,8 +88,30 @@ import uniPopupMessage from '@/components/uni-popup/uni-popup-message.vue';
 			clickExamples(){
 					this.$refs.popup2.open()
 			},
-			buttonclick (index) {
-				this.is_click =  index
+			buttonclick (index,item) {
+				Array.prototype.indexOf = function(val) { 
+				for (var i = 0; i < this.length; i++) { 
+				if (this[i] == val) return i; 
+				} 
+				return -1; 
+				};
+				Array.prototype.remove = function(val) { 
+				var index = this.indexOf(val); 
+				if (index > -1) { 
+				this.splice(index, 1); 
+				} 
+				};
+				for(let i=0;i<this.weishu_list.length;i++){
+					if(index == i){
+						this.weishu_list[index].clickonoff = !this.weishu_list[index].clickonoff
+						if(this.weishu_list[index].clickonoff == true){
+								this.item_list1.push(item.title)
+						}else{
+							this.item_list1.remove(item.title); 
+						}
+					}
+				}
+				this.$emit('click_list1',this.item_list1)
 			},
 			close1(done) {
 				// TODO 做一些其他的事情，before-close 为true的情况下，手动执行 done 才会关闭对话框

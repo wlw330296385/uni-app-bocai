@@ -1,6 +1,7 @@
 <template>
 	<view class="uni-popup-message" :class="'uni-popup__'+[type]">
-		<text class="uni-popup-message-text" :class="'uni-popup__'+[type]+'-text'">{{message}}</text>
+		<view class="image">{{message}}</view>
+		<!-- <text class="uni-popup-message-text" :class="'uni-popup__'+[type]+'-text'">{{message}}</text> -->
 	</view>
 </template>
 
@@ -71,11 +72,12 @@
 		display: flex;
 		/* #endif */
 		flex-direction: row;
-		background-color: #e1f3d8;
-		padding: 15px 15px;
+		// background-color: #e1f3d8;
+		padding: 45px 15px;
 		border-color: #eee;
 		border-style: solid;
 		border-width: 1px;
+		margin-top: 100upx;
 	}
 	.uni-popup-message-text {
 		font-size: 14px;
@@ -83,11 +85,11 @@
 	}
 
 	.uni-popup__success {
-		background-color: #e1f3d8;
+		// background-color: #e1f3d8;
 	}
 
 	.uni-popup__success-text {
-		color: #67C23A;
+		// color: #67C23A;
 	}
 
 	.uni-popup__warn {
@@ -112,5 +114,14 @@
 
 	.uni-popup__info-text {
 		color: #909399;
+	}
+	.image{
+		width: 100%;
+		height: 250upx;
+		background: url(/static/zhongjiang.png) repeat center center;
+		background-size: 100% 100%;
+		text-align: center;
+		line-height: 250upx;
+		color: #fff;
 	}
 </style>

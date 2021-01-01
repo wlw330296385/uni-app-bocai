@@ -157,7 +157,7 @@
 	$z-index: 3000;
 	
 	.lee-popup-mask {
-		top: 40px;
+		top: 60upx;
 		left: 0;
 		width: 100%;
 		height: 100%;

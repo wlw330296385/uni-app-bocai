@@ -3,18 +3,20 @@
 	<view class="dynamic">
 		<view class="page">
 			<view class="left">
-				<view> 20201130-0800 
+				<view class="left-click"> 
+				    <span class="left-click-span">20201130-0800</span>
 					<span class="left-p">00100101</span>
 				</view>
 				<view class="uni-flex uni-row"> 20201130-0800 
 					<span class="left-p uni-flex-item">
+						<img class="left-p-image" src="@/static/shizhong.png" alt="">
 					</span>
-					@<uni-countdown class=" uni-flex-item" color="#ff00ff"
+					<uni-countdown class="uni-flex-item" color="#ff00ff"
 						:show-day="false" 
 						:hour="hour" 
 						:minute="minute" 
 						:second="second">
-						</uni-countdown>
+					</uni-countdown>
 				</view>
 			</view>
 			<view class="right">
@@ -27,7 +29,8 @@
 				<legend class="legend">近期投注</legend>
 			</fieldset>
 			<view class="Box1-list">
-				<view class="Box1-list-1">
+				<scroll-view style="height: 100%;" scroll-y="true" scroll-with-animation>
+				<view class="Box1-list-1" v-for="(item,index) in 4" :key="index">
 					<h2 class="history-code-item item-flex">
 						<view class="Box1-p Box1-p-color">腾讯分分彩</view>
 						<view class="Box1-p">玩法:后二直选</view>
@@ -43,6 +46,7 @@
 						<view class="Box1-p">状态:未中奖</view>
 					</view>
 				</view>
+				</scroll-view>
 			</view>
 			<view class="hr"></view>
 			<view class="Box1-buttom">
@@ -61,7 +65,9 @@
 					<span>开奖号码</span>
 					<span>三星状态</span>
 				</h2>
-				<view class="history-code-item item-flex1">
+				<scroll-view style="height: 100%;" scroll-y="true" scroll-with-animation>
+				
+				<view class="history-code-item item-flex1" v-for="(item,index) in 12" :key="index">
 					<view class="code-issue ">1201-213 期</view>
 					<view class="code-number code-number-flex">
 						<span class="disabled">7</span>
@@ -72,6 +78,7 @@
 					</view>
 					<view class="code-form ">组三</view>
 				</view>
+				</scroll-view>
 			</view>
 			<view class="hr"></view>
 			<view class="Box1-buttom">
@@ -91,7 +98,7 @@
 		data() {
 			return {
 				box1onoff: false,
-				box2onoff: false,
+				box2onoff: false
 			}
 		},
 		created() {
@@ -130,9 +137,13 @@
 		display: flex;
 		justify-content: space-between;
 	}
+	.left{
+		margin-top: 5upx;
+	}
 
 	.left-p {
-		color: #ff55ff;
+		color: #ff00ff;
+		padding-right: 10upx;
 	}
 
 	.right-click {
@@ -140,12 +151,21 @@
 		border-radius: 10px;
 		padding: 0 5px;
 	}
-
+	.right-click:nth-child(1){
+		margin:0 auto 10upx;
+	}
+	.left-click{
+			margin:0 auto 10upx;
+	}
+	.left-click-span{
+		padding-right: 20upx;
+	}
 	.Box1,
 	.Box2 {
 		width: 100%;
 		position: absolute;
 		background-color: #fff;
+		z-index: 99999;
 	}
 
 	.Box1-list {
@@ -153,6 +173,7 @@
 		width: 95%;
 		height: 300px;
 		background-color: #f6fffc;
+		overflow: hidden;
 	}
 
 	.Box1-list-1 {
@@ -282,5 +303,10 @@
 	.Box1-buttom-1-color{
 		background-image: linear-gradient(to right, #aa00ff, #ff00ff);
 		color: #fff;
+	}
+	.left-p-image{
+		width: 35upx;
+		height: 35upx;
+		padding: 4px 0 0 0;
 	}
 </style>

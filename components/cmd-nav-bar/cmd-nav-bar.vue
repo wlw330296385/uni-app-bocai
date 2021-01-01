@@ -1,6 +1,10 @@
 <template>
 	<view :class="fixed ? 'cmd-nav-bar-fixed' : ''" :style="setBackgroundColor">
-		<view class="status-bar"></view>
+		<!-- <navigator url="/pages/login/login"> -->
+		<view class="status-bar">
+			<!-- <image src="/static/fanhui.png" mode="" style="width:50upx; height: 50upx; padding: 20upx;"  ></image> -->
+		</view>
+		<!-- </navigator> -->
 	</view>
 </template>
 

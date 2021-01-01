@@ -4,8 +4,24 @@
 			<text class="uni-dialog-title-text" :class="['uni-popup__'+dialogType]">{{title}}</text>
 		</view>
 		<view class="uni-dialog-content">
+			<view class="uni-dialog-content-new" v-if="list">
+				<view class="uni-dialog-content-title">{{list.title}}</view>
+				<view class="uni-dialog-content-buttom">
+					<view class="uni-dialog-content-buttom-fen">分</view>
+					<view>
+						<view class="uni-dialog-content-buttom-type"><span class="uni-dialog-content-buttom-type-span">{{list.type}}</span>{{list.Colorseed}}</view>
+					<view class="uni-dialog-content-buttom-type">号码:{{list.number}}</view>
+					</view>
+					<view class="uni-dialog-content-buttom-type-color">{{list.money}}</view>
+				</view>
+				<hr style="border-top:#999999;margin: 10upx auto;">
+				<view class="uni-dialog-content-bottom">
+					<view>{{list.zhushu}}注*{{list.beishu}}倍*{{list.moneyUnit}}--模式:{{list.jiangjinmoshi}} <span class="uni-dialog-content-buttom-type-span">合计{{list.money}}</span></view>
+				</view>
+			</view>
 			<text class="uni-dialog-content-text" v-if="mode === 'base'">{{content}}</text>
 			<input v-else class="uni-dialog-input" v-model="val" type="text" :placeholder="placeholder" :focus="focus" >
+			
 		</view>
 		<view class="uni-dialog-button-group">
 			<view class="uni-dialog-button" @click="close" v-if="cancel== 'true' ">
@@ -92,13 +108,17 @@
 			beforeClose: {
 				type: Boolean,
 				default: false
-			}
+			},
+			/**
+			 * 
+			 */
+			list: {}
 		},
 		data() {
 			return {
 				dialogType: 'error',
 				focus: false,
-				val: ""
+				val: "",
 			}
 		},
 		inject: ['popup'],
@@ -156,8 +176,8 @@
 
 <style lang="scss" scoped>
 	.uni-popup-dialog {
-		width: 300px;
-		border-radius: 15px;
+		width: 600upx;
+		border-radius: 20upx;
 		background-color: #fff;
 	}
 
@@ -167,13 +187,14 @@
 		/* #endif */
 		flex-direction: row;
 		justify-content: center;
-		padding-top: 15px;
-		padding-bottom: 5px;
+		padding-top: 25upx;
+		padding-bottom: 15upx;
 	}
 
 	.uni-dialog-title-text {
-		font-size: 16px;
-		font-weight: 500;
+		font-size: 26upx;
+		font-weight: bold;
+		color: #000;
 	}
 
 	.uni-dialog-content {
@@ -183,11 +204,11 @@
 		flex-direction: row;
 		justify-content: center;
 		align-items: center;
-		padding: 5px 15px 15px 15px;
+		padding: 15upx 25upx 25upx 25upx;
 	}
 
 	.uni-dialog-content-text {
-		font-size: 14px;
+		font-size: 24upx;
 		color: #6e6e6e;
 	}
 
@@ -210,7 +231,7 @@
 		flex-direction: row;
 		justify-content: center;
 		align-items: center;
-		height: 45px;
+		height: 75upx;
 	}
 
 	.uni-border-left {
@@ -220,7 +241,7 @@
 	}
 
 	.uni-dialog-button-text {
-		font-size: 14px;
+		font-size: 34upx;
 	}
 
 	.uni-button-color {
@@ -229,7 +250,7 @@
 
 	.uni-dialog-input {
 		flex: 1;
-		font-size: 14px;
+		font-size: 24upx;
 	}
 
 	.uni-popup__success {
@@ -246,5 +267,36 @@
 
 	.uni-popup__info {
 		color: #909399;
+	}
+	.uni-dialog-content-new{
+		width: 100%;
+	}
+	.uni-dialog-content-title{
+		width: 100%;
+		color: red;
+	}
+	.uni-dialog-content-buttom{
+		display: flex;
+		justify-content: left;
+	}
+	.uni-dialog-content-buttom-fen{
+		width: 60upx;
+		height: 60upx;
+		border-radius: 50%;
+		text-align: center;
+		color: #fff;
+		line-height: 60upx;
+		background-color: #aaaaff;
+	}
+	.uni-dialog-content-buttom-type{
+		padding:0 20upx;
+	}
+	.uni-dialog-content-buttom-type-span{
+		padding-right: 20upx;
+		color: #aaaaff;
+	}
+	.uni-dialog-content-buttom-type-color{
+		color: #aaaaff;
+		font-weight: bold;
 	}
 </style>

@@ -1,43 +1,52 @@
 <template name='sunui-stepper'>
 	<view class="content">
-		<view class="title">
+		<!-- <view class="title">
 			<view class="title-p">余额:{{balance}}</view>
-			<view class="title-p">已选{{label}}注,共{{Totalprice}}元</view>
-		</view>
+			<view class="title-p">已选{{label}}注,共{{totalPrice}}元</view>
+		</view> -->
 		<view class="Counter-flex">
 			<view class="buttom-flex">
-				<view class="button" :class="item.Index?'button-color':''" v-for="(item,index) in list" :key="index" @click="buttonclick(index)">{{item.title}}</view>
+				<view class="button" :class="item.Index?'button-color':''" 
+				v-for="(item,index) in yjfl" :key="index" @click="buttonclick(index)">
+				{{item.title}}
+				</view>
 			</view>
 			<view class="sunui-stepper">
 				<view @tap="less" :style="stepperCacheNum<=min?'color:'+unactive+';':'color:'+active+';'">-</view>
 				<input type="number" :value="stepperCacheNum" @input="iptVal" :disabled="true" /><span>倍</span>
 				<view @tap="add" :style="stepperCacheNum>=max?'color:'+unactive+';':'color:'+active+';'">+</view>
 			</view>
-			<view class="Betting" @click="Bettingclick">添加投注</view>
+			<!-- <view class="Betting uni-bg-red" @click="Bettingclick">添加投注</view> -->
+			<view class="Betting uni-bg-red" >余额:{{balance}}</view>
 		</view>
 		<!-- 已选购彩种列表 -->
 		<view class="caizhong-list">
 			<view class="caizhong-item">
 				<view class="item-left">
-					<view class="item-left-top">[任选二_直选复式-,-,7,9,7]</view>
-					<view class="item-left-buttom">3注*1倍*2分 = 0.06元 <span>模式:195.60</span></view>
+					<view class="item-left-top">[任选二_直选复式: {{pingjie}}]</view>
+					<view class="item-left-buttom">{{label}}注*{{stepperCacheNum}}倍*{{moneyUnit}}={{totalPrice}}元 <span>--模式:{{jiangjinmoshi}}</span></view>
 				</view>
-				<view class="item-right" @click="deleteclick"><span>X</span></view>
+				<!-- <view class="item-right" @click="deleteclick"><span>X</span></view> -->
 			</view>
 		</view>
 		<!--  -->
 		<view class="yixuan-list">
 			<view class="yixuan-top">
-				<view class="yixuan-top-left">已选1单,共三注</view>
-			<view class="yixuan-buttom">总金额:0.060元</view>
+				<!-- <view class="yixuan-top-left">已选1单,共三注</view> -->
+				<hyj-select v-model="value" placeholder="奖金1956.00-0" >
+					<hyj-option v-for="(item,index) in options" :label="item.label" :key="index" 
+					:value="item.value" :disabled="item.disabled" >
+					</hyj-option>
+				</hyj-select>
+			<view class="yixuan-buttom">已选{{label}}注,共{{totalPrice}}元</view>
 			</view>
 		</view>
 		<!-- 立即投注 -->
 		<view class="lijitouzhu">
-			<view class="lijitouzhu-title" @click="lijitouzhu">立即投注</view>
+			<view class="lijitouzhu-title uni-bg-red" @click="lijitouzhu">立即投注</view>
 		</view>
-<uni-popup ref="popup2" type="dialog">
-			<uni-popup-dialog type="info" mode="base" message="成功消息" title="删除投注" content="确认删除吗?" :duration="2000" :before-close="true" @close="close2"
+		<uni-popup ref="popup2" type="dialog">
+			<uni-popup-dialog type="info" mode="base" message="成功消息" title="立即投注" content="投注成功!" :duration="2000" :before-close="true" @close="close2"
 			 @confirm="confirm2"></uni-popup-dialog>
 		</uni-popup>
 		<uni-popup ref="popup1" type="dialog">
@@ -45,49 +54,32 @@
 			 @confirm="confirm1"></uni-popup-dialog>
 		</uni-popup>
 		<uni-popup ref="popup" type="dialog">
-			<uni-popup-dialog type="info" mode="base" message="成功消息" title="余额不足,请及时充值" content="21321321" :duration="2000" :before-close="true" @close="close"
-			 @confirm="confirm"></uni-popup-dialog>
+			<uni-popup-dialog type="info" mode="base" message="成功消息" title="确定要加入20201202-132期?" :list="textlist" :duration="2000" :before-close="true" @close="close"
+			 @confirm="confirm">
+			 </uni-popup-dialog>
 		</uni-popup>
 	</view>
 </template>
 
 <script>
-	import uniPopupDialog from '@/components/uni-popup/uni-popup-dialog.vue'
+	import uniPopupDialog from '@/components/uni-popup/uni-popup-dialog.vue';
+	import HyjOption   from '@/components/hyj-select/hyj-option.vue';
+	import HyjSelect  from '@/components/hyj-select/hyj-select.vue';
 	export default {
 		components: {
-			uniPopupDialog
+			uniPopupDialog,
+			HyjOption,
+			HyjSelect
 		},
-		data() {
-			return {
-				stepperNum: 0,
-				stepperCacheNum: 0,
-				balance: 10,
-				num: 1,
-				price: 0,
-				multiple: 0,
-				checked: false,
-				value: '',
-				list: [{
-						Index: false,
-						title: '元',
-					},
-					{
-						Index: false,
-						title: '角',
-					},
-					{
-						Index: false,
-						title: '分',
-					},
-					{
-						Index: false,
-						title: '离',
-					},
-				],
-			};
-		},
-		name: 'sunui-stepper',
 		props: {
+			caizhong:{
+				type: String,
+				default:"分分彩"
+			},
+			playmode:{
+				type: String,
+				default:"复式"
+			},
 			val: {
 				type: [String, Number],
 				default: 0
@@ -106,7 +98,7 @@
 			},
 			label: {
 				type: Number,
-				default: 0
+				default: 1
 			},
 			disabled: {
 				type: Boolean,
@@ -119,25 +111,89 @@
 			unactive: {
 				type: String,
 				default: '#ddd'
-			}
+			},
+			data_list1: {
+				type: Array,
+				default: ''
+			},
+			data_list2: {
+				type: Array,
+				default: ''
+			},
+			yjfl: {
+				type: Array,
+				default: ''
+			},
 		},
+		
+		data() {
+			return {
+				jiangjinmoshi:1956.00,
+				moneyUnit:"元",
+				stepperNum: 0,
+				stepperCacheNum: 0,
+				balance: 10,//余额
+				num: 1,
+				multiple: 1,//注数
+				checked: false,
+				value: '',
+				textlist:{
+					title:'投注包含单挑注单,单挑注单盈利上限为3万元,是否继续投注?',
+					Colorseed:'[任选二_直选复式]',
+					money:'1600元',
+					number:'23,01,06,57,89',
+					type:'单挑',
+					beishu:0
+				},
+				options: [{
+						 value: '选项1',
+						  label: '奖金1956.00-0%'
+						},
+								{
+						  value: '选项2',
+						  label: '奖金1800%~7.8%',
+						},]
+			};
+		},
+		name: 'sunui-stepper',
 		created() {
 			this.stepperNum = this.val;
 			this.stepperCacheNum = this.val;
 		},
+		mounted() {
+		},
 		watch: {
 			val: function(val) {
 				this.stepperNum = this.val;
-				// 加上这句
-				this.stepperCacheNum = val
+				
+				this.stepperCacheNum = val;
 			}
 		},
 		computed: {
-			Totalprice() {
-				return this.stepperCacheNum * this.num * this.multiple * this.label
+			totalPrice() {
+				return (this.stepperCacheNum * this.num * this.multiple * this.label).toFixed(3);
 			}
+			,pingjie(){
+				var arr = [];
+				var arr2 = [];
+				var str1 = '';
+				var str2 = '';
+				this.data_list1.forEach(res => {
+					str1 += "'"+arr.concat(res)+"'";
+				});
+				
+				this.data_list2.forEach(res => {
+					str2 += arr2.concat(res) + ',';
+				})
+				return str1+"-"+str2
+			}
+			
 		},
 		methods: {
+			
+			selectChange(e){
+				console.log(e)
+			},
 			less() {
 				this.stepperNum <= this.min ? this.stepperNum = this.min : this.stepperNum -= Math.ceil(this.step * 10) / 10;
 				this.stepperCacheNum = Number(this.stepperNum.toFixed(1));
@@ -167,37 +223,41 @@
 				Number(e.detail.value) > this.max ? this.stepperNum = this.max : this.stepperNum;
 			},
 			buttonclick(index) {
-				for (let i = 0; i < this.list.length; i++) {
-					this.list[i].Index = false
+				for (let i = 0; i < this.yjfl.length; i++) {
+					this.yjfl[i].Index = false
 					if (index == i) {
-						this.list[i].Index = !this.list[i].Index;
-					}
-					if (index == 0) {
-						this.multiple = 1;
-					} else if (index == 1) {
-						this.multiple = 0.1;
-					} else if (index == 2) {
-						this.multiple = 0.01;
-					} else if (index == 3) {
-						this.multiple = 0.001;
+						this.yjfl[i].Index = !this.yjfl[i].Index;
+						this.moneyUnit = this.yjfl[i].title;
+						this.multiple = this.yjfl[i].modeValue
 					}
 				}
 			},
 			lijitouzhu() {
-				if (this.Totalprice <= this.balance) {
+				this.textlist = {
+					title:'投注若单挑注单,单挑注单盈利上限为3万元,是否继续投注?',
+					Colorseed:'['+this.playmode+']',
+					money:this.totalPrice +'元',
+					number:this.pingjie,
+					type:this.caizhong,
+					zhushu:this.label,
+					beishu:this.stepperCacheNum,
+					moneyUnit:this.moneyUnit,
+					jiangjinmoshi:1956.00
+				};
+				if (this.totalPrice <= this.balance) {
 					this.$refs.popup.open()
 					return
 				}
-				if (this.Totalprice >= this.balance) {
+				if (this.totalPrice >= this.balance) {
 					this.$refs.popup.open()
 					return
 				}
+				
 			},
 			Bettingclick(){
 				this.$refs.popup1.open()
 			},
 			deleteclick(){
-					this.$refs.popup2.open()
 			},
 			// 立即投注
 			close(done) {
@@ -206,19 +266,23 @@
 				done()
 			},
 			confirm(done, value) {
+					this.$refs.popup2.open()
 				// 输入框的值
 				console.log(value)
 				// TODO 做一些其他的事情，手动执行 done 才会关闭对话框
 				// ...
 				done()
 			},
-			// 添加投注
-			close1(done) {
-				// TODO 做一些其他的事情，before-close 为true的情况下，手动执行 done 才会关闭对话框
+			close1(done, value) {
+					this.$refs.popup2.open()
+				// 输入框的值
+				console.log(value)
+				// TODO 做一些其他的事情，手动执行 done 才会关闭对话框
 				// ...
 				done()
 			},
 			confirm1(done, value) {
+					this.$refs.popup2.open()
 				// 输入框的值
 				console.log(value)
 				// TODO 做一些其他的事情，手动执行 done 才会关闭对话框
@@ -256,20 +320,24 @@
 
 		view {
 			display: inline-block;
-			font-size: 1.5em;
+			font-size: 40upx;
 			font-weight: bold;
+			text-align: center;
 			// 如果需要边框,则打开本样式 --1
-			line-height: 1em; //1
-			padding: 4upx 10upx; //1
+			line-height: 40upx; //1
 			border: 1upx solid #eee; //1
+			width: 40upx;
 		}
 
 		input {
-			width: 100upx;
+			width: 50upx;
 			// 如果不需要边框,则关闭本样式 --2
 			// margin: 0 20upx; //2
 			text-align: center;
 			// background-color: #eee;
+		}
+		span {
+			padding-right: 15upx;
 		}
 
 	}
@@ -291,37 +359,37 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		margin-top: 5upx;
 	}
 
 	.title-p {
-		padding: 5px 10px;
+		padding: 5upx 10upx;
 	}
 
 	.button {
-		width: 25px;
-		height: 25px;
+		width: 50upx;
+		height: 50upx;
 		text-align: center;
 		color: #fff;
-		margin: 0 2px;
+		margin: 0 5upx;
 		background-color: #ccc;
-		border-radius: 5px;
+		border-radius: 15upx;
 	}
 
 	.button-color {
-		background-image: $uni-bg-color-linear;
+		background-color: #F76260;
 	}
 
 	.Betting {
-		width: 100px;
+		width: 180upx;
 		text-align: center;
-		background-image: $uni-bg-color-linear;
-		border-radius: 10px;
+		border-radius: 10upx;
 		color: #fff;
-		margin-right: 10px;
+		margin-right: 10upx;
 	}
 
 	.caizhong-list {
-		margin: 10px 0 0 0;
+		margin: 10upx 0 0 0;
 	}
 
 	.caizhong-item {
@@ -330,22 +398,22 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		border-radius: 10px;
+		border-radius: 10upx;
 		background-color: #d0e3e6;
 	}
 
 	.item-left {
-		padding: 5px 10px;
+		padding: 5upx 10upx;
 	}
 
 	.item-left-buttom {
-		font-size: 14px;
+		font-size: 24upx;
 		color: #999999;
 	}
 
 	.item-right {
 		width: 12%;
-		padding: 20px 0;
+		padding: 20upx 0;
 		height: auto;
 		background-color: #ccc;
 		border-top-right-radius: 10upx;
@@ -354,13 +422,13 @@
 
 	.item-right span {
 		display: block;
-		width: 20px;
-		height: 20px;
+		width: 20upx;
+		height: 20upx;
 		text-align: center;
 		margin: 0 auto;
-		line-height: 22px;
+		line-height: 22upx;
 		color: #fff;
-		background-color: #ff55ff;
+		background-color: $u-type-info-dark;
 		border-radius: 50%;
 	}
 
@@ -375,26 +443,26 @@
 	}
 
 	.yixuan-top-left {
-		padding: 0px 10px;
+		padding: 0upx 10upx;
 		color: #999999;
 	}
 
 	.yixuan-checkbox {
-		padding: 5px 10px;
+		padding: 5upx 10upx;
 	}
 
 	.yixuan-buttom {
-		padding: 5px 10px;
+		padding: 5upx 10upx;
 	}
 
 	.lijitouzhu-title {
-		width: 95%;
+		width: 100%;
 		margin: 0 auto;
 		text-align: center;
-		background-color: #ff55ff;
-		padding: 18upx 0;
-		border-radius: 10px;
+		padding: 15upx 0;
+		border-top-left-radius: 20upx;
+		border-top-right-radius: 20upx;
 		color: #fff;
-		font-size: 18px;
+		font-size: $uni-font-size-lg;
 	}
 </style>

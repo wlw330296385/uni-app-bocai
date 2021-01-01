@@ -1,3 +1,41 @@
 .row {
 	
 }
+.flex-justify-content-start{
+	justify-content: flex-start; 
+}
+.flex-justify-content-end{
+	justify-content: flex-end; 
+}
+.flex-justify-content-center{
+	justify-content: center; 
+}
+.flex-justify-content-space-between{
+	justify-content: space-between; 
+}
+.flex-justify-content-space-around{
+	justify-content: space-around; 
+}
+
+.liuhe-hong {
+	background-color: #FFD1D1!important;
+}
+.liuhe-hong-kong {
+	border: 10upx #FFD1D1 solid!important;
+}
+
+.liuhe-lv {
+	background-color: #D2FFD3!important;
+}
+
+.liuhe-lv-kong {
+	border: 10upx #D2FFD3 solid!important;
+}
+
+.liuhe-lan {
+	background-color: #C8CAFF!important;
+}
+
+.liuhe-lan-kong {
+	border: 10upx #C8CAFF solid!important;
+}

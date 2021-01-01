@@ -2,20 +2,10 @@
 <template>
 	<view class="r-top">
 		<view class="r-background">
-			<view class="title">
-				<view class="title-p">
-					<span class="title-span">?</span>
-					<span>手动输入2个号码组成一注,所选号码的第一位,第二位与开奖号码相同,即为中奖</span>
-				</view>
-				<view class="right-buttom">
-					<view class="right-buttom-list" @click="clickhelp">帮助</view>
-					<view class="right-buttom-list" @click="clickExamples">示例</view>
-				</view>
-			</view>
 			<view class="frame">
 				<view class="frame-text">
 					<view class="frame-text-buttom" :class="item.onoff == true?'frame-text-buttom-click': ''" v-for="(item,index) in list"
-					 :key="index" @click="frame(index)">{{item.title}}</view>
+					 :key="index" @click="frame(index,item)">{{item.title}}</view>
 				</view>
 			</view>
 		</view>
@@ -23,8 +13,7 @@
 </template>
 <script>
 	export default {
-		components: {
-		},
+		components: {},
 		computed: {},
 		props: {
 			pl: {
@@ -58,34 +47,40 @@
 						onoff: false
 					},
 				],
-				onoff: -1,
-				wholeonoff: false,
-				totalonoff: false,
+				xiazhuData:[],
 			}
 		},
 		methods: {
-			Delete() {},
-			empty() {
-				this.content = '';
-			},
-			frame(index) {
-					for (let i = 0; i < this.list.length; i++) {
-						if (index == i) {
-							this.list[i].onoff = !this.list[i].onoff
-							}
-			}
-				
+			frame(index,item) {
+				Array.prototype.indexOf = function(val) {
+				for (var i = 0; i < this.length; i++) { 
+				if (this[i] == val) return i; 
+				} 
+				return -1; 
+				};
+				Array.prototype.remove = function(val) { 
+				var index = this.indexOf(val); 
+				if (index > -1) { 
+				this.splice(index, 1); 
+				} 
+				};
+				for (let i = 0; i < this.list.length; i++) {
+					if (index == i) {
+						this.list[i].onoff = !this.list[i].onoff;
+						if(this.list[i].onoff == true){
+							this.xiazhuData.push(item.title)
+						}else{
+								this.xiazhuData.remove(item.title); 
+						}
+					}
+				}
+				this.$emit('click_list1',this.xiazhuData)
 			}
 		}
 	}
 </script>
 
 <style lang="scss">
-	.title {
-		display: flex;
-		padding: 5px;
-	}
-
 	.right-buttom {
 		display: flex;
 	}
@@ -132,24 +127,6 @@
 		background-color: #b46dfa;
 	}
 
-	.title-p {
-		width: 70%;
-		font-size: 12px;
-		display: flex;
-		color: #9c9c9c;
-	}
-
-	.title-span {
-		display: block;
-		width: 25px;
-		height: 15px;
-		text-align: center;
-		line-height: 14px;
-		color: #fff;
-		border: 1px solid #cccccc;
-		border-radius: 50%;
-		background-color: #ccc;
-	}
 
 	.frame {
 		width: 95%;
@@ -191,7 +168,7 @@
 
 	.frame-text-buttom {
 		margin: 5px;
-		padding:10px;
+		padding: 10px;
 		border: 1px solid #cccccc;
 		border-radius: 5px;
 		background-color: #cccccc;
@@ -199,25 +176,24 @@
 	}
 
 	.frame-text-buttom-click {
-		background-image: $uni-bg-color-linear;
+		background-color: #F76260;
 	}
 
 	/deep/.demo-popup1 {
 		.s-popup-wrap {
-			top : $uni-pop-top;
-			left : $uni-pop-left;
-			right : $uni-pop-right;
-			bottom : $uni-pop-bottom;
+			top: $uni-pop-top;
+			left: $uni-pop-left;
+			right: $uni-pop-right;
+			bottom: $uni-pop-bottom;
 		}
 	}
 
 	/deep/.demo-popup2 {
 		.s-popup-wrap {
-			top : $uni-pop-top;
-			left : $uni-pop-left;
-			right : $uni-pop-right;
-			bottom : $uni-pop-bottom;
+			top: $uni-pop-top;
+			left: $uni-pop-left;
+			right: $uni-pop-right;
+			bottom: $uni-pop-bottom;
 		}
 	}
 </style>
-

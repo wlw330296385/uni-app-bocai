@@ -2,67 +2,82 @@
 	"pages": [
 		//pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
+            "path" : "pages/login/login",
+            "style" : {
+                "navigationBarTitleText": "登陆",
+				"app-plus": {  
+					"titleNView": false
+				}  
+            }
+            
+        },
+		{
 			"path": "pages/tabbar/tabbar-1/tabbar-1",
 			"style": {
 				"navigationBarTitleText": "彩票"
+				,"app-plus": {  
+				//#ifndef APP-PLUS
+					"titleNView": false
+				//#endif 
+				} 
 			}
 		},
 		{
 			"path": "pages/tabbar/tabbar-2/tabbar-2",
 			"style": {
-				"navigationBarTitleText": "走势滑动"
-				}
+				"navigationBarTitleText": "走势"
+				,"app-plus": {  
+				//#ifndef APP-PLUS
+					"titleNView": false
+				//#endif 
+				} 
+			}
 		},
 		{
 			"path": "pages/tabbar/tabbar-3/tabbar-3",
 			"style": {
 				
 					"navigationBarTextStyle":"black",
-					"navigationBarTitleText": "热门活动",
+					"navigationBarTitleText": "我的",
 					"navigationBarBackgroundColor": "white",
-					"enablePullDownRefresh":false,
-					"app-plus": {
-					            "titleNView": {  
-					                "buttons": [{  
-					                    "text": "消息",  
-					                    "fontSize": "18px",
-										  "width":"60px"
-					                }]  
-					            }  
-					        }  
+					"enablePullDownRefresh":false
+					,"app-plus": {  
+					//#ifndef APP-PLUS
+						"titleNView": false
+					//#endif 
+				} 
 			}
 		},
 		{
 			"path": "pages/tabbar/tabbar-4/tabbar-4",
 			"style": {
-				"navigationBarTitleText": "第四页面"
+				"navigationBarTitleText": "活动"
+				,"app-plus": {  
+				//#ifndef APP-PLUS
+					"titleNView": false
+				//#endif 
+				} 
 			}
 		},
 		{
 			"path": "pages/tabbar/tabbar-5/tabbar-5",
 			"style": {
-				"navigationBarTitleText": "第五页面"
+				"navigationBarTitleText": "娱乐"
+				,"app-plus": {  
+				//#ifndef APP-PLUS
+					"titleNView": false
+				//#endif 
+				} 
 			}
-		},{
-            "path" : "pages/login/login",
-            "style" : {
-                "navigationBarTitleText": "登陆",
-				"app-plus": {  
-				            "titleNView": {  
-				                "buttons": [{  
-				                    "text": "注册",  
-				                    "fontSize": "18px",
-									  "width":"60px"
-				                }]  
-				            }  
-				        }  
-            }
-            
-        },
+		}
+		,
         {
           "path": "pages/login/register",
           "style": {
-            "navigationBarTitleText": "注册"
+            "navigationBarTitleText": "注册",
+				"app-plus": {
+					"titleNView":false
+				}  
           }
         }
         ,{
@@ -70,22 +85,12 @@
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "分分彩",
-                "enablePullDownRefresh": false,
-				"app-plus": {
-					"titleNView":false
-				        }  
-            }
-            
-        }
-        ,{
-            "path" : "pages/xuanma/wuxingzhixuanfushi",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "五星",
-                "enablePullDownRefresh": false,
-				"app-plus": {  
-					"titleNView":false
-				        }  
+                "enablePullDownRefresh": false
+				,"app-plus": {  
+				//#ifndef APP-PLUS
+					"titleNView": false
+				//#endif 
+				} 
             }
             
         }
@@ -94,15 +99,17 @@
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "时时彩",
-                "enablePullDownRefresh": false,
-				"app-plus": {
-					"titleNView":false
-				        }  
+                "enablePullDownRefresh": false
+				,"app-plus": {  
+				//#ifndef APP-PLUS
+					"titleNView": false
+				//#endif 
+				}   
             }
             
         }
         ,{
-            "path" : "pages/xuanma/touzhulishi",
+            "path" : "pages/common/touzhulishi",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "开奖历史",
@@ -115,24 +122,18 @@
 								  "width":"80px"
 							}]  
 						}  
-				        }  
+				    }  
             }
         }
         ,{
-            "path" : "pages/xuanma/prizedetails",
+            "path" : "pages/xuanma/daxiaodanshuang",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "开奖详情",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/xuanma/prizetrend",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "开奖走势",
-                "enablePullDownRefresh": false
+                "navigationBarTitleText": "大小单双",
+                "enablePullDownRefresh": false,
+				"app-plus": {
+					"titleNView":false
+				 }  
             }
             
         }
@@ -140,11 +141,11 @@
             "path" : "pages/xuanma/hezhi",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
+                "navigationBarTitleText": "和值",
                 "enablePullDownRefresh": false,
 				"app-plus": {
 					"titleNView":false
-				        }  
+				}  
             }
             
         }
@@ -152,8 +153,13 @@
             "path" : "pages/tabbar/tabbar-3/prizeDetails",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "开奖详情",
+                "navigationBarTitleText": "cai",
                 "enablePullDownRefresh": false
+				,"app-plus": {  
+				//#ifndef APP-PLUS
+					"titleNView": false
+				//#endif 
+				} 
             }
             
         }
@@ -163,6 +169,11 @@
             {
                 "navigationBarTitleText": "开奖详情列表",
                 "enablePullDownRefresh": false
+				,"app-plus": {  
+				//#ifndef APP-PLUS
+					"titleNView": false
+				//#endif 
+				} 
             }
             
         }
@@ -172,27 +183,29 @@
             {
                 "navigationBarTitleText": "",
                 "enablePullDownRefresh": false
+				,"app-plus": {  
+				//#ifndef APP-PLUS
+					"titleNView": false
+				//#endif 
+				} 
             }
             
         }
         ,{
-            "path" : "pages/common/common",
+            "path" : "pages/common/webView",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "",
                 "enablePullDownRefresh": false
+				,"app-plus": {  
+				//#ifndef APP-PLUS
+					"titleNView": false
+				//#endif 
+				} 
             }
             
         }
-        ,{
-            "path" : "components/myUnits/SystemNotice",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "系统公告",
-                "enablePullDownRefresh": false
-            }
-            
-        }
+        
         ,{
             "path" : "pages/xuanma/sizeSinglepair",
             "style" :                                                                                    
@@ -201,7 +214,253 @@
                 "enablePullDownRefresh": false,
 				"app-plus": {
 					"titleNView":false
-				        }  
+				}  
+            }
+            
+        }
+        
+        ,{
+            "path" : "pages/tabbar/tabbar-3/message",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "用户消息",
+                "enablePullDownRefresh": false
+				,"app-plus": {  
+				//#ifndef APP-PLUS
+					"titleNView": false
+				//#endif 
+				} 
+            }
+            
+        }
+        ,{
+            "path" : "pages/index/kongbai",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+				,"app-plus": {  
+				//#ifndef APP-PLUS
+					"titleNView": false
+				//#endif 
+				} 
+            }
+            
+        }
+        ,{
+            "path" : "pages/tabbar/tabbar-3/lotteryReport",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "彩票报表",
+                "enablePullDownRefresh": false
+				,"app-plus": {  
+				//#ifndef APP-PLUS
+					"titleNView": false
+				//#endif 
+				} 
+            }
+            
+        }
+        ,{
+            "path" : "pages/tabbar/tabbar-3/commonProblem",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "常见问题",
+                "enablePullDownRefresh": false
+				,"app-plus": {  
+				//#ifndef APP-PLUS
+					"titleNView": false
+				//#endif 
+				} 
+            }
+            
+        }
+        
+        ,{
+            "path" : "pages/tabbar/tabbar-3/ChangePassword",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "修改密码",
+                "enablePullDownRefresh": false
+				,"app-plus": {  
+				//#ifndef APP-PLUS
+					"titleNView": false
+				//#endif 
+				} 
+            }
+            
+        }
+        ,{
+            "path" : "pages/tabbar/tabbar-3/Immediatewithdrawal",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "立即提现",
+                "enablePullDownRefresh": false
+				,"app-plus": {  
+				//#ifndef APP-PLUS
+					"titleNView": false
+				//#endif 
+				} 
+            }
+            
+        }
+        ,{
+            "path" : "pages/tabbar/tabbar-3/teamIndex",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "团队首页",
+                "enablePullDownRefresh": false
+				,"app-plus": {  
+				//#ifndef APP-PLUS
+					"titleNView": false
+				//#endif 
+				} 
+            }
+            
+        }
+		,{
+            "path" : "pages/tabbar/tabbar-3/humanSports",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "真人体育",
+                "enablePullDownRefresh": false
+				,"app-plus": {  
+				//#ifndef APP-PLUS
+					"titleNView": false
+				//#endif 
+				} 
+            }
+            
+        }
+        ,{
+            "path" : "pages/tabbar/tabbar-3/IntroductionGame",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "玩法介绍",
+                "enablePullDownRefresh": false
+				,"app-plus": {  
+				//#ifndef APP-PLUS
+					"titleNView": false
+				//#endif 
+				} 
+            }
+            
+        }
+        ,{
+            "path" : "pages/tabbar/tabbar-3/colorInformation",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "彩种介绍",
+                "enablePullDownRefresh": false
+				,"app-plus": {  
+				//#ifndef APP-PLUS
+					"titleNView": false
+				//#endif 
+				} 
+            }
+            
+        }
+        ,{
+            "path" : "pages/tabbar/tabbar-3/bindingBankcard",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "绑定银行卡",
+                "enablePullDownRefresh": false
+				,"app-plus": {  
+				//#ifndef APP-PLUS
+					"titleNView": false
+				//#endif 
+				} 
+            }
+            
+        }
+        ,{
+            "path" : "pages/liuhe/haoma",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "号码",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/liuhe/shengxiao",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "生肖",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/liuhe/lianma",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "连码",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/liuhe/liangmian",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "两面",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/liuhe/buzhong",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "不中",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/tabbar/tabbar-3/accountChangeRecord",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/tabbar/tabbar-3/bankcard",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/tabbar/tabbar-3/withdraw",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/tabbar/tabbar-3/promotion",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/tabbar/tabbar-3/sysMessage",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "系统公告",
+                "enablePullDownRefresh": false
             }
             
         }
@@ -209,14 +468,14 @@
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni",
-		"navigationBarBackgroundColor": "#F8F8F8",
+		"navigationBarBackgroundColor": "#f8f8f8",
 		"backgroundColor": "#F8F8F8"
 	},
 	"tabBar": {
 		"borderStyle": "black",
-		"backgroundColor": "#333",
+		"backgroundColor": "#0d0827",
 		"color": "#8F8F94",
-		"selectedColor": "#f33e54",
+		"selectedColor": "#fff",
 		"list": [{
 				"pagePath": "pages/tabbar/tabbar-1/tabbar-1",
 				"iconPath": "static/img/tabbar/home.png",
@@ -225,37 +484,38 @@
 			},
 			{
 				"pagePath": "pages/tabbar/tabbar-2/tabbar-2",
-				"iconPath": "static/img/tabbar/guanzhu.png",
-				"selectedIconPath": "static/img/tabbar/guanzhuactive.png",
+				"iconPath": "static/img/tabbar/trend.png",
+				"selectedIconPath": "static/img/tabbar/trendAct.png",
 				"text": "走势"
+			},
+			{
+				"pagePath": "pages/tabbar/tabbar-4/tabbar-4",
+				"iconPath": "static/img/tabbar/event.png",
+				"selectedIconPath": "static/img/tabbar/eventAct.png",
+				"text": "活动"
+			},
+			{
+				"pagePath": "pages/tabbar/tabbar-5/tabbar-5",
+				"iconPath": "static/img/tabbar/entertainment.png",
+				"selectedIconPath": "static/img/tabbar/entertainmentAct.png",
+				"text": "娱乐"
 			},
 			//#ifdef MP-WEIXIN
 			{
 				"pagePath": "pages/tabbar/tabbar-3/tabbar-3",
-				"iconPath": "static/img/tabbar/add.png",
-				"selectedIconPath": "static/img/tabbar/addactive.png",
-				"text": "我"
+				"iconPath": "static/img/tabbar/mine.png",
+				"selectedIconPath": "static/img/tabbar/mineAct.png",
+				"text": "我的"
 			},
 			//#endif
 			//#ifndef MP-WEIXIN
 			{
 				"pagePath": "pages/tabbar/tabbar-3/tabbar-3",
-				"iconPath": "static/img/tabbar/add.png",
-				"selectedIconPath": "static/img/tabbar/addactive.png"
-			},
-			//#endif
-			{
-				"pagePath": "pages/tabbar/tabbar-4/tabbar-4",
-				"iconPath": "static/img/tabbar/news.png",
-				"selectedIconPath": "static/img/tabbar/newsactive.png",
-				"text": "活动"
-			},
-			{
-				"pagePath": "pages/tabbar/tabbar-5/tabbar-5",
-				"iconPath": "static/img/tabbar/me.png",
-				"selectedIconPath": "static/img/tabbar/meactive.png",
-				"text": "娱乐"
+				"iconPath": "static/img/tabbar/mine.png",
+				"selectedIconPath": "static/img/tabbar/mineAct.png",
+				"text": "我的"
 			}
+			//#endif
 		]
 	}
 }

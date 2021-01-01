@@ -1,23 +1,21 @@
 <template>
 	
-	<navigator :url="url" hover-class="navigator-hover" >
-	<view class="page-body uni-flex uni-column unit0">
+	<view class="page-body uni-flex uni-column unit0" @onclik="goto(url, isSale)" @tap="goto(url, isSale)">
 		<view class="flex-item" style="flex: 1;">
-			<image class="uint1" mode="mode" :src="src" @error="imageError"  @onclik="goto(url)"></image>
+			<image class="uint1" mode="mode" :src="src" @error="imageError" ></image>
 		</view>	
 		<view class="flex-item uni-flex uni-column unit2" style="flex:6">
 			<text class="txt1">{{name}}</text>
 			<uni-countdown  :color="color ? color : '#fff'" :splitorColor = "color ? color : '#fff'" border-color="#00B26A" :show-day="false" :hour="hour" :minute="minute" :second="second"></uni-countdown>
 		</view>
 	</view>
-	</navigator>
 </template>
 
 <script>
 	import uniCountdown from '@/components/uni-countdown/uni-countdown.vue';
 	export default {
 		components: {uniCountdown},
-		props:['name', 'url', 'src', 'hour', 'minute', 'second', 'color'],
+		props:['name', 'url', 'src', 'hour', 'minute', 'second', 'color', "isSale"],
 		data() {
 			return {
 				mode : "scaleToFill",
@@ -27,10 +25,22 @@
 			imageError: function(e) {
 				console.error('image发生error事件，携带值为' + e.detail.errMsg)
 			},
-			goto(url){
-				// uni.redirectTo({
-				//     url: url
-				// });
+			goto(url, isSale){
+				if (1 == 1) {
+					if (url == "/pages/xuanma/lhc") {
+						url = "/pages/liuhe/haoma"
+					}
+					uni.navigateTo({
+					    url: url
+					});
+				} else {
+					uni.showToast({
+						mask:true,
+						title:"该彩种暂未上架",
+						icon:"loading"
+					})
+				}
+				
 			}
 		}
 	}
@@ -50,14 +60,15 @@
 	}
 	.uint1 {
 		margin-top: 30upx;
-		width: 150upx;
-		height: 140upx;
+		width: 200upx;
+		height: 200upx;
 	}
 	.unit2 {
 		padding:0 10upx;
 		color: #ffffff;
 	}
 	.txt1 {
+		font-size: $uni-font-size-ssm;
 		font-weight: bold;
 	}
 	.txt2 {

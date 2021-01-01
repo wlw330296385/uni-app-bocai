@@ -1,9 +1,9 @@
 {
-    "name" : "纠纷菠菜",
-    "appid" : "__UNI__3E9BCBD",
-    "description" : "test2020年11月24日",
-    "versionName" : "1.0.0",
-    "versionCode" : "100",
+    "name" : "同乐娱乐",
+    "appid" : "__UNI__3A03BAB",
+    "description" : "2020年12月16日15:32:43",
+    "versionName" : "1.0.1",
+    "versionCode" : 1,
     "transformPx" : false,
     "app-plus" : {
         "usingComponents" : true,
@@ -92,10 +92,19 @@
         }
     },
     "h5" : {
-        "title" : "jiufen",
+        "title" : "同乐娱乐",
         "uniStatistics" : {
             "enable" : true
-        }
+        },
+        "domain" : "",
+        "router" : {
+            "mode" : "hash",
+            "base" : ""
+        },
+        "devServer" : {
+            "https" : false
+        },
+        "template" : "template.h5.html"
     },
     "uniStatistics" : {
         "enable" : true

@@ -2,10 +2,15 @@
 	<view class="navTabBox">
 		<view class="longTab">
 			<scroll-view scroll-x="true" style="white-space: nowrap; display: flex" scroll-with-animation :scroll-left="tabLeft">
-				<view class="longItem" :style='"width:"+isWidth+"px"' :data-index="index" :class="index===tabClick?'click':''" v-for="(item,index) in tabTitle" :key="index" :id="'id'+index" @click="longClick(index)">{{item}}</view>
-				<view class="underlineBox" :style='"transform:translateX("+isLeft+"px);width:"+isWidth+"px"'>
-					<view class="underline"></view>
+				<view class="longItem" :style='"width:"+isWidth+"px"' :data-index="index" :class="index===tabClick?'click':''" 
+				v-for="(item,index) in tabTitle" :key="index" :id="item.id" 
+				@click="longClick(index)"
+				>
+					{{item.cname}}
 				</view>
+				<!-- <view class="underlineBox" :style='"transform:translateX("+isLeft+"px);width:"+isWidth+"px"'>
+					<view class="underline"></view>
+				</view> -->
 			</scroll-view>
 		</view>
 	</view>
@@ -30,6 +35,7 @@
 			};
 		},
 		created() {
+			this.$emit('changeTabid', 100);
 			var that = this
 			// 获取设备宽度
 			uni.getSystemInfo({
@@ -42,6 +48,8 @@
 				}
 			})
 		},
+		mounted(){
+		},
 		methods: {
 			// 导航栏点击
 			longClick(index){
@@ -53,6 +61,7 @@
 				this.tabClick = index //设置导航点击了哪一个
 				this.isLeft = index * this.isWidth //设置下划线位置
 				this.$emit('changeTab', index);//设置swiper的第几页
+				this.$emit('changeTabid', this.tabTitle[index].id);//返回彩种ID
 				// this.$parent.currentTab = index //设置swiper的第几页
 			}
 		}
@@ -65,13 +74,16 @@
 		color: rgba(255, 255, 255, 0.50);
 		.click {
 			color: white;
+		background: url(/static/anniu.png) no-repeat center center;
+		background-size: 90% 75%;
 		}
 		.longTab {
 			width: 100%;
-			.longItem{ 
-				height: 90upx; 
+			.longItem{
+				width: 25%;
+				height: 130upx; 
 				display: inline-block;
-				line-height: 90upx;
+				line-height: 130upx;
 				text-align: center;
 			}
 			.underlineBox {
@@ -82,9 +94,9 @@
 				justify-content: center;
 				transition: .5s;
 				.underline {
-					width: 84upx;
-					height: 4px;
-					background-color: white;
+					// width: 84upx;
+					// height: 4px;
+					// background-color: white;
 				}
 			}
 		}

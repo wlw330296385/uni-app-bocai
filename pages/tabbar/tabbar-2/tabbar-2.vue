@@ -4,30 +4,29 @@
 		<refresh ref="refresh" @isRefresh='isRefresh'></refresh>
 		<view class='nav'>
 			<!-- #ifdef H5 -->
-			<view style="height: 44px;width: 100%;">边距盒子</view>
+			<!-- <view style="height: 44px;width: 100%;"></view> -->
 			<!-- #endif -->
 
 			<!-- 导航栏 agents导航栏标题 -->
-			<navTab ref="navTab" :tabTitle="tabTitle" @changeTab='changeTab'></navTab>
+			<navTab ref="navTab" :tabTitle="tabTitle" @changeTab='changeTab'  @changeTabid='changeTabid'></navTab>
 		</view>
 		<!-- swiper切换 swiper-item表示一页 scroll-view表示滚动视窗 -->
-		<swiper style="min-height: 100vh;" :current="currentTab" @change="swiperTab">
+		<swiper style="min-height: 100%;" :current="currentTab" @change="swiperTab"><!-- 原来是min-height:100vh -->
 			<swiper-item v-for="(listItem,listIndex) in list" :key="listIndex">
 				<scroll-view style="height: 100%;" scroll-y="true" @scrolltolower="lower1" scroll-with-animation :scroll-into-view="toView">
-					<view :id="'top'+listIndex" style="width: 100%;height: 110upx;">边距盒子</view>
+					<view :id="'top'+listIndex" style="width: 100%;height: 110upx;"></view>
 					<view class='content'>
 						<!-- <view class='card' v-for="(item,index) in listItem" v-if="listItem.length > 0" :key="index">
 						13231321
 					</view> -->
 						<view class="swiper-item">
-							<trendItem :url ="url"></trendItem>
-
+							<trendItem :url ="url" :list="list" v-for="(item,index) in listItem" :key="index"></trendItem>
 						</view>
 					</view>
-					<view class='noCard' v-if="listItem.length===0">
+					<!-- <view class='noCard' v-if="listItem.length===0">
 						暂无信息
-					</view>
-					<view style="width: 100%;height: 100upx;opacity:0;">底部占位盒子</view>
+					</view> -->
+					<!-- <view style="width: 100%;height: 100upx;opacity:0;">底部占位盒子</view> -->
 				</scroll-view>
 			</swiper-item>
 		</swiper>
@@ -49,8 +48,10 @@
 			return {
 				toView: '', //回到顶部id
 				currentTab: 0, //sweiper所在页
+				caizhongid:'',
 				pages: [1, 1, 1, 1, 1, 1, 1, 1, 1], //第几页存储 
-				tabTitle: ['选择一', '选择二', '选择三', '选择四', '选择五', '选择六', '选择七', '选择八', '选择九'], //导航栏格式
+				//导航栏格式
+				tabTitle: [ "时时彩", "11x5", "福彩3D", "排列三"], 
 				list: [
 					[1, 2, 3, 4, 5, 6],
 					['a', 'b', 'c', 'd', 'e', 'f'],
@@ -62,15 +63,56 @@
 					['8'],
 					['9号']
 				] //数据格式
-				,'url':"/pages/xuanma/touzhulishi"
+				,'url':"/pages/common/touzhulishi"
 			};
 		},
 		onLoad(e) {
-
+			//尝试请求
+			// for (let key in this.tab_list) {
+			// 	this.tabTitle.push(this.tab_list[key].gname);
+			// }
 		},
 		onShow() {},
 		onHide() {},
+		created() {
+			this.navtablist()
+		},
 		methods: {
+			navtablist(){
+				this.$myRequest.get(
+					'/game-cls/v1', {},
+					{
+					success: (res) => {
+							if(res.data.code == 200){
+								this.tabTitle = res.data.data
+							}else{
+								alert(res.massage)
+							}
+						}
+					}
+				
+				)
+			},
+			trendItem(){
+				this.$myRequest.get(
+					'/qihao/v1', 
+					{
+						gameId:this.caizhongid,
+						pageIndex:this.pages[this.currentTab],
+						pageSize:10
+					},
+					{
+					success: (res) => {
+							if(res.data.code == 200){
+								this.list[this.currentTab] = res.data.data.content
+							}else{
+								alert(res.massage)
+							}
+						}
+					}
+				
+				)
+			},
 			toTop() {
 				this.toView = ''
 				setTimeout(() => {
@@ -78,13 +120,19 @@
 				}, 10)
 			},
 			changeTab(index) {
-				this.currentTab = index
+				this.currentTab = index;
+				
+			},
+			changeTabid(id){
+				this.caizhongid = id
+				this.trendItem()
 			},
 			// 其他请求事件 当然刷新和其他请求可以写一起 多一层判断。
 			isRequest(pages) {
 				return new Promise((resolve, reject) => {
 					this.pages[this.currentTab]++
 					var that = this
+					this.trendItem()
 					setTimeout(() => {
 						uni.hideLoading()
 						uni.showToast({
@@ -111,7 +159,6 @@
 				this.isRequest().then((res) => {
 					let tempList = this.list
 					tempList[this.currentTab] = tempList[this.currentTab].concat(res)
-					console.log(tempList)
 					this.list = tempList
 					this.$forceUpdate() //二维数组，开启强制渲染
 				})
@@ -141,13 +188,14 @@
 
 <style lang="scss">
 	.container999 {
-		width: 100vw;
-		font-size: 28upx;
-		min-height: 100vh;
-		overflow: hidden;
-		color: #6B8082;
-		position: relative;
-		background-color: #f6f6f6;
+		position: absolute;
+		top: 0;
+		right: 0;
+		left: 0;
+		bottom: 0;
+		background-image: linear-gradient(#151b4a, #0d0827);
+		// background: url(../../../static/img/content-background.png) repeat fixed center;
+		background-size: 100% 100%;
 		}
 
 	.content {
@@ -190,7 +238,6 @@
 		align-items: flex-start;
 		justify-content: flex-start;
 		font-size: 24upx;
-		background-color: #50B7EA;
 		z-index: 996;
 	}
 	
@@ -251,50 +298,6 @@
 		border-radius: 10upx;
 	}
 
-
-	.nav {
-		position: fixed;
-		left: 0;
-		top: 0;
-		color: white;
-		width: 100%;
-		display: flex;
-		flex-direction: column;
-		align-items: flex-start;
-		justify-content: flex-start;
-		font-size: 24upx;
-		background-color: #50B7EA;
-		z-index: 996;
-	}
-
-	.searchInput999 {
-		width: 90%;
-		margin: 0 auto;
-		background: white;
-		border-radius: 30upx;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		height: 56upx;
-	}
-
-	.search999 {
-		width: 32upx;
-		height: 32upx;
-	}
-
-	.searchBox999 {
-		width: 56upx;
-		height: 56upx;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
-
-	.input999 {
-		color: #999;
-		width: 80%;
-	}
 
 	
 </style>

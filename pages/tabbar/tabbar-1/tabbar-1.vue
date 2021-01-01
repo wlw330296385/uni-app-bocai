@@ -1,83 +1,29 @@
-<template>
+ <template>
 	<view class="content">
-
 		<!-- 标签列表 -->
-			<navTab ref="navTab" :tabTitle="tabTitle" @changeTab='changeTab'></navTab>
-			<swiper style="min-height: 80vh;" :current="currentTab" @change="swiperTab">
-				<swiper-item v-for="(listItem,listIndex) in 9" :key="listIndex">
+			<navTab ref="navTab" :tabTitle="tab_list" @changeTab='changeTab'></navTab>
+			<swiper style="min-height: 100%;" :current="currentTab" @change="swiperTab"><!-- 原来是min-height:80vh -->
+				<swiper-item v-for="(listItem,listIndex) in tab_list" :key="listIndex">
+					<scroll-view style="height: 100%;" scroll-y="true" scroll-with-animation :scroll-into-view="toView">
 					<view class='content swiper-flex'>
-						<my-unit3 v-for="(item, idx) in list" :key="idx" :src="item.src" :url="item.url" :name="item.name" :hour="item.hour"
-						 :minute='item.minute' :second='item.second' :color="color"></my-unit3>
+						<my-unit3 v-for="(item, idx) in listItem.items" :key="idx" 
+						:src="item.icon" 
+						:url="item.url" 
+						:isSale = "item.isSale"
+						:name="item.gname" 
+						:hour = "parseInt(item.hour)"
+						:minute = "parseInt(item.minute)" :second = "parseInt(item.second)" :color="color"></my-unit3>
 					</view>
-
+					</scroll-view>
 				</swiper-item>
 			</swiper>
 	</view>
 </template>
 
 <script>
+	const util = require('@/util/util.js');
 	import myUnit3 from '@/components/myUnits/unit3.vue'; 
 	import navTab from '@/components/uni-scroll/navTab.vue';
-	var list = [{
-			src: "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3511544063,4112539952&fm=26&gp=0.jpg",
-			url: "/pages/xuanma/shishicai",
-			hour: Math.round(Math.random() * 10),
-			minute: Math.round(Math.random() * 10),
-			second: Math.round(Math.random() * 10),
-			daojishi: "15:54:17",
-			name: "时时彩直选",
-		},
-		{
-			src: "../../../static/img/PK104.png",
-			url: "/pages/xuanma/sizeSinglepair",
-			hour: Math.round(Math.random() * 10),
-			minute: Math.round(Math.random() * 10),
-			second: Math.round(Math.random() * 10),
-			daojishi: "15:54:17",
-			name: "大小单双",
-		},
-		{
-			src: "../../../static/img/PK10图标4.png",
-			url: "/pages/xuanma/fenfencai",
-			hour: Math.round(Math.random() * 10),
-			minute: Math.round(Math.random() * 10),
-			second: Math.round(Math.random() * 10),
-			daojishi: "15:54:17",
-			name: "单选",
-		},
-		{
-			src: "../../../static/img/PK10图标4.png",
-			url: "/pages/xuanma/hezhi",
-			hour: Math.round(Math.random() * 10),
-			minute: Math.round(Math.random() * 10),
-			second: Math.round(Math.random() * 10),
-			daojishi: "15:54:17",
-			name: "时时彩和值",
-		},
-	];
-	var tab_list = [{
-			"id": 100,
-			"gname": "时时彩",
-			"isSale": true
-		},
-		{
-			"id": 101,
-			"gname": "11x5",
-			"isSale": true
-		},
-		{
-			"id": 102,
-			"gname": "福彩3D",
-			"isSale": true
-		},
-		{
-			"id": 107,
-			"gname": "排列三",
-			"isSale": true
-		}
-	];
-	var tabTitle = [];
-	var color = "#ffffff";
 	export default {
 		components: {
 			myUnit3,
@@ -85,17 +31,31 @@
 		},
 		data() {
 			return {
+				color: "#ffffff",
 				toView: '', //回到顶部id
 				currentTab: 0, //sweiper所在页
-				tabTitle: tabTitle, //导航栏格式
-				list,
-				tab_list,
-				color
+				tab_list:[]
 			};
 		},
 		onLoad() {
+			this.navtablist();
 		},
 		methods: {
+			navtablist(){
+			this.$myRequest.get(
+				'/game/v1/getAllGames', {},
+				{
+				success: (res) => {
+						if(res.data.code == 200){
+							console.log(res.data.data);
+							this.tab_list = res.data.data
+						}else{
+							alert(res.massage)
+						}
+					}
+				})
+			},
+			// 加载更多 util.throttle为防抖函数
 			changeTab(index) {
 				this.currentTab = index
 			},
@@ -107,31 +67,15 @@
 						url: '/pages/login/login'
 					})
 				}
-				//尝试请求
-				this.request_test();
-				for (let key in tab_list) {
-					this.tabTitle.push(tab_list[key].gname);
-				}
+				// for (let key in this.tab_list) {
+				// 	this.tabTitle.push(this.tab_list[key].cname);
+				// }
 			},
-			request_test() {
-				uni.request({
-					url: 'http://192.168.3.29:80/', //仅为示例，并非真实接口地址。
-					data: {
-						text: 'uni.request'
-					},
-					header: {
-
-					},
-					success: (res) => {
-						console.log(res.data);
-					}
-				});
+			// swiper 滑动
+			swiperTab: function(e) {
+				var index = e.detail.current //获取索引
+				this.$refs.navTab.longClick(index);
 			}
-			//尝试请求
-			// this.request_test();
-			// for (let key in tab_list) {
-			// 	this.tabTitle.push(tab_list[key].gname);
-			// }
 		},
 
 	};
@@ -144,7 +88,8 @@
 		right: 0;
 		left: 0;
 		bottom: 0;
-		background: url(../../../static/img/content-background.png) repeat fixed center;
+		background-image: linear-gradient(#151b4a, #0d0827);
+		/* background: url(/static/img/content-background.png) repeat fixed center; */
 		background-size: 100% 100%;
 	}
 
@@ -153,13 +98,13 @@
 		height: 80rpx;
 		display: flex;
 		justify-content: space-around;
-		font-size: 35rpx;
+		font-size: $uni-font-size-sm;
 	}
 
 	.nuter view {
 		flex: 1;
-		font-size: 30upx;
-		line-height: 40px;
+		font-size: $uni-font-size-ssm;
+		line-height: 40upx;
 		text-align: center;
 		transition: all 0.5s ease .1s;
 		background-color: #f0f0f0;
@@ -171,7 +116,7 @@
 		border-bottom: 5upx solid #00aaff;
 		background-color: #f3ffff;
 		border-radius: 10upx;
-		box-shadow: 3px 3px 5px #888888;
+		box-shadow: 3upx 3upx 5upx #888888;
 	}
 
 	.swiper-flex {
@@ -179,4 +124,6 @@
 		flex-wrap: wrap;
 		align-content: flex-start;
 	}
+	
+
 </style>
