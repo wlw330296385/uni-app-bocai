@@ -11,7 +11,7 @@
         <!-- #ifdef H5 -->
         <cmd-transition name="fade-up">
           <view v-if="status">
-            <view class="register-phone">
+            <view class="register-phone" :class="coloronoff3 == true?'login-username-color':''" @click="coloronoff3 =false" >
 				<view>
 					<image class="loginimage" src="/static/dianhua.png" mode=""></image>
 				</view>
@@ -19,41 +19,41 @@
               <view class="register-phone-getcode" @tap="!safety.state ? fnGetPhoneCode() : ''">{{!safety.state&&'获取验证码'||(safety.time+' s')}}</view>
             </view>
 			
-            <view class="register-code">
+            <view class="register-code" :class="coloronoff4 == true?'login-username-color':''" @click="coloronoff4 =false" >
 				<view>
 					<image class="loginimage" src="/static/yanzheng.png" mode=""></image>
 				</view>
               <cmd-input v-model="mobile.code" type="number" maxlength="6" placeholder="请输入短信验证码"></cmd-input>
             </view>			
 			
-			<view class="register-username">
+			<view class="register-username" :class="coloronoff5 == true?'login-username-color':''" @click="coloronoff5 =false" >
 				<view>
 					<image class="loginimage" src="/static/yaoqing.png" mode=""></image>
 				</view>
 			  <cmd-input v-model="account.invitation_code" type="password" displayable maxlength="26" placeholder="请输入邀请码"></cmd-input>
 			</view>
 
-            <button class="btn-register" :class="registerMobile ? 'btn-register-active':''" :disabled="!registerMobile"
+            <button class="btn-register" :class="registerMobile ? 'btn-register-active':''"
               hover-class="btn-register-hover" @tap="fnRegister" @click="fnRegister">注册1</button>
           </view>
         </cmd-transition>
         <!-- #endif -->
         <!-- #ifndef H5 -->
         <cmd-transition name="fade-up" v-if="status">
-          <view class="register-phone">
+          <view class="register-phone" :class="coloronoff3 == true?'login-username-color':''" @click="coloronoff3 =false" >
 			  <view>
 					<image class="loginimage" src="/static/dianhua.png" mode=""></image>
 				</view>
             <cmd-input v-model="mobile.phone" type="number" focus maxlength="11" placeholder="请输入手机号"></cmd-input>
             <view class="register-phone-getcode" @tap="!safety.state ? fnGetPhoneCode() : ''">{{!safety.state&&'获取验证码'||(safety.time+' s')}}</view>
           </view>
-          <view class="register-code">
+          <view class="register-code" :class="coloronoff4 == true?'login-username-color':''" @click="coloronoff4 =false" >
 			  <view>
 					<image class="loginimage" src="/static/yanzheng.png" mode=""></image>
 				</view>
             <cmd-input v-model="mobile.code" type="number" maxlength="6" placeholder="请输入短信验证码"></cmd-input>
           </view>
-			<view class="register-code">
+			<view class="register-code" :class="coloronoff5 == true?'login-username-color':''" @click="coloronoff5 =false" >
 			  <view>
 					<image class="loginimage" src="/static/yaoqing.png" mode=""></image>
 				</view>
@@ -69,19 +69,19 @@
         <!-- #ifdef H5 -->
         <cmd-transition name="fade-up">
           <view v-if="!status">
-            <view class="register-username">
+            <view class="register-username" :class="coloronoff == true?'login-username-color':''" @click="coloronoff =false">
 			  <view>
-					<image class="loginimage" src="/static/zhanghao.png" mode=""></image>
+					<image class="loginimage" src="/static/team1.png" mode=""></image>
 				</view>
               <cmd-input v-model="account.username" type="text" focus maxlength="26" placeholder="请输入账号"></cmd-input>
             </view>
-            <view class="register-password">
+            <view class="register-password" :class="coloronoff1 == true?'login-username-color':''" @click="coloronoff1 =false">
 			  <view>
 					<image class="loginimage" src="/static/mima.png" mode=""></image>
 				</view>
               <cmd-input v-model="account.password" type="password" displayable maxlength="26" placeholder="请输入密码"></cmd-input>
             </view>
-            <view class="register-username">
+            <view class="register-username" :class="coloronoff2 == true?'login-username-color':''" @click="coloronoff2 =false">
 			  <view>
 					<image class="loginimage" src="/static/yaoqing.png" mode=""></image>
 				</view>
@@ -94,19 +94,19 @@
         <!-- #endif -->
         <!-- #ifndef H5 -->
         <cmd-transition name="fade-up" v-if="!status">
-          <view class="register-username">
+          <view class="register-username" :class="coloronoff3 == true?'login-username-color':''" @click="coloronoff3 =false">
 			  <view>
 					<image class="loginimage" src="/static/team1.png" mode=""></image>
 				</view>
             <cmd-input v-model="account.username" type="text" focus maxlength="26" placeholder="请输入账号"></cmd-input>
           </view>
-          <view class="register-password">
+          <view class="register-password" :class="coloronoff4 == true?'login-username-color':''" @click="coloronoff4 =false">
 			  <view>
 					<image class="loginimage" src="/static/mima.png" mode=""></image>
 				</view>
             <cmd-input v-model="account.password" type="password" displayable maxlength="26" placeholder="请输入密码"></cmd-input>
           </view>
-          <view class="register-username" style="opacity: 0;">
+          <view class="register-username" style="opacity: 0;" :class="coloronoff5 == true?'login-username-color':''" @click="coloronoff5 =false">
 			  <image class="loginimage"  mode=""></image>
           </view>
           <button class="btn-register" :class="registerAccount ? 'btn-register-active':''" :disabled="!registerAccount"
@@ -141,6 +141,12 @@
 
     data() {
       return {
+		  coloronoff:false,
+		  coloronoff1:false,
+		  coloronoff2:false,
+		  coloronoff3:false,
+		  coloronoff4:false,
+		  coloronoff5:false,
         account: {
           username: '',
           password: ''
@@ -199,18 +205,57 @@
        * 注册按钮点击执行
        */
       fnRegister() {
-        // if (this.status) {
-        //   console.log(JSON.stringify(this.mobile));
-        // } else {
-        //   console.log(JSON.stringify(this.account));
-        // }
-		if(this.account.password == ''){
-			uni.showToast({
-			  title: "请输入密码",
-			  icon: "success"
-			})
+        if (this.status) {
+          // console.log(JSON.stringify(this.mobile));
+		  if(this.mobile.phone == ''){
+		  	this.coloronoff3 = true
+		  	
+		  		uni.showToast({
+		  			title:"请输入手机号",
+		  			icon:"none"
+		  		})
+		  	return
+		  }
+		  if(this.mobile.code == ''){
+		  	this.coloronoff4 = true
+		  	
+		  		uni.showToast({
+		  			title:"请输入验证码",
+		  			icon:"none"
+		  		})
+		  	return
+		  }
+		  if(this.mobile.invitation_code == ''){
+		  	this.coloronoff5 = true
+		  	
+		  		uni.showToast({
+		  			title:"请输入邀请",
+		  			icon:"none"
+		  		})
+		  	return
+		  }
+        } else {
+          // console.log(JSON.stringify(this.account));
+		  if(this.account.username == ''){
+			this.coloronoff = true
+			
+				uni.showToast({
+					title:"请输入账号",
+					icon:"none"
+				})
 			return
 		}
+		if(this.account.password == ''){
+			this.coloronoff1 = true
+			
+				uni.showToast({
+					title:"请输入密码",
+					icon:"none"
+				})
+			return
+		}
+        }
+		
 		this.$myRequest.post(
 			'/user-info/v1/regist', 
 			{
@@ -226,7 +271,11 @@
 						    url: '/pages/tabbar/tabbar-1/tabbar-1'
 						});
 					}else{
-						alert(res.data.message)
+						
+							uni.showToast({
+								title:res.data.message,
+								icon:"none"
+							})
 					}
 				}
 			}
@@ -354,6 +403,10 @@
 	padding:0 10upx;
 	border-radius: 20upx;
 	background-color: rgba(217,93,0,0.9);
+  }
+  
+  .login-username-color{
+  	  box-shadow: 0 0 10upx 1upx red;
   }
 
   .register-code {

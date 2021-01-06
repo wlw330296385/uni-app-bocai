@@ -1,7 +1,9 @@
 import Vue from 'vue';
 import App from './App';
 import myRequest from "./common/myRequest.js";
+import myJs from "./common/myJs.js";
 Vue.prototype.$myRequest = myRequest;
+Vue.prototype.$myJs = myJs;
 Vue.config.productionTip = false;
 App.mpType = 'app';
 Vue.prototype.$messageData = {

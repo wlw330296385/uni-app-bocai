@@ -1,3 +1,4 @@
+import myEncryption from './myEncryption.js'
 //请求库
 export default {
 	config: {
@@ -17,16 +18,25 @@ export default {
 		complete() {}
 	},
 	request(options) {
-		options.baseUrl = options.baseUrl || this.config.baseUrl
-		options.dataType = options.dataType || this.config.dataType
-		options.url = options.baseUrl + options.url
-		options.data = options.data || {}
+		options.baseUrl = options.baseUrl || this.config.baseUrl;
+		options.dataType = options.dataType || this.config.dataType;
+		options.url = options.baseUrl + options.url;
+		options.data = options.data || {};
 		options.method = options.method || this.config.method;
+		let timestamp =  (new Date()).valueOf();
+		let appId =  "M0001";
+		//拼接加密串
+		var signObj = {};
+		signObj = {...options.data};
+		signObj.appId = appId;
+		signObj.timestamp = timestamp;
+		signObj.appSecret = "C683C7AC18566066228667EA802C06EF";
+		let sign = myEncryption.encodeSearchParams(signObj)
+		// 设置请求头
 		options.header = {
-					appId		: 'M0001' ,//自定义请求头信息
-					sign		: "iaL1LJM1mF9aRKPZJkmG8xXhiaHqkKSVMMWeN3hLut7X7hicFNjakmxibMLGWpXrEXB33367o7zHN0CwngnQY7zb7g",
-					appSecret	: "C683C7AC18566066228667EA802C06EF",
-					timestamp: (new Date()).valueOf()
+					appId		: appId ,//自定义请求头信息
+					sign		: sign,
+					timestamp	: timestamp
 				};
 		if	(!options.success) {
 			options.success = (res) => {

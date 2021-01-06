@@ -1,6 +1,6 @@
 <template>
 	<view class="page">
-		<liuheHead></liuheHead>	
+		<liuheHead :rule="rule" :gameId="gameId"></liuheHead>	
 		<!-- 彩种选择列表 -->
 		<view class="page_five">
 			<view class="page_five_list">
@@ -46,8 +46,9 @@
 			 @change="stepper3" 
 			 :data_list1="data_list1"
 			 :data_list2="data_list2"
-			 :playmode = "playmode"
+			 :playmode = "wfxzitem"
 			 :caizhong = "caizhong"
+			 :wname="wname"
 			 :yjfl="yjfl"
 		 ></OnekeyBettingLiuhe>
 	</view>
@@ -61,12 +62,30 @@
 		components:{liuheHead,OnekeyBettingLiuhe},
 		data() {
 			return {
+				gameId:104,
+				rule:`
+				①平特一肖
+				香港六合彩公司开出当期号码(所有平码与最
+				后开出的特码),落在下注生肖范围内,则视
+				为中奖。
+				②特码合肖
+				一肖:合肖类别一肖为选择1个生肖为一注
+				特码在此注内即为中奖
+				二肖:合肖类别二肖为选择2个生肖为一注
+				特码在比注内即为中奖
+				三肖:合肖类别三肖为选择3个生肖为一注
+				特码在此注内即为中奖
+				四肖:合肖类别四肖为选择4个生肖为一注
+				特码在此注内即为中奖
+				五肖:合肖类别五肖为选择5个生肖为一注
+				`,
 				wfxzitem:'一肖',
 				temaonoff:false,
 				data_list1:[],
 				data_list2:[],
-				playmode:"连号",
-				caizhong:"六合",
+				playmode:"平特一肖",
+				wname:"一肖",
+				caizhong:"生肖",
 				yjfl:[
 					  {
 						title: "元",
@@ -119,7 +138,7 @@
 				wfxz_list:[
 					{
 						title: '一肖',
-						onoff: false
+						onoff: true
 					},
 					{
 						title: '二肖',
@@ -158,21 +177,22 @@
 		created() {
 				this.onoffclick1(0)
 		},
+		// 页面周期与 onLoad 同级
+		onBackPress(e) {
+			console.log(e);
+			if (e.from == 'backbutton') {
+				uni.switchTab({
+					url:"/pages/tabbar/tabbar-1/tabbar-1"
+				});
+				return true; //阻止默认返回行为
+			}
+		},
 		methods: {
 			// 平特 特码 平码
 			onoffclick1(index1){
 				this.temaonoff = false;
 				let url ='/lhc-wanfa/v1/pingmasx';
 				let name = ''
-				if(index1 == 1){
-					url = '/lhc-wanfa/v1/temahexiao';
-					this.temaonoff = true;
-					name = this.wfxzitem
-				}else if(index1 == 2){
-					url ='/lhc-wanfa/v1/pingmasx';
-				}else if(index1 == 3){
-					url = '/lhc-wanfa/v1/temasx';
-				}
 				for(let i in this.five_list_item) {
 					this.five_list_item[i].onoff = false;
 				}
@@ -181,6 +201,16 @@
 				}
 				for (let i = 0; i < this.wfxz_list.length; i++) {
 					this.wfxz_list[i].onoff = false
+				}
+				if(index1 == 1){
+					url = '/lhc-wanfa/v1/temahexiao';
+					this.temaonoff = true;
+					this.wfxz_list[0].onoff = true
+					name = this.wfxzitem;
+				}else if(index1 == 2){
+					url ='/lhc-wanfa/v1/pingmasx';
+				}else if(index1 == 3){
+					url = '/lhc-wanfa/v1/temasx';
 				}
 				this.five_list_item[index1].onoff = true;
 				this.data_list1 = [];
@@ -191,6 +221,7 @@
 					{
 					success: (res) => {
 							if(res.data.code == 200){
+								this.wname = res.data.data.wname;
 								let lhcCodeVos = liuhejs.escapedlhcCodeVos(res.data.data.lhcCodeVos);
 								this.codeList = lhcCodeVos;
 							}else{
@@ -207,6 +238,7 @@
 				this.onoffclick1(1)
 				this.wfxz_list[index3].onoff = true
 				this.wfxzitem = item;
+				this.playmode = item;
 				this.data_list2 = [item];
 			},
 			// 号码选择

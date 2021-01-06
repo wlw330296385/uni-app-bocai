@@ -8,7 +8,8 @@
 					<view class='content swiper-flex'>
 						<my-unit3 v-for="(item, idx) in listItem.items" :key="idx" 
 						:src="item.icon" 
-						:url="item.url" 
+						:url="item.url"
+						:gameId="item.id"
 						:isSale = "item.isSale"
 						:name="item.gname" 
 						:hour = "parseInt(item.hour)"
@@ -31,13 +32,13 @@
 		},
 		data() {
 			return {
-				color: "#ffffff",
+				color: "#000000",
 				toView: '', //回到顶部id
 				currentTab: 0, //sweiper所在页
 				tab_list:[]
 			};
 		},
-		onLoad() {
+		onLoad(option) {
 			this.navtablist();
 		},
 		methods: {
@@ -47,10 +48,12 @@
 				{
 				success: (res) => {
 						if(res.data.code == 200){
-							console.log(res.data.data);
 							this.tab_list = res.data.data
 						}else{
-							alert(res.massage)
+							uni.showToast({
+								title:res.data.message,
+								icon:"none"
+							})
 						}
 					}
 				})
@@ -88,8 +91,6 @@
 		right: 0;
 		left: 0;
 		bottom: 0;
-		background-image: linear-gradient(#151b4a, #0d0827);
-		/* background: url(/static/img/content-background.png) repeat fixed center; */
 		background-size: 100% 100%;
 	}
 
@@ -112,9 +113,9 @@
 
 	.active {
 		box-sizing: border-box;
-		color: #007AFF;
-		border-bottom: 5upx solid #00aaff;
-		background-color: #f3ffff;
+		color: $theme-color;
+		border-bottom: 5upx solid $theme-color;
+		/* background-color: #f3ffff; */
 		border-radius: 10upx;
 		box-shadow: 3upx 3upx 5upx #888888;
 	}

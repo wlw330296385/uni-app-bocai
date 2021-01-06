@@ -23,7 +23,7 @@
 					</view>
 				</view>
 			</view>
-			<view class="uni-flex uni-row search-unit" >
+<!-- 			<view class="uni-flex uni-row search-unit" >
 				<view class="search-item uni-flex uni-row ">
 					<view class="flex-item">
 						<view class="label-text">名字</view>
@@ -48,7 +48,7 @@
 					</view>
 				</view>
 			</view>
-			
+			 -->
 			<view class="bottom-btn">
 				<button type="warn" class="btn">搜索</button>
 			</view>
@@ -64,19 +64,19 @@
 		
 		<view class="mine2 mine">
 			<view class="uni-flex uni-row">
-				<view class="flex-item">充值金额: 0.0000</view>
-				<view class="flex-item">提现金额: 0.0000</view>
+				<view class="flex-item">充值金额: {{selfReportList.rechargeAmt}}</view>
+				<view class="flex-item">提现金额: {{selfReportList.rewardAmt}}</view>
 			</view>
 			<view class="uni-flex uni-row">
-				<view class="flex-item">投注金额: 0.0000</view>
-				<view class="flex-item">中奖金额: 0.0000</view>
+				<view class="flex-item">投注金额: {{selfReportList.orderAmt}}</view>
+				<view class="flex-item">中奖金额: {{selfReportList.winAmt}}</view>
 			</view>
 			<view class="uni-flex uni-row">
-				<view class="flex-item">返点金额: 0.0000</view>
-				<view class="flex-item">盈亏金额: 0.0000</view>
+				<view class="flex-item">返点金额: {{selfReportList.fanShuiAmt}}</view>
+				<view class="flex-item">盈亏金额: {{selfReportList.ykAmt}}</view>
 			</view>
 			<view class="uni-flex uni-row">
-				<view class="flex-item">活动金额: 0.0000</view>
+				<view class="flex-item">活动金额: {{selfReportList.hdAmt}}</view>
 			</view>
 			<hr>
 			<view class="button-3">
@@ -102,17 +102,17 @@
 		</view>
 		
 		
-		<view class="mine2 mine">
+		<view class="mine2 mine" v-for="(item,index) in selfReportList.items">
 				<view class="uni-flex uni-row">
-					<view class="flex-item">本页合计</view>
+					<view class="flex-item" >本页合计</view>
 				</view>
 				<view class="uni-flex uni-row">
-					<view class="flex-item">投注金额: 0.0000</view>
-					<view class="flex-item">中奖金额: 0.0000</view>
+					<view class="flex-item">投注金额: {{item.orderAmt}}</view>
+					<view class="flex-item">中奖金额: {{item.winAmt}}</view>
 				</view>
 				<view class="uni-flex uni-row">
-					<view class="flex-item">返点金额: 0.0000</view>
-					<view class="flex-item">盈亏金额: 0.0000</view>
+					<view class="flex-item">返点金额: {{item.fanShuiAmt}}</view>
+					<view class="flex-item">盈亏金额: {{item.ykAmt}}</view>
 				</view>
 		</view>
 		<view class="mine2 mine">
@@ -120,12 +120,12 @@
 					<view class="flex-item">总合计</view>
 				</view>
 				<view class="uni-flex uni-row">
-					<view class="flex-item">投注金额: 0.0000</view>
-					<view class="flex-item">中奖金额: 0.0000</view>
+					<view class="flex-item">投注金额: </view>
+					<view class="flex-item">中奖金额: </view>
 				</view>
 				<view class="uni-flex uni-row">
-					<view class="flex-item">返点金额: 0.0000</view>
-					<view class="flex-item">盈亏金额: 0.0000</view>
+					<view class="flex-item">返点金额: </view>
+					<view class="flex-item">盈亏金额: </view>
 				</view>
 		</view>
 		<view class="bottom-text">统计时间为: 2020-12-11 18:11:44</view>
@@ -133,6 +133,25 @@
 </template>
 
 <script>
+	Date.prototype.format = function (format) {
+		           var args = {
+		               "M+": this.getMonth() + 1,
+		               "d+": this.getDate(),
+		               "h+": this.getHours(),
+		               "m+": this.getMinutes(),
+		               "s+": this.getSeconds(),
+		               "q+": Math.floor((this.getMonth() + 3) / 3),  //quarter
+		               "S": this.getMilliseconds()
+		           };
+		           if (/(y+)/.test(format))
+		               format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+		           for (var i in args) {
+		               var n = args[i];
+		               if (new RegExp("(" + i + ")").test(format))
+		                   format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? n : ("00" + n).substr(("" + n).length));
+		           }
+		           return format;
+	}
 	export default {
 		data() {
 			const currentDate = this.getDate({
@@ -152,10 +171,54 @@
 				current:0,
 				index: 0,
 				date: currentDate,
-				time: '12:01'
+				time: '12:01',
+				selfReportList:{}
 			}
 		},
+		created() {
+			this.selfReportlist("/user-total/v1/selfReport")
+		},
 		methods: {
+			selfReportlist(url){
+				 var day1 = new Date();
+				 day1.setDate(day1.getDate() - 30);
+				 var s1 = day1.format("yyyy-MM-dd hh:mm:ss");
+				 var day2 = new Date().format("yyyy-MM-dd hh:mm:ss");
+				 let data = {}
+				 if(this.current == 1){
+					  data = {
+						beginDate:s1,
+						endDate:day2,
+						userName:'root'
+					} 
+				 }else if(this.current == 0){
+					  data = {
+					 	beginDate:s1,
+					 	endDate:day2,
+					 	userName:'root',
+						pageIndex:1,
+						pageSize:10,
+						pid:123456,
+					 } 
+				 }
+				this.$myRequest.get(
+					url, 
+					data,
+					{
+					success: (res) => {
+							if(res.data.code == 200){
+								this.selfReportList = res.data.data
+							}else{
+								
+								uni.showToast({
+									title:res.data.message,
+									icon:"none"
+								})
+							}
+						}
+					}
+				)
+			},
 			bindDateChange: function(e) {
 				this.date = e.target.value
 			},
@@ -175,8 +238,13 @@
 				return `${year}-${month}-${day}`;
 			},
 		 radioChange: function(evt) {
-					for (let i = 0; i < this.items.length; i++) {
-						if (this.items[i].value === evt.target.value) {
+					for (let i = 0; i < this.array.length; i++) {
+						if (this.array[i].value === evt.target.value) {
+							if(this.array[i].value == 1){
+								this.selfReportlist("/user-total/v1/selfReport")
+							}else{
+								this.selfReportlist("/user-total/v1/teamReport")
+							}
 							this.current = i;
 							break;
 						}

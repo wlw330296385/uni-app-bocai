@@ -44,8 +44,11 @@
 	export default {
 		data() {
 			return {
-				
+				id:''
 			}
+		},
+		onLoad(option) {
+			console.log(option.id)
 		},
 		methods: {
 			returnback(){

@@ -3,14 +3,16 @@
 		<view class="nonetop"></view>
 		<view class="header">
 			<view class="header-left" @click="goto">
-				<image style="width: 30upx; height: 30upx;" :src="src">
+				<image style="margin-top: 50upx; width: 30upx; height: 30upx;" :src="src">
 				</image>
 			</view>
 			<view class="header-center" @click="itemlink">
-				<span class="header-center-span">{{caizhong}}</span>
-				{{playmode}}:{{playmode1}} 
-				<image style="width: 30upx; height: 20upx; padding: 10upx 10upx 0 10upx ;" src="/static/down.png">
-				</image>
+				<view>
+					<span class="header-center-span">{{caizhong}}</span>
+					{{playmode}}:{{playmode1}} 
+					<image style="width: 30upx; height: 30upx; padding: 0upx 10upx 0 10upx ;" src="/static/down.png">
+					</image>
+				</view>
 			</view>
 			<view class="header-right"></view>
 		</view>
@@ -50,14 +52,13 @@
 			Wuxing,
 			sPopup
 		},
-		props: ["caizhong"],
+		props: ["caizhong","gameId"],
 		data() {
 			return {
 				src: "/static/fanhui.png",
 				showCategoryIndex: 0,
 				headerPosition: "fixed",
 				visible: false,
-				gameId : 105,
 				playmode:'',
 				playmode1:'',
 				//分类列表
@@ -101,6 +102,12 @@
 							this.categoryList = res.data.data.cls;
 							this.playmode = this.categoryList[0].name;
 							this.playmode1 = this.categoryList[0].childs[0].wfs[0].name;
+							this.wfId = this.categoryList[0].childs[0].wfs[0].id;
+							
+							this.$emit('getwfData',{
+								id:this.wfId,
+								name:this.playmode1,
+							});
 						}
 					},
 					fail: (res) => {
@@ -151,8 +158,9 @@
 	/* #ifdef  APP-PLUS-NVUE || MP-WEIXIN || APP-PLUS */  
 	.header {
 		position: fixed;
-		top: 50upx;
+		top: 40upx;
 		background-color: #fff;
+		padding: 10upx 0;
 		width: 100%;
 		height: 45upx;
 		display: flex;
@@ -168,8 +176,9 @@
 	/* #ifdef  H5 */  
 	.header {
 		position: fixed;
-		top: 10upx;
+		top: 0;
 		background-color: #fff;
+		padding: 10upx 0;
 		width: 100%;
 		height: 45upx;
 		display: flex;
@@ -207,7 +216,7 @@
 	/* #ifdef  APP-PLUS-NVUE || MP-WEIXIN || APP-PLUS */  
 	.page {
 		position: absolute;
-		top: 0;
+		top: 0upx;
 		right: 0;
 		bottom: 0;
 		left: 0;
@@ -218,7 +227,7 @@
 	/* #ifdef  H5 */  
 	.page {
 		position: absolute;
-		top: 0;
+		top: 0upx;
 		right: 0;
 		bottom: 0;
 		left: 0;

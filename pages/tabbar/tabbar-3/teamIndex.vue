@@ -43,6 +43,9 @@
 			</view>
 		</view>	
 		
+		<view class="bottom-btn">
+			<button type="warn" class="btn">返点设置</button>
+		</view>
 		<view class="mine2 mine">
 			
 			<view class="uni-flex uni-row">

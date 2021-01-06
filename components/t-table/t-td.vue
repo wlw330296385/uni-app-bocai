@@ -7,14 +7,14 @@
 <script>
 	export default {
 		props: {
-			align: String
+			align: String,
+			color:String
 		},
 		data() {
 			return {
 				thBorder: '1',
 				borderColor: '#d0dee5',
 				fontSize: 5,
-				color: '#555c60',
 				tdAlign: 'center'
 			};
 		},
@@ -24,7 +24,10 @@
 			this.thBorder = this.table.border;
 			this.borderColor = this.table.borderColor;
 			this.fontSize = this.tr.fontSize;
-			this.color = this.tr.color;
+			if(!this.color) {
+				this.color = this.tr.color;
+			}
+			
 			if (this.align) {
 				this.tdAlign = this.align;
 			} else {

@@ -1,7 +1,6 @@
 <template>
-	<view class="conter">
-	<!-- navigationbar -->
-	<navigationbar :playmode = "playmode" :playmode1="playmode1" :caizhong = "caizhong"></navigationbar>
+	<view class="content">
+	<navigationbar :playmode = "playmode" :playmode1="playmode1" :caizhong = "caizhong" @wfid="wfid"></navigationbar>
 		<dynamic :hour="hour" :minute='minute' :second='second'></dynamic>
 		<sampleHelp></sampleHelp>
 
@@ -9,10 +8,11 @@
 
 		</hezhi-unit>
 
-		<OnekeyBetting :label='2' :max="99" :val="0" :step="1" :min="0" 
+		<OnekeyBetting  :max="99" :val="0" :step="1" :min="0" 
 		@change="stepper3"
 		:data_list1 = "data_list1"
 		:data_list2 = "data_list2"
+		:wfid = "wfID"
 		 :playmode = "playmode"
 		 :caizhong = "caizhong"
 		 :yjfl="yjfl"
@@ -36,6 +36,7 @@
 		},
 		data() {
 			return {
+				wfID:'',
 				caizhong:"新疆分分彩",
 				playmode:"大小单双",
 				playmode1:"中三个大小个数",
@@ -56,6 +57,9 @@
 			this.digitslist();
 		},
 		methods: {
+			wfid(e){
+				this.wfID = e
+			},
 			//接受多少注多少元
 			stepper3(e) {
 				
@@ -84,7 +88,11 @@
 								})
 								this.yjfl[0].Index = true
 							}else{
-								alert(res.data.message)
+								
+									uni.showToast({
+										title:res.data.message,
+										icon:"none"
+									})
 							}
 						}
 					}
@@ -95,8 +103,7 @@
 </script>
 
 <style lang="scss">
-	.conter{
-		padding-top: 70upx;
-		padding-bottom: 500upx;
+	.content{
+		margin-top: 60upx;
 	}
 </style>

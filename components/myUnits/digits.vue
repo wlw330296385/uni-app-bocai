@@ -1,7 +1,7 @@
 <template>
 	<view>
-		<view v-for="(item, index) in digits" :key="index" @click="Zongindex(index)">
-			<view class="uni-flex uni-row digits">
+		<view v-for="(item, index) in codebox" :key="index" @click="Zongindex(index)">
+			<view class="uni-flex uni-row codebox">
 				<view class="r-top-buttom uni-bg-blue">{{item.title}}</view>
 				<view class="flex-item top-button" :class="item.zongOnoff1.quanonoff?'uni-bg-red':''" @click="all_choose(index)">全</view>
 				<view class="flex-item top-button" :class="item.zongOnoff1.daonoff?'uni-bg-red':''" @click="big_choose(index)">大</view>
@@ -12,7 +12,7 @@
 			</view>
 
 			<view class="buttom">
-				<view v-for="(item1, index1) in item.nums" :key="index1" @click="clickbuttom(index,index1)" class="button-list"
+				<view v-for="(item1, index1) in item.code" :key="index1" @click="clickbuttom(index,index1)" class="button-list"
 				 :class=" item1.onoff ?'uni-bg-red':'button-light'">
 					{{item1.number}}
 				</view>
@@ -24,7 +24,7 @@
 
 <script>
 	export default {
-		props: ["keyindex", 'title'],
+		props: ["keyindex", 'title', "codebox","list2onoff"],
 		data() {
 			return {
 				zongindex: 0,
@@ -36,224 +36,6 @@
 					[],
 					[]
 				],
-				// nums: [{number:0,onoff:false},{number:1,onoff:false},{number:2,onoff:false},{number:3,onoff:false},{number:4,onoff:false},{number:5,onoff:false},{number:6,onoff:false},{number:7,onoff:false},{number:8,onoff:false},{number:9,onoff:false}],
-				digits: [{
-						"title": 'N选1',
-						"index": 0,
-						"zongOnoff1": {
-							quanonoff: false,
-							daonoff: false,
-							xiaoonoff: false,
-							jionoff: false,
-							ouonoff: false,
-							qingonoff: false,
-						},
-						"nums": [{
-							number: 0,
-							onoff: false
-						}, {
-							number: 1,
-							onoff: false
-						}, {
-							number: 2,
-							onoff: false
-						}, {
-							number: 3,
-							onoff: false
-						}, {
-							number: 4,
-							onoff: false
-						}, {
-							number: 5,
-							onoff: false
-						}, {
-							number: 6,
-							onoff: false
-						}, {
-							number: 7,
-							onoff: false
-						}, {
-							number: 8,
-							onoff: false
-						}, {
-							number: 9,
-							onoff: false
-						}]
-					},
-					{
-						"title": '万位',
-						"index": 1,
-						"zongOnoff1": {
-							quanonoff: false,
-							daonoff: false,
-							xiaoonoff: false,
-							jionoff: false,
-							ouonoff: false,
-							qingonoff: false,
-						},
-						"nums": [{
-							number: 0,
-							onoff: false
-						}, {
-							number: 1,
-							onoff: false
-						}, {
-							number: 2,
-							onoff: false
-						}, {
-							number: 3,
-							onoff: false
-						}, {
-							number: 4,
-							onoff: false
-						}, {
-							number: 5,
-							onoff: false
-						}, {
-							number: 6,
-							onoff: false
-						}, {
-							number: 7,
-							onoff: false
-						}, {
-							number: 8,
-							onoff: false
-						}, {
-							number: 9,
-							onoff: false
-						}]
-					},
-					{
-						"title": '万位',
-						"index": 2,
-						"zongOnoff1": {
-							quanonoff: false,
-							daonoff: false,
-							xiaoonoff: false,
-							jionoff: false,
-							ouonoff: false,
-							qingonoff: false,
-						},
-						"nums": [{
-							number: 0,
-							onoff: false
-						}, {
-							number: 1,
-							onoff: false
-						}, {
-							number: 2,
-							onoff: false
-						}, {
-							number: 3,
-							onoff: false
-						}, {
-							number: 4,
-							onoff: false
-						}, {
-							number: 5,
-							onoff: false
-						}, {
-							number: 6,
-							onoff: false
-						}, {
-							number: 7,
-							onoff: false
-						}, {
-							number: 8,
-							onoff: false
-						}, {
-							number: 9,
-							onoff: false
-						}]
-					},
-					{
-						"title": '千位',
-						"index": 3,
-						"zongOnoff1": {
-							quanonoff: false,
-							daonoff: false,
-							xiaoonoff: false,
-							jionoff: false,
-							ouonoff: false,
-							qingonoff: false,
-						},
-						"nums": [{
-							number: 0,
-							onoff: false
-						}, {
-							number: 1,
-							onoff: false
-						}, {
-							number: 2,
-							onoff: false
-						}, {
-							number: 3,
-							onoff: false
-						}, {
-							number: 4,
-							onoff: false
-						}, {
-							number: 5,
-							onoff: false
-						}, {
-							number: 6,
-							onoff: false
-						}, {
-							number: 7,
-							onoff: false
-						}, {
-							number: 8,
-							onoff: false
-						}, {
-							number: 9,
-							onoff: false
-						}]
-					},
-					{
-						"title": '十位',
-						"index": 5,
-						"zongOnoff1": {
-							quanonoff: false,
-							daonoff: false,
-							xiaoonoff: false,
-							jionoff: false,
-							ouonoff: false,
-							qingonoff: false,
-						},
-						"nums": [{
-							number: 0,
-							onoff: false
-						}, {
-							number: 1,
-							onoff: false
-						}, {
-							number: 2,
-							onoff: false
-						}, {
-							number: 3,
-							onoff: false
-						}, {
-							number: 4,
-							onoff: false
-						}, {
-							number: 5,
-							onoff: false
-						}, {
-							number: 6,
-							onoff: false
-						}, {
-							number: 7,
-							onoff: false
-						}, {
-							number: 8,
-							onoff: false
-						}, {
-							number: 9,
-							onoff: false
-						}]
-					}
-				],
-				
 			};
 		},
 		methods: {
@@ -262,73 +44,62 @@
 			},
 			//数字选择
 			clickbuttom(index, index1) {
-				Array.prototype.indexOf = function(val) {
-					for (var i = 0; i < this.length; i++) {
-						if (this[i] == val) return i;
-					}
-					return -1;
-				};
-				Array.prototype.remove = function(val) {
-					var Index = this.indexOf(val);
-					if (Index > -1) {
-						this.splice(Index, 1);
-					}
-				};
+			
 				let quanonoff = true;
 				let daonoff = true;
 				let xiaoonoff = true;
 				let jionoff = true;
 				let ouonoff = true;
-				for (let i = 0; i < this.digits[index].nums.length; i++) {
+				for (let i = 0; i < this.codebox[index].code.length; i++) {
 					if (i == index1) {
-						this.digits[index].nums[index1].onoff = !this.digits[index].nums[index1].onoff;
-						if (this.digits[index].nums[index1].onoff == true) {
-							this.list2[index].push(this.digits[index].nums[index1].number)
+						this.codebox[index].code[index1].onoff = !this.codebox[index].code[index1].onoff;
+						if (this.codebox[index].code[index1].onoff == true) {
+							this.list2[index].push(this.codebox[index].code[index1].number)
 						}else {
-							this.list2[index].remove(this.digits[index].nums[index1].number);
+							this.$myJs.array_remove(this.codebox[index].code[index1].number,this.list2[index])
 						}
 					}
-					// 判断是否全选nums
-					if(this.digits[index].nums[i].onoff == false){
+					// 判断是否全选code
+					if(this.codebox[index].code[i].onoff == false){
 						quanonoff = false;
 					}
-					// 判断是否全选属于大的nums
+					// 判断是否全选属于大的code
 					if(i>=6){
-						if(this.digits[index].nums[i].onoff == false){
+						if(this.codebox[index].code[i].onoff == false){
 						daonoff = false;
 						}
 					}else if(i<6){
-						if(this.digits[index].nums[i].onoff == true){
+						if(this.codebox[index].code[i].onoff == true){
 						daonoff = false;
 						}
 					}
-					// 判断是否全选属于小的nums
+					// 判断是否全选属于小的code
 					if(i<6){
-						if(this.digits[index].nums[i].onoff == false){
+						if(this.codebox[index].code[i].onoff == false){
 						xiaoonoff = false;
 						}
 					}else if(i>=6){
-						if(this.digits[index].nums[i].onoff == true){
+						if(this.codebox[index].code[i].onoff == true){
 						xiaoonoff = false;
 						}
 					}
-					// 判断是否全选属于奇的nums
+					// 判断是否全选属于奇的code
 					if(i%2 == 1){
-						if(this.digits[index].nums[i].onoff == false){
+						if(this.codebox[index].code[i].onoff == false){
 						jionoff = false;
 						}
 					}else if(i%2 == 0){
-						if(this.digits[index].nums[i].onoff == true){
+						if(this.codebox[index].code[i].onoff == true){
 						jionoff = false;
 						}
 					}
-					// 判断是否全选属于偶的nums
+					// 判断是否全选属于偶的code
 					if(i%2 == 0){
-						if(this.digits[index].nums[i].onoff == false){
+						if(this.codebox[index].code[i].onoff == false){
 						ouonoff = false;
 						}
 					}else if(i%2 == 1){
-						if(this.digits[index].nums[i].onoff == true){
+						if(this.codebox[index].code[i].onoff == true){
 						ouonoff = false;
 						}
 					}
@@ -340,48 +111,36 @@
 					}else{layan.push(res.join(''))}
 					
 				})
-				this.digits[index].zongOnoff1.quanonoff = quanonoff
-				this.digits[index].zongOnoff1.daonoff = daonoff
-				this.digits[index].zongOnoff1.xiaoonoff = xiaoonoff
-				this.digits[index].zongOnoff1.jionoff = jionoff
-				this.digits[index].zongOnoff1.ouonoff = ouonoff
+				this.codebox[index].zongOnoff1.quanonoff = quanonoff
+				this.codebox[index].zongOnoff1.daonoff = daonoff
+				this.codebox[index].zongOnoff1.xiaoonoff = xiaoonoff
+				this.codebox[index].zongOnoff1.jionoff = jionoff
+				this.codebox[index].zongOnoff1.ouonoff = ouonoff
 				this.$emit('click_list2', layan)
 			}
 			// 奇偶选择.
 			,
 			all_choose(index) {
-				Array.prototype.indexOf = function(val) {
-					for (var i = 0; i < this.length; i++) {
-						if (this[i] == val) return i;
-					}
-					return -1;
-				};
-				Array.prototype.remove = function(val) {
-					var index = this.indexOf(val);
-					if (index > -1) {
-						this.splice(index, 1);
-					}
-				};
 				this.list2[index] = [];
-				if (this.digits[index].zongOnoff1.quanonoff == false) {
+				if (this.codebox[index].zongOnoff1.quanonoff == false) {
 					// 将全大小清奇偶关闭
-					for (let key in this.digits[index].zongOnoff1) {
-						this.digits[index].zongOnoff1[key] = false;
+					for (let key in this.codebox[index].zongOnoff1) {
+						this.codebox[index].zongOnoff1[key] = false;
 					}
 					// 循环每个12345789列表
-					for (let key in this.digits[index].nums) {
-						// 将点击对应的nums列表开关打开
-						this.digits[index].nums[key].onoff = true;
+					for (let key in this.codebox[index].code) {
+						// 将点击对应的code列表开关打开
+						this.codebox[index].code[key].onoff = true;
 						// 将点击的数字赋值到list2
-						if (this.digits[index].nums[key].onoff == true) {
-							this.list2[index].push(this.digits[index].nums[key].number)
+						if (this.codebox[index].code[key].onoff == true) {
+							this.list2[index].push(this.codebox[index].code[key].number)
 						} else {
-							this.list2[index].remove(this.digits[index].nums[key].number);
+							this.$myJs.array_remove(this.codebox[index].code[key].number,this.list2[index])
 						}
 					}
 				}else{
-					for (let key in this.digits[index].nums) {
-						this.digits[index].nums[key].onoff = false;
+					for (let key in this.codebox[index].code) {
+						this.codebox[index].code[key].onoff = false;
 					}
 				}
 				let layan = []
@@ -391,37 +150,37 @@
 					}else{layan.push(res.join(''))}
 					
 				})
-				this.digits[index].zongOnoff1.quanonoff = !this.digits[index].zongOnoff1.quanonoff;
+				this.codebox[index].zongOnoff1.quanonoff = !this.codebox[index].zongOnoff1.quanonoff;
 				this.$emit('click_list2', layan)
 			},
 			big_choose(index) {
 				//把list2[index]清空
 				this.list2[index] = [];
 				//得到大的数字
-				let len = Math.floor(this.digits[index].nums.length / 2);
+				let len = Math.floor(this.codebox[index].code.length / 2);
 				//把zongOnoff1全关掉只有bigonoff是true
-				if(this.digits[index].zongOnoff1.daonoff == false){
-					for(let i in this.digits[index].zongOnoff1){
-					this.digits[index].zongOnoff1[i] = false;
+				if(this.codebox[index].zongOnoff1.daonoff == false){
+					for(let i in this.codebox[index].zongOnoff1){
+					this.codebox[index].zongOnoff1[i] = false;
 					}
 					//把选上的数字加入到list2[index]
-					for(let i = 0; i < this.digits[index].nums.length; i++){
+					for(let i = 0; i < this.codebox[index].code.length; i++){
 						if(i>len){
-							this.digits[index].nums[i].onoff = true;
-							if (this.digits[index].nums[i].onoff == true) {
-								this.list2[index].push(this.digits[index].nums[i].number)
+							this.codebox[index].code[i].onoff = true;
+							if (this.codebox[index].code[i].onoff == true) {
+								this.list2[index].push(this.codebox[index].code[i].number)
 							} else {
-								this.list2[index].remove(this.digits[index].nums[i].number);
+								this.$myJs.array_remove(this.codebox[index].code[i].number,this.list2[index])
 							}
 						}else{
 							// 把属于小的onoff = false
-								this.digits[index].nums[i].onoff = false;
+								this.codebox[index].code[i].onoff = false;
 						}
 					}
 				}else{
-					//把digits[index].nums里面的onoff全关掉
-					for(let i in this.digits[index].nums){
-						this.digits[index].nums[i].onoff = false;
+					//把codebox[index].code里面的onoff全关掉
+					for(let i in this.codebox[index].code){
+						this.codebox[index].code[i].onoff = false;
 					}
 				}
 				//把list2[index]传到shishicai
@@ -432,37 +191,37 @@
 					}else{layan.push(res.join(''))}
 					
 				})
-				this.digits[index].zongOnoff1.daonoff = !this.digits[index].zongOnoff1.daonoff
+				this.codebox[index].zongOnoff1.daonoff = !this.codebox[index].zongOnoff1.daonoff
 				this.$emit('click_list2', layan)
 			},
 			small_choose(index) {
 				//把list2[index]清空
 				this.list2[index] = [];
 				//得到大的数字
-				let len = Math.floor(this.digits[index].nums.length / 2);
+				let len = Math.floor(this.codebox[index].code.length / 2);
 				//把zongOnoff1全关掉只有bigonoff是true
-				if(this.digits[index].zongOnoff1.xiaoonoff == false){
-					for(let i in this.digits[index].zongOnoff1){
-					this.digits[index].zongOnoff1[i] = false;
+				if(this.codebox[index].zongOnoff1.xiaoonoff == false){
+					for(let i in this.codebox[index].zongOnoff1){
+					this.codebox[index].zongOnoff1[i] = false;
 					}
 					//把选上的数字加入到list2[index]
-					for(let i = 0; i < this.digits[index].nums.length; i++){
+					for(let i = 0; i < this.codebox[index].code.length; i++){
 						if(i<=len){
-							this.digits[index].nums[i].onoff = true;
-							if (this.digits[index].nums[i].onoff == true) {
-								this.list2[index].push(this.digits[index].nums[i].number)
+							this.codebox[index].code[i].onoff = true;
+							if (this.codebox[index].code[i].onoff == true) {
+								this.list2[index].push(this.codebox[index].code[i].number)
 							} else {
-								this.list2[index].remove(this.digits[index].nums[i].number);
+								this.$myJs.array_remove(this.codebox[index].code[i].number,this.list2[index])
 							}
 						}else{
 							// 把属于小的onoff = false
-								this.digits[index].nums[i].onoff = false;
+								this.codebox[index].code[i].onoff = false;
 						}
 					}
 				}else{
-					//把digits[index].nums里面的onoff全关掉
-					for(let i in this.digits[index].nums){
-						this.digits[index].nums[i].onoff = false;
+					//把codebox[index].code里面的onoff全关掉
+					for(let i in this.codebox[index].code){
+						this.codebox[index].code[i].onoff = false;
 					}
 				}
 				//把list2[index]传到shishicai
@@ -473,35 +232,35 @@
 					}else{layan.push(res.join(''))}
 					
 				})
-				this.digits[index].zongOnoff1.xiaoonoff = !this.digits[index].zongOnoff1.xiaoonoff
+				this.codebox[index].zongOnoff1.xiaoonoff = !this.codebox[index].zongOnoff1.xiaoonoff
 				this.$emit('click_list2', layan)
 			},
 			odd_choose(index) {
 				//把list2[index]清空
 				this.list2[index] = [];
 				//把zongOnoff1全关掉只有bigonoff是true
-				if(this.digits[index].zongOnoff1.jionoff == false){
-					for(let i in this.digits[index].zongOnoff1){
-					this.digits[index].zongOnoff1[i] = false;
+				if(this.codebox[index].zongOnoff1.jionoff == false){
+					for(let i in this.codebox[index].zongOnoff1){
+					this.codebox[index].zongOnoff1[i] = false;
 					}
 					//把选上的数字加入到list2[index]
-					for(let i = 0; i < this.digits[index].nums.length; i++){
+					for(let i = 0; i < this.codebox[index].code.length; i++){
 						if(i%2 == 1){
-							this.digits[index].nums[i].onoff = true;
-							if (this.digits[index].nums[i].onoff == true) {
-								this.list2[index].push(this.digits[index].nums[i].number)
+							this.codebox[index].code[i].onoff = true;
+							if (this.codebox[index].code[i].onoff == true) {
+								this.list2[index].push(this.codebox[index].code[i].number)
 							} else {
-								this.list2[index].remove(this.digits[index].nums[i].number);
+								this.$myJs.array_remove(this.codebox[index].code[i].number,this.list2[index])
 							}
 						}else{
 							// 把属于小的onoff = false
-								this.digits[index].nums[i].onoff = false;
+								this.codebox[index].code[i].onoff = false;
 						}
 					}
 				}else{
-					//把digits[index].nums里面的onoff全关掉
-					for(let i in this.digits[index].nums){
-						this.digits[index].nums[i].onoff = false;
+					//把codebox[index].code里面的onoff全关掉
+					for(let i in this.codebox[index].code){
+						this.codebox[index].code[i].onoff = false;
 					}
 				}
 				//把list2[index]传到shishicai
@@ -512,35 +271,35 @@
 					}else{layan.push(res.join(''))}
 					
 				})
-				this.digits[index].zongOnoff1.jionoff = !this.digits[index].zongOnoff1.jionoff
+				this.codebox[index].zongOnoff1.jionoff = !this.codebox[index].zongOnoff1.jionoff
 				this.$emit('click_list2', layan)
 			},
 			even_choose(index) {
 				//把list2[index]清空
 				this.list2[index] = [];
 				//把zongOnoff1全关掉只有bigonoff是true
-				if(this.digits[index].zongOnoff1.ouonoff == false){
-					for(let i in this.digits[index].zongOnoff1){
-					this.digits[index].zongOnoff1[i] = false;
+				if(this.codebox[index].zongOnoff1.ouonoff == false){
+					for(let i in this.codebox[index].zongOnoff1){
+					this.codebox[index].zongOnoff1[i] = false;
 					}
 					//把选上的数字加入到list2[index]
-					for(let i = 0; i < this.digits[index].nums.length; i++){
+					for(let i = 0; i < this.codebox[index].code.length; i++){
 						if(i%2 == 0){
-							this.digits[index].nums[i].onoff = true;
-							if (this.digits[index].nums[i].onoff == true) {
-								this.list2[index].push(this.digits[index].nums[i].number)
+							this.codebox[index].code[i].onoff = true;
+							if (this.codebox[index].code[i].onoff == true) {
+								this.list2[index].push(this.codebox[index].code[i].number)
 							} else {
-								this.list2[index].remove(this.digits[index].nums[i].number);
+								this.$myJs.array_remove(this.codebox[index].code[i].number,this.list2[index])
 							}
 						}else{
 							// 把属于小的onoff = false
-								this.digits[index].nums[i].onoff = false;
+								this.codebox[index].code[i].onoff = false;
 						}
 					}
 				}else{
-					//把digits[index].nums里面的onoff全关掉
-					for(let i in this.digits[index].nums){
-						this.digits[index].nums[i].onoff = false;
+					//把codebox[index].code里面的onoff全关掉
+					for(let i in this.codebox[index].code){
+						this.codebox[index].code[i].onoff = false;
 					}
 				}
 				//把list2[index]传到shishicai
@@ -551,19 +310,19 @@
 					}else{layan.push(res.join(''))}
 					
 				})
-				this.digits[index].zongOnoff1.ouonoff = !this.digits[index].zongOnoff1.ouonoff
+				this.codebox[index].zongOnoff1.ouonoff = !this.codebox[index].zongOnoff1.ouonoff
 				this.$emit('click_list2', layan)
 			},
 			none_choose(index) {
 				//把list2[index]清空
 				this.list2[index] = [];
 				//把zongOnoff1全关掉只有bigonoff是true
-				if(this.digits[index].zongOnoff1.qingonoff == false){
-					for(let i in this.digits[index].zongOnoff1){
-					this.digits[index].zongOnoff1[i] = false;
+				if(this.codebox[index].zongOnoff1.qingonoff == false){
+					for(let i in this.codebox[index].zongOnoff1){
+					this.codebox[index].zongOnoff1[i] = false;
 					}}
-				for(let i in this.digits[index].nums){
-						this.digits[index].nums[i].onoff = false;
+				for(let i in this.codebox[index].code){
+						this.codebox[index].code[i].onoff = false;
 					}
 				//把list2[index]传到shishicai
 				let layan = []
@@ -573,7 +332,7 @@
 					}else{layan.push(res.join(''))}
 					
 				})
-				this.digits[index].zongOnoff1.qingonoff = !this.digits[index].zongOnoff1.qingonoff
+				// this.codebox[index].zongOnoff1.qingonoff = !this.codebox[index].zongOnoff1.qingonoff
 				this.$emit('click_list2', layan)
 			}
 			//其他
@@ -582,7 +341,7 @@
 </script>
 
 <style lang='scss'>
-	.digits {
+	.codebox {
 		margin: $uni-spacing-col-base 0;
 		font-size: $uni-font-size-lg;
 		text-align: center;

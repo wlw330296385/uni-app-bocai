@@ -1,5 +1,5 @@
 <template>
-	<view class="page">
+	<view class="content">
 	<!-- navigationbar -->
 	<navigationbar :playmode = "playmode" :playmode1="playmode1" :caizhong = "caizhong"></navigationbar>
 		<dynamic :hour="hour" :minute='minute' :second='second'></dynamic>
@@ -86,7 +86,11 @@
 								})
 								this.yjfl[0].Index = true
 							}else{
-								alert(res.data.message)
+								
+									uni.showToast({
+										title:res.data.message,
+										icon:"none"
+									})
 							}
 						}
 					}
@@ -97,7 +101,8 @@
 </script>
 
 <style>
-	.page{
-		padding-top: 70upx;
+
+	.content{
+		margin-top: 60upx;
 	}
 </style>

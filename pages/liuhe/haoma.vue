@@ -1,6 +1,6 @@
 <template>
 	<view class="page">
-		<liuheHead></liuheHead>	
+		<liuheHead :rule="rule" :gameId="gameId"></liuheHead>	
 		<!-- 彩种选择列表 -->
 		<view class="page_five">
 			<view class="page_five_list">
@@ -47,6 +47,18 @@
 		components:{liuheHead,OnekeyBettingLiuhe},
 		data() {
 			return {
+				gameId:104,
+				rule:`
+				①平码
+				香港六合彩公司当期开出之前6个号码叫平码
+				每个号码为一投注组合,假如投注号码为
+				开奖号码之平码,视为中奖,其余情形视为不
+				中奖
+				②特码
+				香港六合彩公司当期开出之最后号码叫特码
+				每个号码为一投注组合,假如投注号码为
+				特码,视为中奖,其余情形视为不中奖。
+				`,
 				wanfa:0,
 				codeList:[],
 				color_onoff:[],
@@ -97,6 +109,16 @@
 				})
 			};
 			this.getCodeList();
+		},
+		// 页面周期与 onLoad 同级
+		onBackPress(e) {
+			console.log(e);
+			if (e.from == 'backbutton') {
+				uni.switchTab({
+					url:"/pages/tabbar/tabbar-1/tabbar-1"
+				});
+				return true; //阻止默认返回行为
+			}
 		},
 		methods: {
 			addClass(item){

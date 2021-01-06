@@ -62,19 +62,18 @@
 		width: 95%;
 		border-top-left-radius:15px;
 		border-top-right-radius:15px;
-		background-color: #021769;
 	}
 	.title{
 		border-top-left-radius:15px;
 		border-top-right-radius:15px;
-		background-color: #342075;
+		background-color: #b0b0b0;
 		display: flex;
 		color: #fff;
 		justify-content: space-between;
 	}
 	.title-left{
 		padding: 4px 10px;
-		color: #fff;
+		color: #000000;
 	}
 	.title-right{
 		padding: 4px 115px 0 0;
@@ -83,6 +82,8 @@
 		padding: 5px 0;
 		display: flex;
 		justify-content: space-between;
+		
+		box-shadow: 10upx 10upx 10upx #f0f0f0;
 	}
 	.button{
 		width: 25px;
@@ -90,16 +91,15 @@
 		border-radius: 50%;
 		text-align: center;
 		line-height: 25px;
-		background-image: $uni-bg-color-linear;
+		background-color: $theme-color-text;
 		margin: 0 5upx;
-		/* background-image: $uni-bg-color-linear; */
-		/* color: #fff; */
+		color: #FFFFFF;
 	}
 	.title-flex{
 		padding: 5px 20px 0 0;
 		display: flex;
 	}
 	.list-bgc{
-		background-color: #444691;
+		background-color: #f4f4f4;
 	}
 </style>

@@ -1,6 +1,5 @@
 <template>
-	<view>
-		<view class="page">
+	<view class="content">
 	<navigationbar :playmode = "playmode" :playmode1="playmode1" :caizhong = "caizhong"></navigationbar>
 		<dynamic :hour="hour" :minute='minute' :second='second'></dynamic>
 			<cmd-textarea :weishu="weishu" :weishu_list="weishu_list" @click_list1="click_list1" @click_list2="click_list2"></cmd-textarea>
@@ -12,9 +11,6 @@
 				 :caizhong = "caizhong"
 				 :yjfl = "yjfl"
 			 ></OnekeyBetting>
-		</view>
-		<view>
-		</view>
 	</view>
 </template>
 
@@ -86,7 +82,11 @@
 								})
 								this.yjfl[0].Index = true
 							}else{
-								alert(res.data.message)
+								
+									uni.showToast({
+										title:res.data.message,
+										icon:"none"
+									})
 							}
 						}
 					}
@@ -98,7 +98,6 @@
 
 <style>
 	.page {
-		padding-top: 70upx;
-		padding-bottom: 500upx;
+		margin-top: 60upx;
 	}
 </style>

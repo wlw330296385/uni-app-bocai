@@ -4,9 +4,8 @@
 		<refresh ref="refresh" @isRefresh='isRefresh'></refresh>
 		<view class='nav'>
 			<!-- #ifdef H5 -->
-			<!-- <view style="height: 44px;width: 100%;"></view> -->
+			<view style="height: 44px;width: 100%;"></view>
 			<!-- #endif -->
-
 			<!-- 导航栏 agents导航栏标题 -->
 			<navTab ref="navTab" :tabTitle="tabTitle" @changeTab='changeTab'  @changeTabid='changeTabid'></navTab>
 		</view>
@@ -86,7 +85,11 @@
 							if(res.data.code == 200){
 								this.tabTitle = res.data.data
 							}else{
-								alert(res.massage)
+								
+								uni.showToast({
+									title:res.data.message,
+									icon:"none"
+								})
 							}
 						}
 					}
@@ -106,7 +109,10 @@
 							if(res.data.code == 200){
 								this.list[this.currentTab] = res.data.data.content
 							}else{
-								alert(res.massage)
+								uni.showToast({
+									title:res.data.message,
+									icon:"none"
+								})
 							}
 						}
 					}
@@ -193,14 +199,8 @@
 		right: 0;
 		left: 0;
 		bottom: 0;
-		background-image: linear-gradient(#151b4a, #0d0827);
-		// background: url(../../../static/img/content-background.png) repeat fixed center;
 		background-size: 100% 100%;
 		}
-
-	.content {
-		width: 100%;
-	}
 	
 	.card {
 		width: 90%;
@@ -231,71 +231,16 @@
 		position: fixed;
 		left: 0;
 		top: 0;
-		color: white;
 		width: 100%;
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
 		justify-content: flex-start;
 		font-size: 24upx;
-		z-index: 996;
+		z-index: 9996;
 	}
-	
-	.searchInput999 {
-		width: 90%;
-		margin: 0 auto;
-		background: white;
-		border-radius: 30upx;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		height: 56upx;
-	}
-	
-	.search999 {
-		width: 32upx;
-		height: 32upx;
-	}
-	
-	.searchBox999 {
-		width: 56upx;
-		height: 56upx;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
-	
-	.input999 {
-		color: #999;
-		width: 80%;
-	}
-
 	.content {
 		width: 100%;
-	}
-
-	.card {
-		width: 90%;
-		height: 368upx;
-		background-color: white;
-		margin: 0 auto 42upx auto;
-		background: #FFFFFF;
-		box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.10);
-		border-radius: 5px;
-		position: relative;
-	}
-
-	.noCard {
-		width: 90%;
-		height: 200upx;
-		margin: auto;
-		background-color: white;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		color: #999999;
-		box-shadow: 0 0 10upx 0 rgba(0, 0, 0, 0.10);
-		border-radius: 10upx;
 	}
 
 

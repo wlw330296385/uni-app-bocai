@@ -6,7 +6,8 @@
 			<p @click="lijixiugai">USDT提款</p>
 		</view>
 		<uni-popup ref="popup" type="dialog">
-			<uni-popup-dialog type="info" mode="base" message="成功消息" title="正在开发,敬请期待" :duration="2000" :before-close="true" @close="close"
+			<uni-popup-dialog type="info" mode="base" message="成功消息" title="正在开发,敬请期待" 
+			:duration="2000" :before-close="true" @close="close" :list="[]"
 			 @confirm="confirm">
 			 </uni-popup-dialog>
 		</uni-popup>

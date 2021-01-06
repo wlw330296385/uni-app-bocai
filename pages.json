@@ -16,7 +16,7 @@
 			"style": {
 				"navigationBarTitleText": "彩票"
 				,"app-plus": {  
-				//#ifndef APP-PLUS
+				//#ifndef H5
 					"titleNView": false
 				//#endif 
 				} 
@@ -27,7 +27,7 @@
 			"style": {
 				"navigationBarTitleText": "走势"
 				,"app-plus": {  
-				//#ifndef APP-PLUS
+				//#ifndef H5
 					"titleNView": false
 				//#endif 
 				} 
@@ -42,7 +42,7 @@
 					"navigationBarBackgroundColor": "white",
 					"enablePullDownRefresh":false
 					,"app-plus": {  
-					//#ifndef APP-PLUS
+					//#ifndef H5
 						"titleNView": false
 					//#endif 
 				} 
@@ -53,7 +53,7 @@
 			"style": {
 				"navigationBarTitleText": "活动"
 				,"app-plus": {  
-				//#ifndef APP-PLUS
+				//#ifndef H5
 					"titleNView": false
 				//#endif 
 				} 
@@ -64,7 +64,7 @@
 			"style": {
 				"navigationBarTitleText": "娱乐"
 				,"app-plus": {  
-				//#ifndef APP-PLUS
+				//#ifndef H5
 					"titleNView": false
 				//#endif 
 				} 
@@ -87,9 +87,9 @@
                 "navigationBarTitleText": "分分彩",
                 "enablePullDownRefresh": false
 				,"app-plus": {  
-				//#ifndef APP-PLUS
+				
 					"titleNView": false
-				//#endif 
+				
 				} 
             }
             
@@ -100,10 +100,8 @@
             {
                 "navigationBarTitleText": "时时彩",
                 "enablePullDownRefresh": false
-				,"app-plus": {  
-				//#ifndef APP-PLUS
+				,"app-plus": {
 					"titleNView": false
-				//#endif 
 				}   
             }
             
@@ -156,7 +154,7 @@
                 "navigationBarTitleText": "cai",
                 "enablePullDownRefresh": false
 				,"app-plus": {  
-				//#ifndef APP-PLUS
+				//#ifndef H5
 					"titleNView": false
 				//#endif 
 				} 
@@ -170,7 +168,7 @@
                 "navigationBarTitleText": "开奖详情列表",
                 "enablePullDownRefresh": false
 				,"app-plus": {  
-				//#ifndef APP-PLUS
+				//#ifndef H5
 					"titleNView": false
 				//#endif 
 				} 
@@ -184,7 +182,7 @@
                 "navigationBarTitleText": "",
                 "enablePullDownRefresh": false
 				,"app-plus": {  
-				//#ifndef APP-PLUS
+				//#ifndef H5
 					"titleNView": false
 				//#endif 
 				} 
@@ -198,7 +196,7 @@
                 "navigationBarTitleText": "",
                 "enablePullDownRefresh": false
 				,"app-plus": {  
-				//#ifndef APP-PLUS
+				//#ifndef H5
 					"titleNView": false
 				//#endif 
 				} 
@@ -226,7 +224,7 @@
                 "navigationBarTitleText": "用户消息",
                 "enablePullDownRefresh": false
 				,"app-plus": {  
-				//#ifndef APP-PLUS
+				//#ifndef H5
 					"titleNView": false
 				//#endif 
 				} 
@@ -240,7 +238,7 @@
                 "navigationBarTitleText": "",
                 "enablePullDownRefresh": false
 				,"app-plus": {  
-				//#ifndef APP-PLUS
+				//#ifndef H5
 					"titleNView": false
 				//#endif 
 				} 
@@ -254,7 +252,7 @@
                 "navigationBarTitleText": "彩票报表",
                 "enablePullDownRefresh": false
 				,"app-plus": {  
-				//#ifndef APP-PLUS
+				//#ifndef H5
 					"titleNView": false
 				//#endif 
 				} 
@@ -268,7 +266,7 @@
                 "navigationBarTitleText": "常见问题",
                 "enablePullDownRefresh": false
 				,"app-plus": {  
-				//#ifndef APP-PLUS
+				//#ifndef H5
 					"titleNView": false
 				//#endif 
 				} 
@@ -283,7 +281,7 @@
                 "navigationBarTitleText": "修改密码",
                 "enablePullDownRefresh": false
 				,"app-plus": {  
-				//#ifndef APP-PLUS
+				//#ifndef H5
 					"titleNView": false
 				//#endif 
 				} 
@@ -297,7 +295,7 @@
                 "navigationBarTitleText": "立即提现",
                 "enablePullDownRefresh": false
 				,"app-plus": {  
-				//#ifndef APP-PLUS
+				//#ifndef H5
 					"titleNView": false
 				//#endif 
 				} 
@@ -311,7 +309,7 @@
                 "navigationBarTitleText": "团队首页",
                 "enablePullDownRefresh": false
 				,"app-plus": {  
-				//#ifndef APP-PLUS
+				//#ifndef H5
 					"titleNView": false
 				//#endif 
 				} 
@@ -325,7 +323,7 @@
                 "navigationBarTitleText": "真人体育",
                 "enablePullDownRefresh": false
 				,"app-plus": {  
-				//#ifndef APP-PLUS
+				//#ifndef H5
 					"titleNView": false
 				//#endif 
 				} 
@@ -339,7 +337,7 @@
                 "navigationBarTitleText": "玩法介绍",
                 "enablePullDownRefresh": false
 				,"app-plus": {  
-				//#ifndef APP-PLUS
+				//#ifndef H5
 					"titleNView": false
 				//#endif 
 				} 
@@ -353,7 +351,7 @@
                 "navigationBarTitleText": "彩种介绍",
                 "enablePullDownRefresh": false
 				,"app-plus": {  
-				//#ifndef APP-PLUS
+				//#ifndef H5
 					"titleNView": false
 				//#endif 
 				} 
@@ -367,7 +365,7 @@
                 "navigationBarTitleText": "绑定银行卡",
                 "enablePullDownRefresh": false
 				,"app-plus": {  
-				//#ifndef APP-PLUS
+				//#ifndef H5
 					"titleNView": false
 				//#endif 
 				} 
@@ -464,6 +462,24 @@
             }
             
         }
+        ,{
+            "path" : "pages/tabbar/tabbar-3/accountRecord",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "账变记录",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/tabbar/tabbar-3/Securitysettings",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
@@ -473,9 +489,9 @@
 	},
 	"tabBar": {
 		"borderStyle": "black",
-		"backgroundColor": "#0d0827",
-		"color": "#8F8F94",
-		"selectedColor": "#fff",
+		"backgroundColor": "#ffffff",
+		"color": "#000000",
+		"selectedColor": "#FF8E00",
 		"list": [{
 				"pagePath": "pages/tabbar/tabbar-1/tabbar-1",
 				"iconPath": "static/img/tabbar/home.png",

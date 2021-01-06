@@ -29,7 +29,7 @@
 					</view>
 					<view>立即充值</view>
 				</navigator>
-				<navigator class="botton-flex" url="/pages/tabbar/tabbar-3/accountChangeRecord">
+				<navigator class="botton-flex" url="/pages/tabbar/tabbar-3/accountRecord">
 					<view class="btn-area-img">
 						<image mode="scaleToFill" style="width: 100upx; height: 100upx;" src="@/static/jilu.png" alt=""></image>
 					</view>
@@ -86,7 +86,7 @@
 						<span class="report_xc-span">
 							<image mode="scaleToFill" style="width: 50upx; height: 50upx;" class="report_sc-img" src="@/static/team.png"
 							 alt=""></image>
-								代理日报/团队日报
+								代理管理/团队日报
 						</span>
 						<span class="icon_gt">></span>
 						</navigator>
@@ -123,15 +123,15 @@
 						<span class="icon_gt">></span>
 						</navigator>
 					</li>
-					<li @click="clickdialog" class="report_xc_flex">
-						<!-- <navigator class="report_xc_flex" url="/pages/tabbar/tabbar-3/detailsList"> -->
+					<li>
+						<navigator class="report_xc_flex" url="/pages/tabbar/tabbar-3/Securitysettings">
 						<span class="report_xc-span">
 							<image mode="scaleToFill" style="width: 50upx; height: 50upx;" class="report_sc-img" src="@/static/secret.png"
 							 alt=""></image>
 								密保设定
 						</span>
 						<span class="icon_gt">></span>
-						<!-- </navigator> -->
+						</navigator>
 					</li>
 					<li @click="clickdialog" class="report_xc_flex">
 						<!-- <navigator class="report_xc_flex" url="/pages/tabbar/tabbar-3/detailsList"> -->
@@ -146,7 +146,7 @@
 					<li>
 						<navigator class="report_xc_flex" url="/pages/tabbar/tabbar-3/sysMessage">
 						<span class="report_xc-span">
-							<image mode="scaleToFill" style="width: 50upx; height: 50upx;" class="report_sc-img" src="@/static/notic.png"
+							<image mode="scaleToFill" style="width: 50upx; height: 50upx;" class="report_sc-img" src="@/static/notice.png"
 							 alt=""></image>
 								公告
 						</span>
@@ -197,11 +197,13 @@
 
 			</view>
 			<uni-popup ref="popup" type="dialog">
-				<uni-popup-dialog type="input" mode="base" message="成功消息" title="提示" content="正在开发,敬请期待" cancel="false" :duration="2000"
+				<uni-popup-dialog type="input" mode="base" message="成功消息" title="提示" 
+				content="正在开发,敬请期待" cancel="false" :duration="2000" :list="[]"
 				 :before-close="true" @close="close" @confirm="confirm"></uni-popup-dialog>
 			</uni-popup>
 			<uni-popup ref="popup1" type="dialog">
-				<uni-popup-dialog type="input" mode="base" message="成功消息" title="提示" content="确认退出?" cancel="false" :duration="2000"
+				<uni-popup-dialog type="input" mode="base" message="成功消息" title="提示" content="确认退出?"
+				 cancel="false" :duration="2000" :list="[]"
 				 :before-close="true" @close="close1" @confirm="confirm1"></uni-popup-dialog>
 			</uni-popup>
 		</view>
@@ -294,7 +296,10 @@
 									url:"/pages/login/login"
 								})
 							}else{
-								alert(res.data.message)
+								uni.showToast({
+									title:res.data.message,
+									icon:"none"
+								})
 							}
 						}
 					}
@@ -425,7 +430,7 @@
 	}
 
 	.icon_gt {
-		color: #c878d5;
+		color: $theme-color-text;
 		font-size: 20px;
 	}
 

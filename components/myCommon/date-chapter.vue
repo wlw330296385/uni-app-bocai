@@ -46,7 +46,7 @@
 				text-align: center;
 			}
 			.selection-top-color {
-				background-color: #ffaaff;
+				background-color: $theme-color;
 				color: #fff;
 			}
 		}

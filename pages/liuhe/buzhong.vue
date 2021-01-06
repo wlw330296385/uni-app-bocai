@@ -1,6 +1,6 @@
 <template>
 	<view class="page">
-		<liuheHead></liuheHead>	
+		<liuheHead :rule="rule" :gameId="gameId"></liuheHead>	
 		<!-- 彩种选择列表 -->
 		<view class="page_five">
 			<view class="page_five_list">
@@ -12,7 +12,7 @@
 			<view class="page_five_list1">
 				<view class="page_five_list_item-1" v-for="(item1,index1) in five_list_item" :key="index1">
 					<view class="page_five_list_item-1_item"  :class="item1.onoff?'page_five_list_item_onoff':''"
-					 @click="onoffclick1(index1)">
+					 @click="onoffclick1(index1,item1)">
 					 <span>
 					    {{item1.code}}
 						<br>
@@ -38,7 +38,8 @@
 			 :data_list1="data_list1"
 			 :data_list2="data_list2"
 			 :playmode = "playmode"
-			 :caizhong = "caizhong"
+			 :caizhong = "wname"
+			 :wname = "wname"
 			 :yjfl="yjfl"
 		 ></OnekeyBettingLiuhe>
 	</view>
@@ -52,11 +53,13 @@
 		components:{liuheHead,OnekeyBettingLiuhe},
 		data() {
 			return {
+				gameId:104,
+				rule:"自选不中奖:挑选5-12个号码为一个组合,当期号码(所有平码与最后开出的特码)皆没有坐落于投注时所挑选之号码组合内,则视为中奖,若是有任何一个当期号码开在所挑选的号码组合情形视为不中奖。例如当期号码为19,24,17,34,40,39特别号49,所挑选5个号码(称为五不中),若所挑选的号码内皆没有坐落于当期号码,则为中奖",
 				codeList:[],
 				data_list1:[],
 				data_list2:[],
-				playmode:"连号",
-				caizhong:"六合",
+				playmode:"五不中",
+				wname:"不中",
 				yjfl:[
 					  {
 						title: "元",
@@ -85,15 +88,18 @@
 			}
 		},
 		created() {
-			for (let i = 1; i < 50; i++) {
-				this.codeList.push({
-					title:i,
-					onoff:false,
-					odds:Math.round(Math.random() * 10),
-				})
-			}
 			this.getCodeList();
 			this.getBuzhonglList();
+		},
+		// 页面周期与 onLoad 同级
+		onBackPress(e) {
+			console.log(e);
+			if (e.from == 'backbutton') {
+				uni.switchTab({
+					url:"/pages/tabbar/tabbar-1/tabbar-1"
+				});
+				return true; //阻止默认返回行为
+			}
 		},
 		methods: {
 			addClass(item){
@@ -127,16 +133,26 @@
 					success: (res) => {
 							if(res.data.code == 200){
 								console.log(res.data.data)
+								this.wname = res.data.data.wname;
+								let key = 0;
 								res.data.data.lhcCodeVos.forEach(item=>{
+									let onoff = false;
+									if(key ==0){
+										onoff = true;
+									}
 									this.five_list_item.push({
 										code:item.code,
-										onoff:false,
+										onoff:onoff,
 										odds:item.odds
 									})
+									key++
 								})
 								this.yjfl[0].Index = true
 							}else{
-								alert(res.data.message)
+								uni.showToast({
+									title:res.data.message,
+									icon:"none"
+								})
 							}
 						}
 					}
@@ -179,8 +195,8 @@
 					}
 				})
 			},
-			onoffclick1(index1){
-				this.wanfas = index1;
+			onoffclick1(index1, item){
+				this.playmode = item.code;
 				this.getCodeList();
 				for(let i in this.five_list_item) {
 					this.five_list_item[i].onoff = false;

@@ -4,7 +4,6 @@
 			 
 			<view class="flex-item item-left">
 				<view class="uni-flex uni-column flex-item">
-					<view class="flex-item flex-item-V">截止时间</view>
 					<view class="flex-item flex-item-V">
 						<view class="uni-flex uni-row item-left-bottom">
 						    <view class="flex-item">
@@ -20,6 +19,7 @@
 							</view>
 						</view>
 					</view>
+					<view class="flex-item flex-item-V">{{currentNumber}}期开奖</view>
 				</view>
 			</view>
 			
@@ -27,8 +27,8 @@
 				<view class="uni-flex uni-column flex-item">
 					<view class="flex-item flex-item-V">
 						<view class="uni-flex uni-row flex-item flex-justify-content-space-between">
-							<view class="flex-item">xx期开奖结果</view>
-							<view class="flex-item" style="color: #007AFF;" @click="record1">
+							<view class="flex-item" style="color: #00c35e;"  @click="record3">玩法规则</view>
+							<view class="flex-item" style="color: #007AFF;"  @click="record1">
 								投注记录
 							</view>
 							<view class="flex-item" style="color: #ff5500;"  @click="record2">开奖历史</view>
@@ -46,24 +46,41 @@
 					</view>
 				</view>
 			</view>
-			
-			<!-- 投注记录，开奖记录弹窗 -->
+			<!-- 玩法规则弹窗 -->
+			<view class="Box1" v-if="box3onoff">
+				<fieldset class="fieldset">
+					<legend class="legend">玩法规则</legend>
+				</fieldset>
+				
+				<view class="Box1-list">
+					<scroll-view style="height: 800upx;" scroll-y="true" scroll-with-animation>
+						<text>
+							{{rule}}
+						</text>
+					</scroll-view>
+				</view>
+				<view class="hr"></view>
+				<view class="Box1-buttom">
+					<view class="Box1-buttom-1" @click="box3onoff=false">关闭</view>
+				</view>
+			</view>
+			<!-- 投注记录弹窗 -->
 			<view class="Box1" v-if="box1onoff">
 				<fieldset class="fieldset">
 					<legend class="legend">近期投注</legend>
 				</fieldset>
 				<view class="Box1-list">
 					<scroll-view style="height: 100%;" scroll-y="true" scroll-with-animation>
-					<view class="Box1-list-1" v-for="(item,index) in 4" :key="index">
+					<view class="Box1-list-1" v-for="(item,index) in orderpagelsit" :key="index">
 						<h2 class="history-code-item item-flex">
-							<view class="Box1-p Box1-p-color">腾讯分分彩</view>
+							<view class="Box1-p Box1-p-color">{{item.gameName}}</view>
 							<view class="Box1-p"></view>
-							<view class="Box1-p Box1-p-details" @click="gotodetails">详情</view>
+							<view class="Box1-p Box1-p-details" @click="gotodetails(item.gameId)">详情</view>
 						</h2>
 						<view class="history-code-item item-flex-center">
-							<view class="Box1-p" v-for="(item,index) in 4" :key="index">
+							<view class="Box1-p" v-for="(item1,index) in item.content" :key="index">
 								<view class="Box1-center">
-									奖
+									{{item1}}
 								</view>
 								<span class="Box1-p-span">
 									x123
@@ -72,8 +89,10 @@
 						</view>
 						<view class="hr"></view>
 						<view class="history-code-item item-flex">
-							<view class="Box1-p">期号:0.0180</view>
-							<view class="Box1-p">状态:未中奖</view>
+							<view class="Box1-p">期号:{{item.qiHao}}</view>
+							<view class="Box1-p" v-if="item.itemStatus == 0">状态:等待开奖</view>
+							<view class="Box1-p" v-if="item.itemStatus == 1">状态:未中奖</view>
+							<view class="Box1-p" v-if="item.itemStatus == 2">状态:中奖</view>
 						</view>
 					</view>
 					</scroll-view>
@@ -82,9 +101,13 @@
 				<view class="Box1-buttom">
 					<view class="Box1-buttom-1" @click="box1onoff=false">关闭</view>
 					<view class="Box1-buttom-1">刷新</view>
-					<view class="Box1-buttom-1 Box1-buttom-1-color">查看更多</view>
+					<navigator url="/pages/tabbar/tabbar-3/detailsList">
+						<view class="Box1-buttom-1 Box1-buttom-1-color">查看更多</view>
+					</navigator>
 				</view>
 			</view>
+			
+			<!-- 开奖记录弹窗 -->
 			<view class="Box2" v-if="box2onoff">
 				<fieldset class="fieldset">
 					<legend class="legend">近期开奖</legend>
@@ -126,31 +149,76 @@
 <script>
 	import uniCountdown from "@/components/uni-countdown/uni-countdown.vue";
 	import quanquan2 from "@/components/myUnits/quanquan-2.vue";
+	
 	export default {
 		components:{uniCountdown,quanquan2},
+		props:["rule","gameId"],
 		data() {
 			return {
 				hour: Math.round(Math.random() * 10),
 				minute: Math.round(Math.random() * 10),
 				second: Math.round(Math.random() * 10),
 				diyihang:Math.round(Math.random() * 100),
+				currentNumber:"",
+				preNumber:'',
 				dierhang:"猴",
 				box1onoff: false,
-				box2onoff: false
+				box2onoff: false,
+				box3onoff: false,
+				orderpagelsit:[]
 			}
 		},
+		mounted() {
+			this.getCurqihao();
+		},
 		methods: {
+			//获取最近期号
+			getCurqihao(){
+				this.$myRequest.get(
+					"/qihao/v1/curqihao",
+					{gameId: this.gameId},
+					{
+						success:(res)=>{
+							if(res.data.code == 200){
+								console.log(res.data.data)
+								this.hour = parseFloat(res.data.data.hour) ;
+								this.second = parseFloat(res.data.data.second);
+								this.minute = parseFloat(res.data.data.minute);
+								this.currentNumber = res.data.data.currentNumber;
+								this.preNumber = res.data.data.preNumber;
+							} else {
+								uni.showToast({
+									title:res.data.message,
+									icon:"none"
+								})
+							}
+						},
+					}
+				);
+			},
+			//获取投注历史
+			getSalesOrderPagelist(){
+				
+			},
 			record1() {
 				this.box1onoff = !this.box1onoff;
+				this.box3onoff = false;
 				this.box2onoff = false;
+				this.getSalesOrderPagelist()
 			},
 			record2() {
 				this.box2onoff = !this.box2onoff;
+				this.box3onoff = false;
 				this.box1onoff = false;
 			},
-			gotodetails(){
+			record3() {
+				this.box3onoff = !this.box3onoff;
+				this.box2onoff = false;
+				this.box1onoff = false;
+			},
+			gotodetails(id){
 				uni.navigateTo({
-					url: '/pages/tabbar/tabbar-3/prizeDetails'
+					url: '/pages/tabbar/tabbar-3/prizeDetails?id='+encodeURIComponent(JSON.stringify(id))
 				});
 			},
 			Seemoreclick(){

@@ -52,7 +52,9 @@
 			<view class="Box1-buttom">
 				<view class="Box1-buttom-1" @click="box1onoff=false">关闭</view>
 				<view class="Box1-buttom-1">刷新</view>
-				<view class="Box1-buttom-1 Box1-buttom-1-color">查看更多</view>
+				<navigator url="/pages/tabbar/tabbar-3/detailsList">
+					<view class="Box1-buttom-1 Box1-buttom-1-color">查看更多</view>
+				</navigator>
 			</view>
 		</view>
 		<view class="Box2" v-if="box2onoff">

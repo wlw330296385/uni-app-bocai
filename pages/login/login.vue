@@ -12,15 +12,15 @@
         <cmd-transition name="fade-up">
           <view v-if="status">
 			  
-            <view class="login-phone">
+            <view class="login-phone"  :class="coloronoff2 == true?'login-username-color':''" @click="coloronoff2 =false" >
 				<view>
 					<image class="loginimage" src="@/static/dianhua.png" mode=""></image>
 				</view>
               <cmd-input v-model="mobile.phone" type="number" focus maxlength="11" placeholder="请输入手机号"></cmd-input>
-              <view class="login-phone-getcode" @tap="!safety.state ? fnGetPhoneCode() : ''">{{!safety.state&&'获取验证码'||(safety.time+' s')}}</view>
+              <view class="login-phone-getcode" @tap="!safety.state ? fnGetPhoneCode() : ''" @click="!safety.state ? fnGetPhoneCode() : ''">{{!safety.state&&'获取验证码'||(safety.time+' s')}}</view>
             </view>
 			
-            <view class="login-code">
+            <view class="login-code"  :class="coloronoff3 == true?'login-username-color':''" @click="coloronoff3 =false" >
 				<view>
 					<image class="loginimage" src="@/static/yanzheng.png" mode=""></image>
 				</view>
@@ -35,10 +35,8 @@
 			</view>
 			
 			
-			  <navigator url="/pages/tabbar/tabbar-1/tabbar-1" open-type="switchTab" hover-class="other-navigator-hover">
-				<button class="btn-login" :class="loginMobile ? 'btn-login-active':''" :disabled="!loginMobile" hover-class="btn-login-hover"
+				<button class="btn-login" :class="loginMobile ? 'btn-login-active':''"  hover-class="btn-login-hover"
 			 @click="fnLogin()" @tap="fnLogin()">登录</button>
-			  </navigator>
           </view>
         </cmd-transition>
         <!-- #endif -->
@@ -49,7 +47,7 @@
 			  	<image class="loginimage" src="@/static/dianhua.png" mode=""></image>
 			  </view>
             <cmd-input v-model="mobile.phone" type="number" focus maxlength="11" placeholder="请输入手机号"></cmd-input>
-            <view class="login-phone-getcode" @tap="!safety.state ? fnGetPhoneCode() : ''">{{!safety.state&&'获取验证码'||(safety.time+' s')}}</view>
+            <view class="login-phone-getcode" @tap="!safety.state ? fnGetPhoneCode() : ''"  @click="!safety.state ? fnGetPhoneCode() : ''">{{!safety.state&&'获取验证码'||(safety.time+' s')}}</view>
           </view>
           <view class="login-code">
 			  <view>
@@ -65,10 +63,8 @@
 		  	</view>
 		    
 		  </view>
-		  <navigator url="/pages/tabbar/tabbar-1/tabbar-1" open-type="switchTab" hover-class="other-navigator-hover">
-          <button class="btn-login" :class="loginMobile ? 'btn-login-active':''" :disabled="!loginMobile" hover-class="btn-login-hover"
-           @click="fnLogin">登录</button>
-			</navigator>
+          <button class="btn-login" :class="loginMobile ? 'btn-login-active':''"  hover-class="btn-login-hover"
+           @click="fnLogin" @tap="fnLogin">登录</button>
         </cmd-transition>
         <!-- #endif -->
         <!-- 手机表单登录 end -->
@@ -76,13 +72,13 @@
         <!-- #ifdef H5 -->
         <cmd-transition name="fade-up">
           <view v-if="!status">
-            <view class="login-username">
+            <view class="login-username" :class="coloronoff == true?'login-username-color':''" @click="coloronoff =false" >
 				<view>
 					<image class="loginimage1" src="@/static/team1.png" mode=""></image>
 				</view>
-              <cmd-input v-model="account.username" type="text" focus maxlength="26" placeholder="请输入账号"></cmd-input>
+              <cmd-input v-model="account.username"type="text" focus maxlength="26" placeholder="请输入账号"></cmd-input>
             </view>
-            <view class="login-password">
+            <view class="login-password"  :class="coloronoff1== true?'login-username-color':''" @click="coloronoff1 =false" >
 				<view>
 					<image class="loginimage1" src="@/static/mima.png" mode=""></image>
 				</view>
@@ -96,10 +92,8 @@
 			  
 			</view>
 			
-			<!-- <navigator url="/pages/tabbar/tabbar-1/tabbar-1" open-type="switchTab" hover-class="other-navigator-hover"> -->
             <button class="btn-login" :class="loginAccount ? 'btn-login-active':''" 
               hover-class="btn-login-hover" @tap="fnLogin" @click="fnLogin">登录</button>
-			  <!-- </navigator> -->
           </view>
         </cmd-transition>
         <!-- #endif -->
@@ -125,8 +119,8 @@
 			  
 			</view>
 		  <!-- <navigator url="/pages/tabbar/tabbar-1/tabbar-1" open-type="switchTab" hover-class="other-navigator-hover"> -->
-          <button class="btn-login" :class="loginAccount ? 'btn-login-active':''" :disabled="!loginAccount" hover-class="btn-login-hover"
-          @click="fnLogin">登录</button>
+          <button class="btn-login" :class="loginAccount ? 'btn-login-active':''"  hover-class="btn-login-hover"
+          @click="fnLogin" @tap="fnLogin">登录</button>
 			<!-- </navigator> -->
         </cmd-transition>
         <!-- #endif -->
@@ -164,6 +158,10 @@
 
     data() {
       return {
+		  coloronoff:false,
+		  coloronoff1:false,
+		  coloronoff2:false,
+		  coloronoff3:false,
 		loading: false,
 		res: '',
         // 账号登录部分数据
@@ -222,69 +220,128 @@
     },
 
     methods: {
-		
-		
       /**
        * 登录按钮点击执行
        */
       fnLogin() {
-      			this.$myRequest.post(
-      			'/user-info/v1/login', 
-      			{pwd:this.account.password,userName : this.account.username},
-      			{
-      			success: (res) => {
-      					if(res.data.code == 200){
-      						uni.setStorage({
-      							key: 'userInfo',
-      							data: res.data.data,
-      							success: function () {
-      								uni.showToast({
-      									title: res.message,
-      									icon: "success"
-      								})
-      								uni.switchTab({
-      								    url: '/pages/tabbar/tabbar-1/tabbar-1'
-      								});
-      							}
-      						})
-      					}else{
-      						alert(res.data.message)
-      					}
-      				}
-      			}
-      		)
-            },
+		  if(!this.status){
+			 if(this.account.username == ''){
+			  this.coloronoff = true
+			  
+			  	uni.showToast({
+			  		title:"请输入账号",
+			  		icon:"none"
+			  	})
+			  return
+			  }
+			  if(this.account.password == ''){
+				  this.coloronoff1 = true
+			  
+					uni.showToast({
+						title:"请输入密码",
+						icon:"none"
+					})
+					return
+			  } 
+		  }
+		  
+		let url = '/user-info/v1/login';
+		let data = {pwd:this.account.password,userName : this.account.username}
+		if	(this.status) {
+			//手机登录
+			if(this.mobile.phone == ''){
+			 this.coloronoff2 = true
+			  
+			  	
+			  	uni.showToast({
+			  		title:"请输入手机号",
+			  		icon:"none"
+			  	})
+			 return
+			 }
+			 if(this.mobile.code == ''){
+			  this.coloronoff3 = true
+			  
+				  uni.showToast({
+					title:"请输入密码",
+					icon:"none"
+				  })
+				return
+			 } 
+			url = '/user-info/v1/loginByCode';	 
+			data = {vercode:this.mobile.code,tel : this.mobile.phone,}
+		}
+		this.$myRequest.post(
+			url, 
+			data,
+			{
+			success: (res) => {
+					if(res.data.code == 200){
+						uni.setStorage({
+							key: 'userInfo',
+							data: res.data.data,
+							success: function () {
+								uni.showToast({
+									title: res.message,
+									icon: "success"
+								})
+								uni.switchTab({
+									url: '/pages/tabbar/tabbar-1/tabbar-1'
+								});
+							}
+						})
+					}else{
+						
+						uni.showToast({
+							title:res.data.message,
+							icon:"none"
+						})
+					}
+				}
+			}
+		)
+	},
 
       /**
        * 获取验证码
        */
       fnGetPhoneCode() {
         if (this.phoneReg.test(this.mobile.phone)) {
-          uni.showToast({
-            title: "正在发送验证码",
-            icon: "loading",
-            success: () => {
-              // 成功后显示倒计时60s后可在点击
-              this.safety.state = true;
-              // 倒计时
-              this.safety.interval = setInterval(() => {
-                if (this.safety.time-- <= 0) {
-                  this.safety.time = 60;
-                  this.safety.state = false;
-                  clearInterval(this.safety.interval);
-                }
-              }, 1000);
-              uni.showToast({
-                title: "发送成功",
-                icon: "success"
-              })
-            }
-          })
+			this.$myRequest.get(
+				'/user-info/v1/sendTextMessage', 
+				{
+					tel:this.mobile.phone
+				},
+				{
+				success: (res) => {
+						if(res.data.code == 200){
+							console.log(res.data.data)
+						}else{
+							
+							uni.showToast({
+								title:res.data.message,
+								icon:"none"
+							})
+						}
+					}
+				}
+			)
+			// 成功后显示倒计时60s后可在点击
+			this.safety.state = true;
+			// 倒计时
+			this.safety.interval = setInterval(() => {
+			  if (this.safety.time-- <= 0) {
+			    this.safety.time = 60;
+			    this.safety.state = false;
+			    clearInterval(this.safety.interval);
+			  }
+			}, 1000);
         } else {
-          uni.showToast({
-            title: "手机号不正确",
-            icon: "none"
-          })
+			
+				uni.showToast({
+					title:"手机号不正确",
+					icon:"none"
+				})
         }
       },
       /**
@@ -438,7 +495,11 @@
 	justify-content: space-between;
 	align-items: center;
   }
-
+  
+  .login-username-color{
+	  box-shadow: 0 0 10upx 1upx red;
+  }
+  
   .login-password {
 	  margin: 0 auto;
 	  width: 90%;

@@ -193,7 +193,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-	width: 85%;
+	width: 80%;
   }
 
   .cmd-input-input {
@@ -213,6 +213,7 @@
   }
 
   .cmd-input-icon {
+	flex: 0.3;
     width: 48upx;
     margin-left: 8upx;
     text-align: center;

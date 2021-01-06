@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<liuheHead></liuheHead>	
+		<liuheHead :rule="rule" :gameId="gameId"></liuheHead>	
 		<view class="page">
 		<!-- 彩种选择列表 -->
 			<view class="page_five">
@@ -40,7 +40,8 @@
 			 :data_list1="data_list1"
 			 :data_list2="data_list2"
 			 :playmode = "playmode"
-			 :caizhong = "caizhong"
+			 :caizhong = "wname"
+			 :wname = "wname"
 			 :yjfl="yjfl"
 		 ></OnekeyBettingLiuhe>
 	</view>
@@ -54,11 +55,26 @@
 		components:{liuheHead, OnekeyBettingLiuhe},
 		data() {
 			return {
+				rule:`
+				①大小
+				以特码作为开奖结果,特码小于25为小,大于
+				等于25为大
+				②单双
+				以特码作为开奖结果,特码奇数为单,偶数为
+				波色
+				以特码开奖结果对应的颜色作为开奖结果,波
+				色表见开奖规则
+				④双位
+				以特码作为开奖结果,同时亮猜特码大小和单
+				双
+				`,
+				gameId:104,
 				codeList:[],
 				data_list1:[],
 				data_list2:[],
-				playmode:"连号",
-				caizhong:"六合",
+				playmode:"三全中",
+				caizhong:"连码",
+				wname:"连码",
 				// 元角分离
 				yjfl:[
 					  {
@@ -83,32 +99,7 @@
 					title: '不中',
 					onoff: false
 				}],
-				five_list_item:[
-				  {
-					"sale": true,
-					"code": "三全中",
-					"odds": "650.00",
-					"color": ""
-				  },
-				  {
-					"sale": true,
-					"code": "三中二",
-					"odds": "107.00,20.00",
-					"color": ""
-				  },
-				  {
-					"sale": true,
-					"code": "二全中",
-					"odds": "63.00",
-					"color": ""
-				  },
-				  {
-					"sale": true,
-					"code": "二中特",
-					"odds": "51.00,31",
-					"color": ""
-				  }
-				]
+				five_list_item:[]
 			}
 		},
 		created() {
@@ -120,6 +111,16 @@
 			}
 			this.getMenu();
 			this.getCodeList();
+		},
+		// 页面周期与 onLoad 同级
+		onBackPress(e) {
+			console.log(e);
+			if (e.from == 'backbutton') {
+				uni.switchTab({
+					url:"/pages/tabbar/tabbar-1/tabbar-1"
+				});
+				return true; //阻止默认返回行为
+			}
 		},
 		methods: {
 			getMenu(){
@@ -202,7 +203,7 @@
 				}
 			},
 			onoffclick1(item1,index1){
-				this.wanfas = index1;
+				this.playmode = item1.code;
 				this.getCodeList();
 				for(let i in this.five_list_item) {
 					this.five_list_item[i].onoff = false;

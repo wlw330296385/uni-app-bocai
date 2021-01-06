@@ -29,13 +29,13 @@
 					 'select.value':function(newV,oldV){
 						 if(newV===this.value){
 							 uni.$emit("selectOption",{
-							 					 value:this.value,
-							 					 label:this.label
+								 value:this.value,
+								 label:this.label
 							 })
 						 }else{
 							 uni.$emit("selectOption",{
-							 					 value:this.value,
-							 					 label:this.value
+								 value:this.value,
+								 label:this.value
 							 })
 						 }
 					 },

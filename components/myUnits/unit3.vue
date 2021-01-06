@@ -6,7 +6,7 @@
 		</view>	
 		<view class="flex-item uni-flex uni-column unit2" style="flex:6">
 			<text class="txt1">{{name}}</text>
-			<uni-countdown  :color="color ? color : '#fff'" :splitorColor = "color ? color : '#fff'" border-color="#00B26A" :show-day="false" :hour="hour" :minute="minute" :second="second"></uni-countdown>
+			<uni-countdown  :color="color ? color : '#000000'" :splitorColor = "color ? color : '#000000'" border-color="#00B26A" :show-day="false" :hour="hour" :minute="minute" :second="second"></uni-countdown>
 		</view>
 	</view>
 </template>
@@ -15,7 +15,7 @@
 	import uniCountdown from '@/components/uni-countdown/uni-countdown.vue';
 	export default {
 		components: {uniCountdown},
-		props:['name', 'url', 'src', 'hour', 'minute', 'second', 'color', "isSale"],
+		props:['name', 'url', 'src', 'hour', 'minute', 'second', 'color', "isSale", "gameId"],
 		data() {
 			return {
 				mode : "scaleToFill",
@@ -26,12 +26,9 @@
 				console.error('image发生error事件，携带值为' + e.detail.errMsg)
 			},
 			goto(url, isSale){
-				if (1 == 1) {
-					if (url == "/pages/xuanma/lhc") {
-						url = "/pages/liuhe/haoma"
-					}
+				if (isSale) {
 					uni.navigateTo({
-					    url: url
+					    url: `${url}?gameId=${this.gameId}`
 					});
 				} else {
 					uni.showToast({
@@ -65,7 +62,6 @@
 	}
 	.unit2 {
 		padding:0 10upx;
-		color: #ffffff;
 	}
 	.txt1 {
 		font-size: $uni-font-size-ssm;

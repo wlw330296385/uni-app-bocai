@@ -1,5 +1,5 @@
 <template>
-	<view class="conter">
+	<view class="content">
 	<!-- navigationbar -->
 	<navigationbar :playmode = "playmode" :playmode1="playmode1" :caizhong = "caizhong"></navigationbar>
 		<dynamic :hour="hour" :minute='minute' :second='second'></dynamic>
@@ -14,6 +14,7 @@
 		:data_list1 = "data_list1"
 		:data_list2 = "data_list2"
 		 :playmode = "playmode"
+		 :wfData = "wfData"
 		 :caizhong = "caizhong"
 		 :yjfl = "yjfl"
 		></OnekeyBetting>
@@ -37,6 +38,8 @@
 		},
 		data() {
 			return {
+				gameId:100,
+				wfData:{id:1000038,name:""},
 				caizhong:"广西时时彩",
 				playmode:"和值",
 				playmode1:"复式",
@@ -54,16 +57,20 @@
 				yjfl:[]
 			};
 		},
-		onLoad() {
-			this.digitslist()
+		onLoad(option) { 
+			this.digitslist();
+			if (option.gameId) {
+				this.gameId = option.gameId
+				this.wfData.id = option.gameId;
+			}
 		},
 		methods: {
 			//接受多少注多少元
 			stepper3(e) {
 
 			},
-			getWanfas(e) {
-				this.wanfas = e;
+			getwfData(e){
+				this.wfData = e
 			},
 			click_list1(e) {
 				this.data_list1 = e;
@@ -89,7 +96,11 @@
 								})
 								this.yjfl[0].Index = true
 							}else{
-								alert(res.data.message)
+								
+									uni.showToast({
+										title:res.data.message,
+										icon:"none"
+									})
 							}
 						}
 					}
@@ -100,8 +111,8 @@
 </script>
 
 <style lang="scss">
-	.conter {
-		padding-bottom: 500upx;
-		padding-top: 70upx;
+	
+	.content{
+		margin-top: 60upx;
 	}
 </style>

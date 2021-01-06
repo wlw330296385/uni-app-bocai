@@ -159,11 +159,10 @@
 				
 			},
 			onChange(){
-				this.$emit('change', this.selectedOption.value)
+				this.$emit('change', this.selectedOption.label)
 			},
 			showOptions(){
 				this.isShow=!this.isShow;
-				console.log(this.isShow)
 				this.nh5=false;
 				if(this.isShow){
 					// #ifdef H5

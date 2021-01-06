@@ -1,22 +1,31 @@
 <template>
 	<view class="uni-popup-dialog">
 		<view class="uni-dialog-title">
-			<text class="uni-dialog-title-text" :class="['uni-popup__'+dialogType]">{{title}}</text>
+			<text class="uni-dialog-title-text" :class="['uni-popup__'+dialogType]">第{{title}}期</text>
 		</view>
 		<view class="uni-dialog-content">
-			<view class="uni-dialog-content-new" v-if="list">
-				<view class="uni-dialog-content-title">{{list.title}}</view>
-				<view class="uni-dialog-content-buttom">
-					<view class="uni-dialog-content-buttom-fen">分</view>
-					<view>
-						<view class="uni-dialog-content-buttom-type"><span class="uni-dialog-content-buttom-type-span">{{list.type}}</span>{{list.Colorseed}}</view>
-					<view class="uni-dialog-content-buttom-type">号码:{{list.number}}</view>
+			<view class="uni-dialog-content-new" v-if="list.length > 0">
+				<view class="uni-dialog-content-title">投注若单挑注单,单挑注单盈利上限为3万元,是否继续投注?</view>
+				<view class="uni-dialog-kuang">
+					<view class="uni-dialog-neikuang" v-for="(item,index) in list" :key="index">
+						<view class="uni-dialog-content-buttom flex-justify-content-center">
+							<!-- <view class="uni-dialog-content-buttom-fen">分</view> -->
+							<view>
+								<view class="uni-dialog-content-buttom-type">
+									<span class="uni-dialog-content-buttom-type-span">[{{item.type}}]</span>{{item.Colorseed}}  模式 : {{item.moShi}} 
+								</view>
+								<view class="uni-dialog-content-buttom-type">
+									<span style="color: #009800;">{{item.content}}</span>
+								</view>
+							</view>
+							<!-- <view class="uni-dialog-content-buttom-type-color">{{list.money}}</view> -->
+						</view>
+						<view class="uni-dialog-content-buttom flex-justify-content-space-around">
+							<view>{{item.zhushu}}注*{{item.multiple}}倍*{{item.moneyUnit}}  </view>
+							<span class="uni-dialog-content-buttom-type-span">  合计{{item.amt}}元</span>
+						</view>
+						<hr style="border-top:#999999;margin: 10upx auto;">
 					</view>
-					<view class="uni-dialog-content-buttom-type-color">{{list.money}}</view>
-				</view>
-				<hr style="border-top:#999999;margin: 10upx auto;">
-				<view class="uni-dialog-content-bottom">
-					<view>{{list.zhushu}}注*{{list.beishu}}倍*{{list.moneyUnit}}--模式:{{list.jiangjinmoshi}} <span class="uni-dialog-content-buttom-type-span">合计{{list.money}}</span></view>
 				</view>
 			</view>
 			<text class="uni-dialog-content-text" v-if="mode === 'base'">{{content}}</text>
@@ -85,8 +94,8 @@
 			 * 对话框标题
 			 */
 			title: {
-				type: String,
-				default: '提示'
+				type: Number,
+				default: '000'
 			},
 			/**
 			 * 显示取消按钮
@@ -275,28 +284,31 @@
 		width: 100%;
 		color: red;
 	}
+	
 	.uni-dialog-content-buttom{
 		display: flex;
-		justify-content: left;
-	}
-	.uni-dialog-content-buttom-fen{
-		width: 60upx;
-		height: 60upx;
-		border-radius: 50%;
-		text-align: center;
-		color: #fff;
-		line-height: 60upx;
-		background-color: #aaaaff;
 	}
 	.uni-dialog-content-buttom-type{
+		width: 500upx;
 		padding:0 20upx;
+		word-wrap: break-word;
+		word-break: normal;
 	}
 	.uni-dialog-content-buttom-type-span{
-		padding-right: 20upx;
-		color: #aaaaff;
+		margin-right: 20upx;
+		color: #ff0000;
 	}
 	.uni-dialog-content-buttom-type-color{
 		color: #aaaaff;
 		font-weight: bold;
+	}
+	
+	.uni-dialog-kuang{
+		width: 100%;
+		height: 200upx;
+		overflow-y: scroll;
+		box-shadow: 0 0 5upx 3upx #ccc;
+	}
+	.uni-dialog-neikuang{
 	}
 </style>

@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<liuheHead></liuheHead>	
+		<liuheHead :rule="rule" :gameId="gameId"></liuheHead>	
 		<view class="page">
 			<!-- 彩种选择列表 -->
 			<view class="page_five">
@@ -64,6 +64,26 @@
 		components:{liuheHead, OnekeyBettingLiuhe},
 		data() {
 			return {
+				gameId:104,
+				rule:`
+				连码玩法是以平码+特码作为开奖结果,连码
+				共有四种玩法:
+				①三全中:所投注的每三个号码为一组合,
+				若三个号码都是开奖号码之平码,视为中奖
+				其余情形视为不中奖
+				②三中二:所投注的每三个号码为一组合
+				若其中2个是开奖号码中的平码,即为三中二
+				视为中奖:;若3个都是开奖号码中的平码
+				即为三中二之中三,其余情形视为不中奖
+				二全中:所投注的每二个号码为一组合
+				二个号码都是开奖号码之平码,视为中奖,其
+				余情形视为不中奖(含个平码加个特别号
+				码之情形)
+				④二中特:所投注的每二个号码为一组合,
+				二个号码都是开奖号码之平码,叫二中特之中
+				二;若其中一个是平码,一个是特别号码,
+				叫二中特之中特;其余情形视为不中奖。
+				`,
 				color_onoff:[],
 				data_list1:[],
 				data_list2:[],
@@ -154,6 +174,16 @@
 				})
 			};
 			this.liangmianlist()
+		},
+		// 页面周期与 onLoad 同级
+		onBackPress(e) {
+			console.log(e);
+			if (e.from == 'backbutton') {
+				uni.switchTab({
+					url:"/pages/tabbar/tabbar-1/tabbar-1"
+				});
+				return true; //阻止默认返回行为
+			}
 		},
 		methods: {
 			addClass(item){

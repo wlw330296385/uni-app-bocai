@@ -70,20 +70,21 @@
 
 <style lang="scss">
 	.navTabBox {
-		width: 100vw;
-		color: rgba(255, 255, 255, 0.50);
+		width: 100%;
+		color: black;
+		font-size: 40upx;
 		.click {
-			color: white;
-		background: url(/static/anniu.png) no-repeat center center;
-		background-size: 90% 75%;
+			color: $theme-color;
+			border-bottom: 5upx solid $theme-color;
+			font-size: 45upx;
 		}
 		.longTab {
 			width: 100%;
 			.longItem{
 				width: 25%;
-				height: 130upx; 
+				height: 80upx; 
 				display: inline-block;
-				line-height: 130upx;
+				line-height: 80upx;
 				text-align: center;
 			}
 			.underlineBox {

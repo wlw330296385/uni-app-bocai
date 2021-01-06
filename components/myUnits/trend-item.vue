@@ -37,7 +37,8 @@
 
 <style lang="scss">
 .buttom-list {
-		background-color: #f0f0f0;
+		border: 1px solid #f0f0f0;
+		box-shadow: 10upx 10upx 10upx #f0f0f0;
 		width: 95%;
 		margin: 5px auto;
 		border-radius: 10px;
@@ -64,7 +65,7 @@
 			text-align: center;
 			line-height: 50upx;
 			color: #fff;
-			background-color: $uni-color-ping;
+			background-color: $theme-color-text;
 		}
 	}
 

@@ -29,7 +29,9 @@
 		     <uni-popup-message type="success" message="成功消息" :duration="2000"></uni-popup-message>
 		 </uni-popup>
 		 <uni-popup ref="popup2" type="dialog">
-		 	<uni-popup-dialog type="input" mode="base" message="成功消息" title="示例" content="你好啊" cancel="false" :duration="2000" :before-close="true" @close="close2"
+		 	<uni-popup-dialog type="input" mode="base" message="成功消息" title="示例" content="你好啊" cancel="false" 
+			:duration="2000" :before-close="true" @close="close2"
+			:list="[]"
 		 	 @confirm="confirm2"></uni-popup-dialog>
 		 </uni-popup>
 	</view>
